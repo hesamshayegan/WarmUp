@@ -5,11 +5,12 @@
 const express = require("express")
 const cors = require("cors");
 
-const { NotFoundError } = require("./expressError")
+const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
-const testRoutes = require("./routes/test.js")
 const usersRoutes = require("./routes/users");
-const authRoutes = require("./routes/auth")
+const authRoutes = require("./routes/auth");
+const questionsRoutes = require("./routes/questions")
+const quizRoutes = require("./routes/scores")
 
 
 const morgan = require("morgan");
@@ -30,10 +31,10 @@ app.use(morgan("tiny"));
 app.use(authenticateJWT);
 
 
-app.use("/test", testRoutes);
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
-
+app.use("/questions", questionsRoutes)
+app.use("/quiz", quizRoutes)
 
 
 /** Handle 404 errors -- this matches everything */

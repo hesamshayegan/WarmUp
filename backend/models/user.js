@@ -79,7 +79,7 @@ class User {
                 email,
                 image_profile)
                 VALUES ($1, $2, $3, $4)
-                RETURNING username, password, email`,
+                RETURNING username, email, image_profile`,
             [ 
                 username,
                 hashedPassword,
