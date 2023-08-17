@@ -32,7 +32,8 @@ CREATE TABLE user_quiz_progress (
   user_id INTEGER,
   cat_id INTEGER,
   questions_answered INTEGER,
-  questions_correct INTEGER
+  correct_answers INTEGER,
+  current_complexity VARCHAR(10)
 );
 
 CREATE TABLE comments (

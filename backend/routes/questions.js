@@ -8,10 +8,6 @@ const Question = require("../models/question");
 const router = express.Router();
 
 
-
-
-
-
 router.get("/:category", async function (req, res, next) {
     try {
 
