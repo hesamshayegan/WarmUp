@@ -1,7 +1,7 @@
 \echo 'Delete and recreate warmup db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 
-DROP DATABASE IF EXISTS warmup;
+DROP DATABASE warmup;
 CREATE DATABASE warmup;
 \connect warmup
 

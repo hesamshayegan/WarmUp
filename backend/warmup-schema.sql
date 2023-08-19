@@ -24,31 +24,27 @@ CREATE TABLE questions (
 
 CREATE TABLE category_questions (
   cat_id INTEGER,
-  question_id INTEGER
+  question_id INTEGER,
+  FOREIGN KEY (cat_id) REFERENCES quiz_category (id),
+  FOREIGN KEY (question_id) REFERENCES questions (id)
 );
 
 CREATE TABLE user_quiz_progress (
   id SERIAL PRIMARY KEY,
   user_id INTEGER,
   cat_id INTEGER,
-  questions_answered INTEGER,
+  questions_per_category INTEGER, 
   correct_answers INTEGER,
-  current_complexity VARCHAR(10)
+  current_complexity VARCHAR(10),
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+  FOREIGN KEY (cat_id) REFERENCES quiz_category (id),
+  UNIQUE (user_id, cat_id)
 );
 
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   comment_id INTEGER,
-  content TEXT NOT NULL
+  content TEXT NOT NULL,
+  FOREIGN KEY (comment_id) REFERENCES user_quiz_progress (id) ON DELETE CASCADE,
+  UNIQUE (comment_id)
 );
-
-ALTER TABLE category_questions ADD FOREIGN KEY (cat_id) REFERENCES quiz_category (id);
-
-ALTER TABLE category_questions ADD FOREIGN KEY (question_id) REFERENCES questions (id);
-
-ALTER TABLE comments ADD FOREIGN KEY (comment_id) REFERENCES user_quiz_progress (id);
-
-ALTER TABLE user_quiz_progress ADD FOREIGN KEY (cat_id) REFERENCES quiz_category (id);
-
-ALTER TABLE user_quiz_progress ADD FOREIGN KEY (user_id) REFERENCES users (id); 
-
