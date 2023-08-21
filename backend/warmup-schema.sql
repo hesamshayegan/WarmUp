@@ -25,8 +25,8 @@ CREATE TABLE questions (
 CREATE TABLE category_questions (
   cat_id INTEGER,
   question_id INTEGER,
-  FOREIGN KEY (cat_id) REFERENCES quiz_category (id),
-  FOREIGN KEY (question_id) REFERENCES questions (id)
+  FOREIGN KEY (cat_id) REFERENCES quiz_category (id) ON DELETE CASCADE,
+  FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_quiz_progress (

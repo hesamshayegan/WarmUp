@@ -4,20 +4,20 @@ const express = require("express");
 const jsonschema = require("jsonschema");
 
 const Score = require("../models/score");
+const { ensureCorrectUser } = require("../middleware/auth");
 
 const router = express.Router();
 
 
 
-
-
-router.post("/:username/:category", async function (req, res, next) {
+// record a score
+router.post("/:username/:category", ensureCorrectUser, async function (req, res, next) {
     try {
         
         const { username, category } = req.params
-        const { correct_answers } = req.body
+        const { correct_answers, current_complexity } = req.body
         const score = await Score.recordScore({ username, category },
-                                              { correct_answers });
+                                              { correct_answers, current_complexity });
         return res.json({ score })
 
     } catch(err) {
@@ -25,15 +25,32 @@ router.post("/:username/:category", async function (req, res, next) {
     }
 })
 
-router.patch("/:username/:category", async function (req, res, next) {
+
+// get a record
+router.get("/:username/:category/record", async function (req, res, next){
+    try {
+        const { username, category } = req.params
+        const record = await Score.getRecord({ username, category});
+
+        return res.json({ record })
+
+    } catch(err) {
+        return next(err)
+    }
+})
+
+
+// update a record
+router.patch("/:username/:category", ensureCorrectUser, async function (req, res, next) {
 
     try {
         const { username, category } = req.params
-        const { correct_answers, current_complexity } = req.body
+        const { correct_answers } = req.body
         const updatedScore = await Score.updateScore({ username, category},
-                                                     { correct_answers, current_complexity });
+                                                     { correct_answers });
         
         return res.json({ updatedScore })
+
     } catch(err) {
         return next(err)
     }
@@ -41,13 +58,15 @@ router.patch("/:username/:category", async function (req, res, next) {
 })
 
 
-router.get("/:username/:category/score", async function (req, res, next) {
+
+router.get("/:username/:category/score", ensureCorrectUser, async function (req, res, next) {
 
     try {
         const { username, category } = req.params
         const scoreCategory = await Score.getCategoryScore({ username, category});
         
         return res.json({ scoreCategory })
+        
     } catch(err) {
         return next(err)
     }
@@ -55,13 +74,14 @@ router.get("/:username/:category/score", async function (req, res, next) {
 })
 
 
-router.get("/:username/totscore", async function (req, res, next) {
+router.get("/:username/totscore", ensureCorrectUser, async function (req, res, next) {
 
     try {
         const { username } = req.params
         const totalCategory = await Score.getTotalScore({ username });
         
         return res.json({ totalCategory })
+
     } catch(err) {
         return next(err)
     }
@@ -69,19 +89,51 @@ router.get("/:username/totscore", async function (req, res, next) {
 })
 
 
-router.get("/:username/topscore", async function (req, res, next) {
+router.get("/:username/topscore", ensureCorrectUser, async function (req, res, next) {
 
     try {
         const { username } = req.params
-        const topScore = await Score.getTopScore({ username });
+        const topScores = await Score.getTopScore({ username });
         
-        return res.json({ topScore })
+        return res.json({ topScores })
+
     } catch(err) {
         return next(err)
     }
 
 })
 
+
+router.get("/topscores", async function (req, res, next) {
+
+    try {
+
+        const allTopScores = await Score.getAllUsersTopScores();
+        
+        return res.json({ allTopScores })
+
+    } catch(err) {
+        return next(err)
+    }
+
+})
+
+
+
+// remove a record
+router.delete("/:username/:category/record", ensureCorrectUser, async function (req, res, next) {
+
+    try {
+        const { username, category } = req.params
+        await Score.remove({ username, category});
+
+        return res.json({ deleted: `username:${req.params.username}, category:${req.params.category} record` });
+        
+    } catch(err) {
+        return next(err)
+    }
+
+})
 
 
 

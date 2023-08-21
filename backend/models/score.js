@@ -2,26 +2,70 @@
 
 const db = require("../db");
 
+const { 
+        BadRequestError,
+        NotFoundError,
+        UnauthorizedError
+      } = require("../expressError");
 
 class Score {
 
 
-    static async recordScore({username, category}, data) {
-        
-        const { correct_answers } = data
 
+    static async getUserId(username) {
+        
         const userQuery = await db.query(`
                 SELECT id
                 FROM users
                 WHERE username = $1`, [username]);
-        const user_id = (userQuery.rows[0]).id;
 
+        if ((userQuery.rows).length === 0) throw new NotFoundError(`No user: ${username}`);
+
+        const user_id = (userQuery.rows[0]).id;
+    
+        return user_id
+    }
+
+
+
+    static async getCategoryId(category) {
+        
         const catQuery = await db.query(`
                 SELECT id
                 FROM quiz_category
                 WHERE category = $1`, [category]);
-        
+
+        if ((catQuery.rows).length === 0) throw new NotFoundError(`No category: ${category}`);
+
         const cat_id = (catQuery.rows[0]).id;
+    
+        return cat_id
+    }
+    
+
+    // record a score
+    static async recordScore({username, category}, data) {
+        
+        const { correct_answers, current_complexity } = data
+
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+        
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
+
+
+        const duplicateCheck = await db.query(
+                `SELECT user_id, cat_id
+                FROM user_quiz_progress
+                WHERE user_id = $1
+                AND cat_id = $2`,
+                [user_id, cat_id],
+                )
+        
+        if (duplicateCheck.rows[0]) {
+            throw new BadRequestError(`Duplicate record for user_id:${user_id} and cat_id:${cat_id}`);
+        }
 
         const catQuestionsQuery = await db.query(`
                 SELECT COUNT (*) FROM questions q
@@ -33,13 +77,17 @@ class Score {
         
 
         const score = await db.query(`
-            INSERT INTO user_quiz_progress
-            (user_id, cat_id, questions_per_category, correct_answers, current_complexity)
-            VALUES 
-            ($1, $2, $3, $4, $5)
-            RETURNING *`,
-            [user_id, cat_id, catQuestionsCount, correct_answers, 'easy'],
-        );
+                INSERT INTO user_quiz_progress
+                (user_id, cat_id, questions_per_category, correct_answers, current_complexity)
+                VALUES 
+                ($1, $2, $3, $4, $5)
+                RETURNING *`,
+                [user_id,
+                cat_id,
+                catQuestionsCount,
+                correct_answers,
+                current_complexity],
+                );
 
         const result = score.rows[0]
         return result
@@ -47,25 +95,73 @@ class Score {
 
 
 
+    // Get a record 
+
+    static async getRecord({username, category}) {
+        
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+        
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
+
+        const record = await db.query(
+                `SELECT *
+                FROM user_quiz_progress
+                WHERE user_id = $1
+                AND cat_id = $2`,
+                [user_id, cat_id],
+                )
+
+        if ((record.rows).length === 0) throw new NotFoundError(`No score found`);
+
+        const result = record.rows[0];
+
+        return result
+            
+    }
+
+    // update a record
+
     static async updateScore({ username, category }, data) {
         
-        const { correct_answers, current_complexity } = data
+        const { correct_answers } = data
 
-        // Fetch user ID
-        const userQuery = await db.query(`
-                SELECT id
-                FROM users
-                WHERE username = $1`, [username]);
+        // Fetch user id
+        const user_id = await this.getUserId(username);
         
-        const user_id = (userQuery.rows[0]).id;
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
+
+        // Fetch current complexity and change it accordingly
+        const levelQuery = await db.query(`
+                SELECT current_complexity
+                FROM user_quiz_progress
+                WHERE user_id = $1
+                AND cat_id = $2`,
+                [user_id, cat_id],
+                );
         
-        // Fetch category ID
-        const catQuery = await db.query(`
-                SELECT id
-                FROM quiz_category
-                WHERE category = $1`, [category]);
-        
-        const cat_id = (catQuery.rows[0]).id;
+        // Check if the record exists before getting new questions
+        if (levelQuery.rows.length === 0) {
+            throw new NotFoundError(`No record found for user: ${username}, category: ${category}`);
+        }
+
+        let currLevel = (levelQuery.rows[0]).current_complexity
+        let newLevel = ""
+
+
+        if (currLevel === "easy") {
+            newLevel = "medium"
+        }
+
+        else if (currLevel === "medium") {
+            newLevel = "hard"
+        }
+
+        else {
+            newLevel = "hard"
+        }
 
         // Update user_quiz_progress
         const scoreUpdated = await db.query(`
@@ -75,37 +171,24 @@ class Score {
                 WHERE user_id = ${user_id}
                 AND cat_id = ${cat_id}
                 RETURNING *
-                `, [correct_answers, current_complexity]);
-                  
+                `, [correct_answers,
+                    newLevel]);
+        
+        if ((scoreUpdated.rows).length === 0) throw new NotFoundError(`No score found`);
+
         const result = scoreUpdated.rows[0];
 
         return result
     }
 
 
-
-
-
     static async getCategoryScore({ username, category }) {
 
-        //  write if there is no score!!!!!
-
-
-        // Fetch user ID
-        const userQuery = await db.query(`
-                SELECT id
-                FROM users
-                WHERE username = $1`, [username]);
-       
-        const user_id = (userQuery.rows[0]).id;
-
-        // Fetch category ID
-        const catQuery = await db.query(`
-                SELECT id
-                FROM quiz_category
-                WHERE category = $1`, [category]);
-
-        const cat_id = (catQuery.rows[0]).id;
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+        
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
 
         // calculate current score per category
         const questionsQuery = await db.query(`
@@ -115,6 +198,8 @@ class Score {
                 AND cat_id = $2
                 `, [ user_id, cat_id]);
         
+        
+        if ((questionsQuery.rows).length === 0) throw new NotFoundError(`No score found`);
         const { questions_per_category, correct_answers } = questionsQuery.rows[0];
 
         const categoryScore = correct_answers / questions_per_category
@@ -127,15 +212,11 @@ class Score {
 
     static async getTotalScore({ username }) {
         
-        // Fetch user ID
-        const userQuery = await db.query(`
-            SELECT id
-            FROM users
-            WHERE username = $1`, [username]);
-       
-        const user_id = (userQuery.rows[0]).id;
 
-        // calculate user's total score
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+
+        // Calculate user's total score
         const sumScoreQuery = await db.query(`
                 SELECT SUM(correct_answers)
                 FROM  user_quiz_progress
@@ -162,15 +243,9 @@ class Score {
 
 
     static async getTopScore({ username }) {
-        
 
-        // Fetch user ID
-        const userQuery = await db.query(`
-            SELECT id
-            FROM users
-            WHERE username = $1`, [username]);
-       
-        const user_id = (userQuery.rows[0]).id;
+        // Fetch user id
+        const user_id = await this.getUserId(username);
         
         // Fetch the scores with a rank = 1
         const topRankQuery = await db.query(`
@@ -188,16 +263,79 @@ class Score {
                     cat_id: row.cat_id, 
                     questions_per_category: row.questions_per_category,
                     correct_answers: row.correct_answers,
-                    score: row.correct_answers / row.questions_per_category
+                    topScore: row.correct_answers / row.questions_per_category
                 });
             }
-        }        
+        }
+        
+        if (topScores.length === 0) throw new NotFoundError(`No score found`);
 
         return topScores
     }
 
 
 
+    static async getAllUsersTopScores() {
+
+        // Fetch all users
+        const usersQuery = await db.query(`
+                SELECT username
+                FROM users       
+                `)
+
+        const allUsersTopScores = []
+        // Iterate through each user and fetch their top scores
+        // not found score case handling is already implemented in the getTopScore method
+        
+        for (const userRow of usersQuery.rows)  {
+  
+            const topScores = await this.getTopScore({ username: userRow.username });
+
+            if(topScores.length !== 0) {
+
+                allUsersTopScores.push({ username: userRow.username,
+                                         topScore: (topScores[0]).topScore })
+            }    
+        }
+
+        return allUsersTopScores
+    }
+
+
+
+    // remove a record
+    static async remove({username, category}) {
+
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+                
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
+
+
+        // Check if the record exists before attempting to delete it
+        const recordQuery = await db.query(
+                `SELECT id
+                FROM user_quiz_progress
+                WHERE user_id = $1
+                AND cat_id = $2`,
+                [user_id, cat_id],
+        );
+
+        if (recordQuery.rows.length === 0) {
+            throw new NotFoundError(`No record found for user: ${username}, category: ${category}`);
+        }
+
+        
+        await db.query(
+              `DELETE
+               FROM user_quiz_progress
+               WHERE user_id = $1
+               AND cat_id = $2`,
+               [user_id, cat_id],
+        );
+
+    }
 
 }
 
