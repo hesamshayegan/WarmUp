@@ -2,8 +2,7 @@
 
 const {
   NotFoundError,
-  BadRequestError,
-  UnauthorizedError,
+  BadRequestError
 } = require("../expressError");
 
 const db = require("../db.js");
@@ -451,13 +450,13 @@ describe("remoeve a record", function() {
 
         const res1 = await db.query(
             "SELECT * FROM user_quiz_progress");
-        expect(res1.rows.length).toEqual(1);
+        expect(res1.rows).toHaveLength(1);
         
         await Score.remove(u1_info);
 
         const res2 = await db.query(
             "SELECT * FROM user_quiz_progress");
-        expect(res2.rows.length).toEqual(0);
+        expect(res2.rows).toHaveLength(0);
         });
 
     // no score found
