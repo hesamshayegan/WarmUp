@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 
 const user =  {
-              username: "testuser",
+              username: "testuser2",
               };
 
 const token = jwt.sign(user, SECRET_KEY);

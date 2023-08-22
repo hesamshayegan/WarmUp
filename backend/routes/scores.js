@@ -5,6 +5,8 @@ const jsonschema = require("jsonschema");
 
 const Score = require("../models/score");
 const { ensureCorrectUser } = require("../middleware/auth");
+const { BadRequestError } = require("../expressError");
+const quizProgressSchema = require("../schemas/quizProgress.json");
 
 const router = express.Router();
 
@@ -13,6 +15,12 @@ const router = express.Router();
 // record a score
 router.post("/:username/:category", ensureCorrectUser, async function (req, res, next) {
     try {
+
+        const validator = jsonschema.validate(req.body, quizProgressSchema);
+        if (!validator.valid) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
         
         const { username, category } = req.params
         const { correct_answers, current_complexity } = req.body
@@ -23,7 +31,7 @@ router.post("/:username/:category", ensureCorrectUser, async function (req, res,
     } catch(err) {
         next(err)
     }
-})
+});
 
 
 // get a record
@@ -44,6 +52,13 @@ router.get("/:username/:category/record", async function (req, res, next){
 router.patch("/:username/:category", ensureCorrectUser, async function (req, res, next) {
 
     try {
+
+        const validator = jsonschema.validate(req.body, quizProgressSchema);
+        if (!validator.valid) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
+        
         const { username, category } = req.params
         const { correct_answers } = req.body
         const updatedScore = await Score.updateScore({ username, category},

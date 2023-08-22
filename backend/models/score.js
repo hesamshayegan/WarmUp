@@ -168,11 +168,13 @@ class Score {
                 UPDATE user_quiz_progress 
                 SET correct_answers = $1,
                     current_complexity = $2
-                WHERE user_id = ${user_id}
-                AND cat_id = ${cat_id}
+                WHERE user_id = $3
+                AND cat_id = $4
                 RETURNING *
                 `, [correct_answers,
-                    newLevel]);
+                    newLevel,
+                    user_id,
+                    cat_id]);
         
         if ((scoreUpdated.rows).length === 0) throw new NotFoundError(`No score found`);
 
