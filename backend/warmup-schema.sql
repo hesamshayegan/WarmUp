@@ -48,3 +48,13 @@ CREATE TABLE comments (
   FOREIGN KEY (comment_id) REFERENCES user_quiz_progress (id) ON DELETE CASCADE,
   UNIQUE (comment_id)
 );
+
+CREATE TABLE user_quiz_history (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER,
+  cat_id INTEGER,
+  score DOUBLE PRECISION, 
+  time_stamp TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+  FOREIGN KEY (cat_id) REFERENCES quiz_category (id)
+);

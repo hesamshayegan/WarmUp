@@ -168,8 +168,10 @@ async function commonBeforeEach() {
   await db.query("BEGIN");
   await db.query("DELETE FROM user_quiz_progress");
   await db.query("DELETE FROM comments");
+  await db.query("DELETE FROM user_quiz_history");
   await db.query("ALTER SEQUENCE user_quiz_progress_id_seq RESTART WITH 1");
   await db.query("ALTER SEQUENCE comments_id_seq RESTART WITH 1");
+  await db.query("ALTER SEQUENCE user_quiz_history_id_seq RESTART WITH 1");
 
 }
 

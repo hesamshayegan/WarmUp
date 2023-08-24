@@ -140,7 +140,7 @@ router.delete("/:username/:category/record", ensureCorrectUser, async function (
 
     try {
         const { username, category } = req.params
-        await Score.remove({ username, category});
+        await Score.removeRecord({ username, category});
 
         return res.json({ deleted: `username:${req.params.username}, category:${req.params.category} record` });
         
@@ -150,6 +150,22 @@ router.delete("/:username/:category/record", ensureCorrectUser, async function (
 
 })
 
+
+
+// get a score history
+router.get("/:username/:category/score/history", ensureCorrectUser, async function (req, res, next) {
+
+    try {
+        const { username, category } = req.params
+        const scoreHisotry = await Score.getScoreHistory({ username, category});
+        
+        return res.json({ scoreHisotry })
+        
+    } catch(err) {
+        return next(err)
+    }
+
+})
 
 
 

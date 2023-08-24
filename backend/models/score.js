@@ -4,9 +4,13 @@ const db = require("../db");
 
 const { 
         BadRequestError,
-        NotFoundError,
-        UnauthorizedError
+        NotFoundError
       } = require("../expressError");
+
+const moment = require('moment');
+
+
+
 
 class Score {
 
@@ -64,7 +68,7 @@ class Score {
                 )
         
         if (duplicateCheck.rows[0]) {
-            throw new BadRequestError(`Duplicate record for user_id:${user_id} and cat_id:${cat_id}`);
+            throw new BadRequestError(`Duplicate record for username:${username} and category:${category}`);
         }
 
         const catQuestionsQuery = await db.query(`
@@ -76,7 +80,7 @@ class Score {
         const catQuestionsCount = (catQuestionsQuery.rows[0]).count
         
 
-        const score = await db.query(`
+        const record = await db.query(`
                 INSERT INTO user_quiz_progress
                 (user_id, cat_id, questions_per_category, correct_answers, current_complexity)
                 VALUES 
@@ -89,8 +93,9 @@ class Score {
                 current_complexity],
                 );
 
-        const result = score.rows[0]
-        return result
+        const currentRecord = record.rows[0];                   
+        
+        return currentRecord
     };
 
 
@@ -160,7 +165,7 @@ class Score {
         }
 
         else {
-            newLevel = "hard"
+            throw new BadRequestError(`record already registered:${username} and category:${category}`);
         }
 
         // Update user_quiz_progress
@@ -179,6 +184,13 @@ class Score {
         if ((scoreUpdated.rows).length === 0) throw new NotFoundError(`No score found`);
 
         const result = scoreUpdated.rows[0];
+
+        // register the score in the user's score history if the complexity is hard
+        if (newLevel === 'hard') {
+
+            const registerToHistory = await this.recordScoreHistory({username, category}); 
+
+        }
 
         return result
     }
@@ -306,7 +318,7 @@ class Score {
 
 
     // remove a record
-    static async remove({username, category}) {
+    static async removeRecord({username, category}) {
 
         // Fetch user id
         const user_id = await this.getUserId(username);
@@ -338,6 +350,84 @@ class Score {
         );
 
     }
+
+
+    /******************************* Score History */
+
+
+    // register a record to score history table
+    static async recordScoreHistory({username, category}) {
+
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+        
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
+
+        const recordQuery = await db.query(`
+                SELECT * 
+                FROM user_quiz_progress
+                WHERE user_id = $1
+                AND cat_id = $2`,
+                [user_id, cat_id],
+                )
+
+        if ((recordQuery.rows).length === 0) throw new NotFoundError(`No score found`);
+        
+        const record = recordQuery.rows[0];
+
+        if (record.current_complexity === 'hard') {
+
+            const currentScore = record.correct_answers / record.questions_per_category;
+
+            // Get the current timestamp in the required format
+            const timestampFormatted = moment().format('YYYY-MM-DD, h:mm:ss');
+
+            const registerRecord = await db.query(
+                `INSERT INTO user_quiz_history
+                (user_id, cat_id, score, time_stamp)
+                VALUES 
+                ($1, $2, $3, $4)`,
+                [user_id, cat_id, currentScore, timestampFormatted]
+                );
+
+            const result = registerRecord.rows
+
+            return result
+
+            }
+        
+    }
+
+
+    // get all the score history for a cateogry
+    static async getScoreHistory({username, category}) {
+        console.log('works')
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+        
+        // Fetch category id
+        const cat_id = await this.getCategoryId(category);
+
+        const historyQuery = await db.query(`
+                SELECT * 
+                FROM user_quiz_history
+                WHERE user_id = $1
+                AND cat_id = $2
+                `,
+                [user_id, cat_id],
+                )
+
+        const result = historyQuery.rows;
+        
+
+        if (result.length === 0) throw new NotFoundError(`No score found`);
+
+        return result;
+
+    }
+
+
 
 }
 

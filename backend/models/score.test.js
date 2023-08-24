@@ -174,18 +174,13 @@ describe("update a score", function() {
          );
 
         // Current Complexity: Hard to Hard
-        const record_update3 = await Score.updateScore(u1_info, data_udpate3);
+        try {
+            const record_update3 = await Score.updateScore(u1_info, data_udpate3);
 
-        expect(record_update3).toEqual(
-            {
-                "id": 1,
-                "user_id": 1,
-                "cat_id": 1,
-                "questions_per_category": 6,
-                "correct_answers": 6,
-                "current_complexity": "hard"
-            }   
-         );
+        } catch(err) {
+            expect(err instanceof BadRequestError).toBeTruthy();
+        }
+
 
     });
 
@@ -211,7 +206,6 @@ describe("update a score", function() {
     });
 
 });
-
 
 
 /************************************** get a category score */
@@ -436,7 +430,7 @@ describe("get all the top scores", function() {
 
 
 /************************************** remove a record */
-describe("remoeve a record", function() {
+describe("remove a record", function() {
     
     test("works", async function () {
         
@@ -452,7 +446,7 @@ describe("remoeve a record", function() {
             "SELECT * FROM user_quiz_progress");
         expect(res1.rows).toHaveLength(1);
         
-        await Score.remove(u1_info);
+        await Score.removeRecord(u1_info);
 
         const res2 = await db.query(
             "SELECT * FROM user_quiz_progress");
@@ -464,14 +458,144 @@ describe("remoeve a record", function() {
         try {
             const u1_info = {username: 'u1',
                              category: 'plastic'}
-            const u1 = await Score.remove(u1_info);
+            const u1 = await Score.removeRecord(u1_info);
         } catch (err) {
             expect(err instanceof NotFoundError).toBeTruthy();
         } 
     });
 
-    
 });
 
+/************************************** record a score history */
+describe("record a score history", function() {
+
+    test("works", async function () {
+
+        const u1_info = {username: 'u1',
+                         category: 'plastic'}
+
+        const data1 = {correct_answers: 2,
+                       current_complexity: "easy"}
+
+        const data_udpate1 = {correct_answers: 4}
+
+        const data_udpate2 = {correct_answers: 6}
 
 
+        const record1 = await Score.recordScore(u1_info, data1);
+        
+        // Current Complexity: Easy to Medium 
+        const record_update1 = await Score.updateScore(u1_info, data_udpate1);
+
+        // Current Complexity: Medium to Hard
+        const record_update2 = await Score.updateScore(u1_info, data_udpate2);
+
+        
+        const userQuery = await db.query(`
+                                    SELECT id
+                                    FROM users
+                                    WHERE username = 'u1'
+                                    `);
+        const user_id = (userQuery.rows[0]).id;
+
+        const catQuery = await db.query(`
+                                    SELECT id
+                                    FROM quiz_category
+                                    WHERE category = 'plastic'
+                                    `);
+        const cat_id = (catQuery.rows[0]).id;
+
+        const record_history = await db.query(`
+                                        SELECT *
+                                        FROM user_quiz_history
+                                        WHERE user_id = ${user_id}
+                                        AND cat_id = ${cat_id};
+                                            `)
+
+        expect((record_history.rows[0]).user_id).toBe(1);
+        expect((record_history.rows[0]).cat_id).toBe(1);
+        expect((record_history.rows[0]).score).toBe(1);
+        expect((record_history.rows[0]).time_stamp).toBeInstanceOf(Date);
+    });
+ 
+});
+
+/************************************** record a score history */
+describe("get all score history for a category", function() {
+
+    // multiples scores with the same cateogry
+    test("works for multiple scores", async function () {
+
+        const u1_info = {username: 'u1',
+                        category: 'plastic'}
+
+        const data1 = {correct_answers: 2,
+                    current_complexity: "easy"}
+
+        const data_udpate1 = {correct_answers: 4}
+
+        const data_udpate2 = {correct_answers: 6}
+
+        const data_udpate11 = {correct_answers: 2}
+
+        const data_udpate21 = {correct_answers: 3}
+
+        const record1 = await Score.recordScore(u1_info, data1);
+        
+        // Current Complexity: Easy to Medium 
+        const record_update1 = await Score.updateScore(u1_info, data_udpate1);
+
+        // Current Complexity: Medium to Hard
+        const record_update2 = await Score.updateScore(u1_info, data_udpate2);
+
+        await Score.removeRecord(u1_info);
+
+        const record11 = await Score.recordScore(u1_info, data1);
+        
+        // Current Complexity: Easy to Medium 
+        const record_update11 = await Score.updateScore(u1_info, data_udpate11);
+
+        // Current Complexity: Medium to Hard
+        const record_update21 = await Score.updateScore(u1_info, data_udpate21);
+
+        const userQuery = await db.query(`
+                                    SELECT id
+                                    FROM users
+                                    WHERE username = 'u1'
+                                    `);
+        const user_id = (userQuery.rows[0]).id;
+
+        const catQuery = await db.query(`
+                                    SELECT id
+                                    FROM quiz_category
+                                    WHERE category = 'plastic'
+                                    `);
+        const cat_id = (catQuery.rows[0]).id;
+
+        const record_history = await Score.getScoreHistory(u1_info)
+        
+        expect((record_history[0]).user_id).toBe(1);
+        expect((record_history[0]).cat_id).toBe(1);
+        expect((record_history[0]).score).toBe(1);
+        expect((record_history[0]).time_stamp).toBeInstanceOf(Date);
+
+        expect((record_history[1]).user_id).toBe(1);
+        expect((record_history[1]).cat_id).toBe(1);
+        expect((record_history[1]).score).toBe(0.5);
+        expect((record_history[1]).time_stamp).toBeInstanceOf(Date);
+
+    });
+
+    // no score found
+    test("score not found", async function () {
+        try {
+            const u1_info = {username: 'u1',
+                             category: 'plastic'}
+            const u1 = await Score.getScoreHistory(u1_info);
+        } catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        } 
+    });
+
+
+})
