@@ -52,15 +52,31 @@ const {
 
             const commentIdQuery = await db.query(
                     `SELECT id
-                    FROM user_quiz_progress
+                    FROM user_quiz_history
                     WHERE user_id = $1
-                    AND cat_id = $2`,
+                    AND cat_id = $2
+                    LIMIT 1`,
                     [user_id, cat_id],
                     )
             
             if ((commentIdQuery.rows).length === 0) throw new NotFoundError(`No score found`);
 
             const comment_id = (commentIdQuery.rows[0]).id;
+
+            // Check if there is already a comment for the specific cateogry
+
+            const commentQuery = await db.query(`
+                        SELECT comment_id
+                        FROM comments c
+                        JOIN user_quiz_history uqh ON uqh.id = c.comment_id
+                        WHERE user_id = $1
+                        AND cat_id = $2`,
+                        [user_id, cat_id],
+                        )
+
+            if (commentQuery.rows.length !== 0) {
+                throw new BadRequestError(`a comment already registered by: username: ${username} and category:${category}`);
+            }
 
             const comment = await db.query(`
                     INSERT INTO comments
@@ -91,9 +107,9 @@ const {
             const commentIdQuery = await db.query(
                 `SELECT comment_id
                 FROM comments c
-                JOIN user_quiz_progress uqp ON c.comment_id = uqp.id
-                WHERE uqp.user_id = $1
-                AND uqp.cat_id = $2`,
+                JOIN user_quiz_history uqh ON c.comment_id = uqh.id
+                WHERE uqh.user_id = $1
+                AND uqh.cat_id = $2`,
                 [user_id, cat_id],
                 )
         

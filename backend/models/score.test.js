@@ -599,3 +599,78 @@ describe("get all score history for a category", function() {
 
 
 })
+
+
+
+
+/************************************** score progress on delete cascade */
+describe("test record score (progress) on delete cascade", function() {
+
+    test("works", async function () {
+
+        const u1_info = {username: 'u1',
+                         category: 'plastic'}
+
+        const u1_info2 = {username: 'u1',
+                         category: 'deforestation'}
+
+        const data1 = {correct_answers: 2,
+                       current_complexity: "easy"}
+
+        const record1 = await Score.recordScore(u1_info, data1);
+
+        const record12 = await Score.recordScore(u1_info2, data1);
+
+        const res1 = await db.query(
+            "SELECT * FROM user_quiz_progress");
+        expect(res1.rows).toHaveLength(2);
+
+        await User.remove('u1');
+
+        const res2 = await db.query(
+            "SELECT * FROM user_quiz_progress");
+        expect(res2.rows).toHaveLength(0);
+
+    })
+})
+
+
+
+
+
+/************************************** score history on delete cascade */
+describe("test score history on delete cascade", function() {
+
+    test("works", async function () {
+
+        const u1_info = {username: 'u1',
+                         category: 'plastic'}
+
+        const data1 = {correct_answers: 2,
+                       current_complexity: "easy"}
+
+        const data_udpate1 = {correct_answers: 4}
+
+        const data_udpate2 = {correct_answers: 6}
+
+
+        const record1 = await Score.recordScore(u1_info, data1);
+
+        // Current Complexity: Easy to Medium 
+        const record_update1 = await Score.updateScore(u1_info, data_udpate1);
+
+        // Current Complexity: Medium to Hard
+        const record_update2 = await Score.updateScore(u1_info, data_udpate2);
+
+        const res1 = await db.query(
+            "SELECT * FROM user_quiz_history");
+        expect(res1.rows).toHaveLength(1);
+
+        await User.remove('u1');
+
+        const res2 = await db.query(
+            "SELECT * FROM user_quiz_history");
+        expect(res2.rows).toHaveLength(0);
+
+    })
+})

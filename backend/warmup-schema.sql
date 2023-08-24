@@ -41,14 +41,6 @@ CREATE TABLE user_quiz_progress (
   UNIQUE (user_id, cat_id)
 );
 
-CREATE TABLE comments (
-  id SERIAL PRIMARY KEY,
-  comment_id INTEGER,
-  content TEXT NOT NULL,
-  FOREIGN KEY (comment_id) REFERENCES user_quiz_progress (id) ON DELETE CASCADE,
-  UNIQUE (comment_id)
-);
-
 CREATE TABLE user_quiz_history (
   id SERIAL PRIMARY KEY,
   user_id INTEGER,
@@ -57,4 +49,12 @@ CREATE TABLE user_quiz_history (
   time_stamp TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (cat_id) REFERENCES quiz_category (id)
+);
+
+CREATE TABLE comments (
+  id SERIAL PRIMARY KEY,
+  comment_id INTEGER,
+  content TEXT NOT NULL,
+  FOREIGN KEY (comment_id) REFERENCES user_quiz_history (id) ON DELETE CASCADE,
+  UNIQUE (comment_id)
 );

@@ -3,9 +3,7 @@
 const db = require("../db");
 
 const { 
-    BadRequestError,
-    NotFoundError,
-    UnauthorizedError
+    NotFoundError
   } = require("../expressError");
 
 
