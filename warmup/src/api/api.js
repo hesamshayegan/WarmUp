@@ -58,6 +58,13 @@ class WarmUpApi {
         let res = await this.request(`users/${username}`, data, 'patch');
         return res.user
     }
+
+    /** Delete a user. */
+
+    static async deleteUser(username) {
+        let res = await this.request(`users/${username}`, {}, 'delete');
+        return res.user
+    }
     
 
 }

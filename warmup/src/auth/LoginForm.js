@@ -5,15 +5,14 @@ import Alert from "../common/Alert";
 const LoginForm = ({ loginUser }) => {
 
     const INITIAL_STATE = { username: "", password: "" };
+
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const [formErrors, setFormErrors] = useState([]);
 
     const navigate = useNavigate();
 
-    const [formErrors, setFormErrors] = useState([]);
-
     console.debug(
         "LoginForm",
-        "login=", typeof loginUser,
         "formData=", formData,
         "formErrors", formErrors,
     );
@@ -21,7 +20,7 @@ const LoginForm = ({ loginUser }) => {
 
     /** Handle form submit:
      *
-     * Calls login func prop and, if successful, redirect to /companies.
+     * Calls login func prop and, if successful, redirect to /homepage
     */
     
     const handleSubmit = async (e) => {
@@ -30,7 +29,7 @@ const LoginForm = ({ loginUser }) => {
       let result = await loginUser(formData);
 
       if (result.success) {
-      setFormData(INITIAL_STATE);
+        setFormData(INITIAL_STATE);
         console.log(`login successful`);
         navigate('/');
       }
@@ -39,7 +38,8 @@ const LoginForm = ({ loginUser }) => {
         setFormErrors(result.errors);
        }
     }
-
+    
+    
     const handleChange = evt => {
       const { name, value } = evt.target;
       setFormData(fData => ({

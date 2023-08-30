@@ -1,13 +1,14 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from "react-router-dom"
-import jwt_decode from "jwt-decode";
-
-
+import jwt_decode from "jwt-decode"
 import MyRoutes from './routes-nav/MyRoutes';
-import UserContext from './profile/UserContext';
+import UserContext from './common/UserContext';
 import WarmUpApi from './api/api';
 import useLocalStorage from './hooks/useLocalStorage';
+import MyNav from './routes-nav/MyNav'
+
+
 
 function App() {
   
@@ -25,12 +26,92 @@ function App() {
       return { success: true };
 
     } catch (errors) {
+
       console.error("login failed", errors);
       return { success: false, errors };
+
     }
     
     
   }
+
+
+
+  async function registerUser(data) {
+
+    try {
+
+      const res = await WarmUpApi.registerUser(data);
+      setToken(res);
+      setCurrentUser(res);
+      return { success: true };
+
+    } catch (errors) {
+
+      console.error("sign up failed", errors);
+      return { success: false, errors }
+
+    }
+    
+  }
+
+
+  async function updateUser(data) {
+
+    try {
+
+      const user = await WarmUpApi.updateUser(currentUser.username, data);
+      setCurrentUser(user);
+      return { success: true };
+
+    } catch (errors) {
+
+      console.error("edit profile failed", errors);
+      return { success: false, errors }
+
+    }
+    
+  }
+
+  function logout() {
+
+    try {
+      console.log("************currentUser", currentUser.username)
+      console.log('logging out')
+      setCurrentUser(null);
+      setToken(null);
+    } catch(errors) {
+
+      console.error("logging out failed", errors);
+      return { success: false, errors }
+
+    }
+    
+
+  }
+
+
+  async function deleteUser() {
+    
+    try {
+      console.log("************currentUser", currentUser.username)
+      const user = await WarmUpApi.deleteUser(currentUser.username);
+      setCurrentUser(null);
+      return { success: true }; 
+
+    } catch (errors) {
+
+      console.error("delete user failed", errors);
+      return { success: false, errors }
+
+    }
+
+  }
+
+
+
+
+
 
   // Load user info from API. Until a user is logged in and they have a token,
   // this should not run. It only needs to re-run when a user logs out, so
@@ -64,21 +145,26 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <UserContext.Provider 
-        value={{  currentUser, setCurrentUser,
+
+        <UserContext.Provider 
+          value={{  currentUser, setCurrentUser,
                   setToken, token, userInfoLoaded, 
-                  setUserInfoLoaded, loginUser }}>
-        </UserContext.Provider >
-          
-        <main>
+                  setUserInfoLoaded, loginUser,
+                  registerUser, updateUser,
+                  deleteUser, logout }}>
+
+          <MyNav logout={logout}/>
+          <main>
           {userInfoLoaded ? <MyRoutes /> : null}
-        </main>
+          </main>
+
+        </UserContext.Provider >
 
       </BrowserRouter>
 
-    </div>
-    
 
+
+    </div>
   );
 }
 
