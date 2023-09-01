@@ -6,6 +6,9 @@ import Home from "../Home/Home";
 import LoginForm from "../auth/LoginForm";
 import NewUserForm from "../auth/NewUserForm";
 import EditUserForm from "../profile/EditUserForm.js";
+import Categories from "../categories/Categories"
+import CategoryInfo from "../categories/CategoryInfo";
+
 
 const MyRoutes = () => {
 
@@ -24,6 +27,12 @@ const MyRoutes = () => {
                 <Route path="/login" element={<LoginForm loginUser={loginUser}/>} />
 
                 <Route path="/signup" element={<NewUserForm registerUser={registerUser} />} />
+                
+                <Route path="/categories" element={<Categories />} />
+
+                <Route path="/categories/:id" element={<CategoryInfo />} />
+
+                <Route path="/categories/:id/quiz" element={<CategoryInfo />} />
 
                 <Route element={<PrivateRoutes /> }>
 

@@ -67,6 +67,13 @@ class WarmUpApi {
     }
     
 
+    /** get all categories. */
+
+    static async getAllCategories() {
+        let res = await this.request(`questions/categories`, {}, 'get');
+        return res
+    }
+
 }
 
 
