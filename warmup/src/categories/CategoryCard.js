@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
 const CategoryCard = ({ category, id }) => {
-    console.log(category)
+
     return (
         <div className="card-container">
             <div className="card-wrapper">
                 <div className="card-header">
                     <div className="card-title"> 
-                        <Link to={`/categories/${id}`} key={id}> { category } </Link>
+                        <Link to={`/categories/${category}`} key={id}> { category } </Link>
                     </div>
                     <div className="card-content"> 
                     <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
@@ -22,6 +22,7 @@ const CategoryCard = ({ category, id }) => {
             </div>
         </div>
     )
+    
 }
 
 export default CategoryCard;

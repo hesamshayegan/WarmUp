@@ -2,7 +2,7 @@
 
 const express = require("express");
 const jsonschema = require("jsonschema");
-
+const { ensureCorrectUser } = require("../middleware/auth");
 const Question = require("../models/question");
 
 const router = express.Router();
@@ -21,8 +21,8 @@ router.get("/categories", async function (req, res, next) {
 module.exports = router
 
 
-//get all questions for a category
-router.get("/:username/:category", async function (req, res, next) {
+// get all questions for a category
+router.get("/:username/:category", ensureCorrectUser, async function (req, res, next) {
     try {
         const { username, category } = req.params
         const questions = await Question.getQuestions({username, category});

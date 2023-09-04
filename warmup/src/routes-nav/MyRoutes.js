@@ -8,6 +8,8 @@ import NewUserForm from "../auth/NewUserForm";
 import EditUserForm from "../profile/EditUserForm.js";
 import Categories from "../categories/Categories"
 import CategoryInfo from "../categories/CategoryInfo";
+import Quiz from "../quiz/Quiz";
+
 
 
 const MyRoutes = () => {
@@ -30,9 +32,9 @@ const MyRoutes = () => {
                 
                 <Route path="/categories" element={<Categories />} />
 
-                <Route path="/categories/:id" element={<CategoryInfo />} />
+                <Route path="/categories/:category" element={<CategoryInfo />} />
 
-                <Route path="/categories/:id/quiz" element={<CategoryInfo />} />
+                <Route path="/quiz/categories/:category" element={<Quiz />} />
 
                 <Route element={<PrivateRoutes /> }>
 

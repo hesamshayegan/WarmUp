@@ -8,8 +8,7 @@ const Categories = () => {
     useEffect(() => {
         async function fetchCategories() {
             try {
-                const response = await WarmUpApi.getAllCategories();
-                const fetchedCategories = response.categories;
+                const fetchedCategories = await WarmUpApi.getAllCategories();
                 setCategories(fetchedCategories);
             } catch (error) {
                 console.error("Error fetching categories:", error);
@@ -19,6 +18,7 @@ const Categories = () => {
         fetchCategories();
         
     }, []);
+
 
     return (
         <div className="category-container">

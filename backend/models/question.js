@@ -75,27 +75,29 @@ class Question {
                 [user_id, cat_id],
                 );
         
-        // Check if the record exists before getting new questions
+
+        let newLevel = ""
+        
         if (levelQuery.rows.length === 0) {
-            throw new NotFoundError(`No record found for user: ${username}, category: ${category}`);
+            newLevel = "easy"            
         }
         
+        else {
 
-        let currLevel = (levelQuery.rows[0]).current_complexity
-        let newLevel = ""
+            let currLevel = (levelQuery.rows[0]).current_complexity
 
-
-        if (currLevel === "easy") {
-            newLevel = "medium"
+            if (currLevel === "easy") {
+                newLevel = "medium"
+            }
+    
+            else if (currLevel === "medium") {
+                newLevel = "hard"
+            }
+            
         }
-
-        else if (currLevel === "medium") {
-            newLevel = "hard"
-        }
-       
-
+        
         const questionQuery = await db.query(`
-                SELECT *
+                SELECT q.id, q.question, q.choice_1, q.choice_2, q.choice_3, q.choice_4, q.complexity, qc.category
                 FROM questions q
                 JOIN category_questions cq ON q.id = cq.question_id
                 JOIN quiz_category qc ON cq.cat_id = qc.id
@@ -104,7 +106,7 @@ class Question {
                  [cat_id, newLevel]);
         
         console.log('----->questionQuery.rows length', questionQuery.rows.length)
-        
+        debugger;
         return questionQuery.rows
     };
 

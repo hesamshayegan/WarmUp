@@ -6,10 +6,10 @@ import categoryData from "./CategoryData";
 const CategoryInfo = () => {
 
 
-    const { id } = useParams();
+    const { category, id } = useParams();
     const categories = categoryData
-    
-    const categoryInfo = categories.find(cat => cat.id === Number(id));
+
+    const categoryInfo = categories.find(cat => cat.name === category);
 
     return (
         <div className="category-container">
@@ -20,7 +20,7 @@ const CategoryInfo = () => {
             
             <div className="category-container">
                 <p> Wanna a take quiz ?</p>
-                <Link to={`quiz/categories/${id}/`} key={id}> { categoryInfo.name } </Link>
+                <Link to={`../quiz/categories/${category}`} key={id}> Start </Link>
 
             </div>
         
