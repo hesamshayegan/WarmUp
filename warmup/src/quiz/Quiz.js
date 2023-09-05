@@ -1,59 +1,3 @@
-// import React, { useState, useEffect, useContext} from 'react';
-// import { useParams } from "react-router-dom";
-// import UserContext from '../common/UserContext';
-// import QuizCard from './QuizCard';
-// import WarmUpApi from '../api/api';
-
-
-// function Quiz() {
-
-//     const { currentUser } = useContext(UserContext);
-//     const [questsions, setQuestions] = useState([]);
-//     const { category, id } = useParams();
-
-    
-
-//     useEffect(() => {
-//         async function fetchQuestions() {
-//             try {
-//                 const username = currentUser.username
-//                 const fetchedQuestions = await WarmUpApi.getQuestions({ username, category });
-//                 setQuestions(fetchedQuestions);
-
-//             } catch (error) {
-//                 console.error("Error fetching questions:", error);
-//             }
-//         }
-        
-//         fetchQuestions();
-        
-//     }, []);
-
-//     return (
-
-//         <div className="question-container">
-//                 <h1> {category} </h1>
-//                 {questsions.map(q => (
-//                     <QuizCard
-//                         key={q.id}
-//                         id={q.id}
-//                         question={q.question}
-//                     />
-//                 ))}
-
-//         </div>
-
-//     )
-
-
-
-
-
-// }
-
-
-// export default Quiz
-
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UserContext from '../common/UserContext';
@@ -67,12 +11,11 @@ function Quiz() {
             const [questions, setQuestions] = useState([]);
             const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
             const [selectedAnswers, setSelectedAnswers] = useState({});
-            const [score, setScore] = useState(0);
             const [isQuizCompleted, setIsQuizCompleted] = useState(false);
 
 
             useEffect(() => {
-                console.log("Running Callback")
+
 
                 async function fetchQuestions() {
                     try {
@@ -80,6 +23,7 @@ function Quiz() {
                         const username = currentUser.username;
                         const fetchedQuestions = await WarmUpApi.getQuestions({ username, category });
                         setQuestions(fetchedQuestions);
+                        
                         console.log('Questions state:', questions);
         
                     } catch (error) {
@@ -107,8 +51,8 @@ function Quiz() {
             };
 
             const handleNextQuestion = () => {
-                debugger;
-                if (selectedAnswers){
+                
+                if (selectedAnswers && selectedAnswers[currentQuestion.id]){
                     const selectedAnswer = selectedAnswers[currentQuestion.id].choice;
                     if (selectedAnswer && currentQuestion[selectedAnswer].isCorrect) {
                         selectedAnswers[currentQuestion.id] = {
@@ -123,9 +67,10 @@ function Quiz() {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
                 
 
-                // Check if all questions have been answered
+                // Check if all questions are seen (answered or not)
                 if (currentQuestionIndex === questions.length - 1) {
                 setIsQuizCompleted(true);
+
                 }
             };
 
@@ -133,28 +78,52 @@ function Quiz() {
 
                 // Move to the previous question
                 setCurrentQuestionIndex(currentQuestionIndex - 1);
-                
+                setIsQuizCompleted(false);
 
             }
 
-            
+
+            const handleSubmit = async () => {
+
+
+                const username = currentUser.username;
+                const data = 
+                            {
+                                "correct_answers": score,
+                                "current_complexity": questions[currentQuestionIndex -1].complexity    
+                            }
+
+                try {
+
+                    await WarmUpApi.recordScore({ username, category }, data);
+
+                } catch (errors) {
+
+                    console.error("record score failed", errors);
+
+                }
+            }
+
+
+            let score = 0
             if (isQuizCompleted) {
+                
+                score = Object.values(selectedAnswers).filter(answer => answer.score === 1).length;
+                console.log(score)
                 return (
 
                 <div>
-                    <button
-                    onClick={() =>
-                        alert(`Quiz completed! Your score: ${score}/${questions.length}`)
-                    }
-                    >
-                    Show Score
-                    </button>
+                    
+                    <button onClick={handlePreviousQuestion}> Previous </button>
+
+                    <button onClick={handleSubmit}> Submit </button>
+
                 </div>
 
+               
                 );
-            }
 
-            if (questions.length === 0) {
+            } else if (questions.length === 0) {
 
                 return <div>Loading...</div>;
 
@@ -163,8 +132,7 @@ function Quiz() {
                 return (
                     
                     <div className="quiz">
-                        {console.log("currentQuestion Selected", selectedAnswers[currentQuestion.id])}
-                        {console.log("selectedAnswer---->", selectedAnswers)}
+
                     <h1>Quiz</h1>
                     <QuizQuestion
                         questionKey={currentQuestion}
@@ -185,13 +153,14 @@ function Quiz() {
                         null
                     }
                     
-                    <button onClick={handleNextQuestion}> Next </button>
-                    {/* {console.log("currentQuestion", currentQuestion)} */}
-                    {console.log("selectedAnswer", selectedAnswers)}
-                    {/* {console.log("Q", questions)}
-                    {console.log("score", score)} */}
+                    
+                     <button onClick={handleNextQuestion}> Next </button>
+                 
+                    
 
-                        
+                    {console.log("selectedAnswer", selectedAnswers)}
+
+
                     </div>
                 );
 
@@ -201,11 +170,3 @@ function Quiz() {
 
 export default Quiz;
 
-{/* {console.log("Rendering")}
-                        {console.log("currentQuestion", currentQuestion)}
-                        {console.log("currentQuestionIndex", currentQuestionIndex)}
-                        {console.log("selectedAnswer", selectedAnswer)}
-                        {console.log("-->",currentQuestion)}
-                        {console.log("selectedAnswer",selectedAnswer)}
-                        {console.log("Selected", currentQuestion[selectedAnswer])}
-                        {console.log("score", score)} */}

@@ -75,11 +75,19 @@ class WarmUpApi {
     }
 
 
-    /** get all categories. */
+    /** get all questions for a complexity. */
 
     static async getQuestions({username, category}) {
         let res = await this.request(`questions/${username}/${category}`, {}, 'get');
         return res.questions
+    }
+
+
+    /** record a score. */
+
+    static async recordScore({username, category}, data) {
+
+        await this.request(`quiz/${username}/${category}`, data, 'post');
     }
 
 
