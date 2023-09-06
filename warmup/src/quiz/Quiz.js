@@ -3,15 +3,18 @@ import { useParams } from 'react-router-dom';
 import UserContext from '../common/UserContext';
 import WarmUpApi from '../api/api';
 import QuizQuestion from './QuizQuestion';
+import QuizAnswer from './QuizAnswer';
 
 function Quiz() {
             const { currentUser } = useContext(UserContext);
-            const { category, id } = useParams();
+            const { category } = useParams();
 
             const [questions, setQuestions] = useState([]);
             const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
             const [selectedAnswers, setSelectedAnswers] = useState({});
             const [isQuizCompleted, setIsQuizCompleted] = useState(false);
+            const [isSubmitted, setIsSubmitted] = useState(false);
+            const [showingAnswers, setShowingAnswers] = useState(false);
 
 
             useEffect(() => {
@@ -19,11 +22,10 @@ function Quiz() {
 
                 async function fetchQuestions() {
                     try {
-
                         const username = currentUser.username;
                         const fetchedQuestions = await WarmUpApi.getQuestions({ username, category });
                         setQuestions(fetchedQuestions);
-                        
+
                         console.log('Questions state:', questions);
         
                     } catch (error) {
@@ -39,14 +41,19 @@ function Quiz() {
 
             const handleAnswerSelect = (choiceId) => {
 
-                setSelectedAnswers({
-                    ...selectedAnswers, 
-                    [currentQuestion.id]: 
-                        {
-                            "choice": choiceId,
-                            "score": 0
-                        }           
-                });
+                if (!isSubmitted) {
+
+                    setSelectedAnswers({
+                        ...selectedAnswers, 
+                        [currentQuestion.id]: 
+                            {
+                                "choice": choiceId,
+                                "score": 0
+                            }           
+                    });
+
+                }
+                
                 
             };
 
@@ -62,16 +69,20 @@ function Quiz() {
                     }
                 }               
                 
+                if (!isSubmitted) {
 
-                // Move to the next question
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
+                    // Move to the next question
+                    setCurrentQuestionIndex(currentQuestionIndex + 1);
+
+                    // Check if all questions are seen (answered or not)
+                    if (currentQuestionIndex === questions.length - 1) {
+                        setIsQuizCompleted(true);
+                    }
+                }
+                
                 
 
-                // Check if all questions are seen (answered or not)
-                if (currentQuestionIndex === questions.length - 1) {
-                setIsQuizCompleted(true);
-
-                }
+                
             };
 
             const handlePreviousQuestion = () => {
@@ -87,21 +98,48 @@ function Quiz() {
 
 
                 const username = currentUser.username;
-                const data = 
+                const dataRecord = 
                             {
                                 "correct_answers": score,
                                 "current_complexity": questions[currentQuestionIndex -1].complexity    
                             }
-
+                
                 try {
 
-                    await WarmUpApi.recordScore({ username, category }, data);
+                    const record = await WarmUpApi.getRecord({ username, category });
+
+                    if (record == undefined) {
+
+                        await WarmUpApi.recordScore({ username, category }, dataRecord);
+                        setIsSubmitted(true)
+                        
+                    } else {
+
+                        const dataUpdate = 
+                            {
+                                "correct_answers": record.correct_answers + score,         
+                            }
+
+                        await WarmUpApi.updateScore({ username, category }, dataUpdate);
+                        setIsSubmitted(true)
+                        
+                    } 
 
                 } catch (errors) {
 
                     console.error("record score failed", errors);
 
                 }
+            }
+
+
+            const showAnswers = () => {
+
+                console.log(questions)
+                console.log("selectedAnswers", selectedAnswers)
+
+                setShowingAnswers(true);
+                
             }
 
 
@@ -112,13 +150,50 @@ function Quiz() {
                 console.log(score)
                 return (
 
-                <div>
-                    
-                    <button onClick={handlePreviousQuestion}> Previous </button>
+                    <div>
 
-                    <button onClick={handleSubmit}> Submit </button>
+                        {isSubmitted
 
-                </div>
+                            ? (
+
+                            <>
+                            {showingAnswers
+                                ? (
+                                    <div>
+                                        <QuizAnswer
+                                            questionItems={questions}
+                                            selectedAnswers={
+                                                selectedAnswers
+                                                ?
+                                                selectedAnswers
+                                                :
+                                                null
+                                            }
+                                        />
+                                    </div>
+                                ) : (
+
+                                    <div>
+                                        <p> You answered {score} of {questions.length} questions correctly. </p>
+                                        <button onClick={showAnswers}>Show Answers</button>
+                                    </div>
+                                )
+                            }
+                                
+                            </>
+                            
+                            ) : (
+
+                            <>
+                                <button onClick={handlePreviousQuestion}> Previous </button>
+
+                                <button onClick={handleSubmit}> Submit </button>
+                            </>
+                        
+                            )
+                        }
+
+                    </div>
 
                
                 );
@@ -156,11 +231,7 @@ function Quiz() {
                     
                      <button onClick={handleNextQuestion}> Next </button>
                  
-                    
-
-                    {console.log("selectedAnswer", selectedAnswers)}
-
-
+                
                     </div>
                 );
 

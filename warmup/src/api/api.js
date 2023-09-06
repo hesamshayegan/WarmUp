@@ -83,12 +83,39 @@ class WarmUpApi {
     }
 
 
+    /** get a record. */
+    
+    static async getRecord({username, category}) {
+
+        let res = await this.request(`quiz/${username}/${category}/record`, {}, 'get');
+        return res.record    
+    }
+
+
+
     /** record a score. */
 
     static async recordScore({username, category}, data) {
 
         await this.request(`quiz/${username}/${category}`, data, 'post');
     }
+
+
+    /** update a score. */
+
+    static async updateScore({username, category}, data) {
+        
+        await this.request(`quiz/${username}/${category}`, data, 'patch');
+    }
+
+
+    /** delete a record. */
+
+    static async deleteRecord({username, category}) {
+        
+        await this.request(`quiz/${username}/${category}/record`, {}, 'delete');
+    }
+
 
 
 

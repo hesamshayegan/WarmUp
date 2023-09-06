@@ -34,11 +34,11 @@ const MyRoutes = () => {
 
                 <Route path="/categories/:category" element={<CategoryInfo />} />
 
-                <Route path="/quiz/categories/:category" element={<Quiz />} />
-
                 <Route element={<PrivateRoutes /> }>
 
                     <Route path="/profile" element={<EditUserForm updateUser={updateUser} />} />
+
+                    <Route path="/quiz/categories/:category" element={<Quiz />} />
 
                 </Route>
 

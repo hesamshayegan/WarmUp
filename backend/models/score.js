@@ -118,7 +118,9 @@ class Score {
                 [user_id, cat_id],
                 )
 
-        if ((record.rows).length === 0) throw new NotFoundError(`No score found`);
+        if ((record.rows).length === 0) {
+            console.debug("No score found")
+        }
 
         const result = record.rows[0];
 

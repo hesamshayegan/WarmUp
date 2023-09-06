@@ -12,6 +12,20 @@ const router = express.Router();
 
 
 
+// get a record
+router.get("/:username/:category/record", ensureCorrectUser, async function (req, res, next){
+    try {
+        const { username, category } = req.params
+        const record = await Score.getRecord({ username, category});
+
+        return res.json({ record })
+
+    } catch(err) {
+        return next(err)
+    }
+})
+
+
 // record a score
 router.post("/:username/:category", ensureCorrectUser, async function (req, res, next) {
     try {
@@ -32,20 +46,6 @@ router.post("/:username/:category", ensureCorrectUser, async function (req, res,
         next(err)
     }
 });
-
-
-// get a record
-router.get("/:username/:category/record", async function (req, res, next){
-    try {
-        const { username, category } = req.params
-        const record = await Score.getRecord({ username, category});
-
-        return res.json({ record })
-
-    } catch(err) {
-        return next(err)
-    }
-})
 
 
 // update a record
