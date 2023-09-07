@@ -10,6 +10,9 @@ const {
 const moment = require('moment');
 
 
+const { getAllCategories } = require("./question");
+
+
 
 
 class Score {
@@ -225,7 +228,54 @@ class Score {
 
 
 
+    static async getAllCurrentScores({ username }) {
 
+        // Fetch user id
+        const user_id = await this.getUserId(username);
+        
+        // Fetch all cateogies
+        const categories = await getAllCategories()
+
+        const userScores = [];
+
+        // Call fetchCategoryScores to populate userScores
+        await fetchCategoryScores(user_id);
+
+        async function fetchCategoryScores(user_id) {
+
+            for (const category of categories) {
+                const { id: cat_id, category: categoryName } = category;
+                let categoryScore = 0
+                
+                // calculate current score per category
+                const questionsQuery = await db.query(`
+                SELECT questions_per_category, correct_answers
+                FROM user_quiz_progress
+                WHERE user_id = $1
+                AND cat_id = $2
+                `, [ user_id, cat_id]);
+
+                if (questionsQuery.rows.length === 0) {
+                        categoryScore
+                } else {
+                        const { questions_per_category, correct_answers } = questionsQuery.rows[0];
+                        categoryScore = correct_answers / questions_per_category;
+                }
+
+                userScores.push({
+                    id: cat_id,
+                    category: categoryName,
+                    currentScore: categoryScore,
+                });
+            }
+        };
+
+        return userScores;
+
+    }
+
+
+    
     static async getTotalScore({ username }) {
         
 

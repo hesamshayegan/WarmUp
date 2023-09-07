@@ -53,51 +53,67 @@ const CategoryInfo = () => {
 
     return (
         <div className="category-container">
-          <div className="category-info">
-            <h1> {categoryInfo.name} </h1>
-            <p> {categoryInfo.info} </p>
-          </div>
-      
-          <div className="category-container">
-            
-            <p>Wanna take a quiz?</p>
-            <Link to={`../quiz/categories/${category}`} key={id}>
-              Start
-            </Link>
-      
-            {record && (
-              <>
-                {record.current_complexity === "easy" && (
-                  <>
-                    <p>Wanna try the medium questions?</p>
+            <div className="category-info">
+                <h1> {categoryInfo.name} </h1>
+                <p> {categoryInfo.info} </p>
+            </div>
+
+            <div className="category-container">
+                {record ? (
+                    <>
+                    {record.current_complexity === "easy" && (
+                        <>
+                        <p>Wanna try the medium questions?</p>
+                        <Link to={`../quiz/categories/${category}`} key={id}>
+                            Start
+                        </Link>
+                        </>
+                    )}
+
+                    {record.current_complexity === "medium" && (
+                        <>
+                        <p>Wanna try the hard questions?</p>
+                        <Link to={`../quiz/categories/${category}`} key={id}>
+                            Start
+                        </Link>
+                        </>
+                    )}
+
+                    {record.current_complexity === "hard" && (
+                        <>
+                        <p>Your previous score is {Math.round(100*(record.correct_answers / record.questions_per_category))}% </p>
+                        <p>Wanna retake the quiz?</p>
+                        <button onClick={handleRestartQuiz}> Start </button>
+                        </>
+                    )}
+                    </>
+                ) : (
+                    <>
+                    <p>Wanna take a quiz?</p>
                     <Link to={`../quiz/categories/${category}`} key={id}>
-                      Start
+                        Start
                     </Link>
-                  </>
+                    </>
                 )}
-      
-                {record.current_complexity === "medium" && (
-                  <>
-                    <p>Wanna try the hard questions?</p>
+
+                {!currentUser ? (
+                    <>
+                    <p>Wanna take a quiz?</p>
                     <Link to={`../quiz/categories/${category}`} key={id}>
-                      Start
+                        Start
                     </Link>
-                  </>
-                )}
-      
-                {record.current_complexity === "hard" && (
-                  <>
-                    <p>Your previous score is {Math.round(100 * (record.correct_answers / record.questions_per_category))}% </p>
-                    <p>Wanna retake the quiz?</p>
-                    <button onClick={handleRestartQuiz}> Start </button>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+                    </>
+                ) : (
+                    null
+                    )   
+                }
+            </div>
+
+        
+
         </div>
-      );
-      
+        
+    )
 
 }
 

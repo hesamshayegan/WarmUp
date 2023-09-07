@@ -89,6 +89,24 @@ router.get("/:username/:category/score", ensureCorrectUser, async function (req,
 })
 
 
+
+// get All current scores
+
+router.get("/:username/scores", ensureCorrectUser, async function (req, res, next) {
+
+    try {
+        const { username } = req.params
+        const allCurrentScores = await Score.getAllCurrentScores({ username });
+        
+        return res.json({ allCurrentScores })
+        
+    } catch(err) {
+        return next(err)
+    }
+
+})
+
+
 router.get("/:username/totscore", ensureCorrectUser, async function (req, res, next) {
 
     try {

@@ -7,6 +7,8 @@ import UserContext from './common/UserContext';
 import WarmUpApi from './api/api';
 import useLocalStorage from './hooks/useLocalStorage';
 import MyNav from './routes-nav/MyNav'
+import ScoreContext from './scoreboard/ScoreContext';
+
 
 
 
@@ -15,6 +17,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(null);
   const [userInfoLoaded, setUserInfoLoaded] = useState(false);
+  const [scores, setScores] = useState([])
 
 
   async function loginUser(data) {
@@ -146,6 +149,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
 
+        
         <UserContext.Provider 
           value={{  currentUser, setCurrentUser,
                   setToken, token, userInfoLoaded, 
@@ -154,9 +158,14 @@ function App() {
                   deleteUser, logout }}>
 
           <MyNav logout={logout}/>
+
+          <ScoreContext.Provider value={{ scores, setScores }}>
+
           <main>
           {userInfoLoaded ? <MyRoutes /> : null}
           </main>
+
+          </ScoreContext.Provider>
 
         </UserContext.Provider >
 

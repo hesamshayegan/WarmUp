@@ -1,4 +1,6 @@
 import React from 'react';
+import Scoreboard from '../scoreboard/Scoreboard';
+
 
 const QuizAnswer = ({ questionItems, selectedAnswers }) => {
     
@@ -33,6 +35,9 @@ const QuizAnswer = ({ questionItems, selectedAnswers }) => {
           </ul>
         </div>
       ))}
+
+      <Scoreboard />
+
     </div>
   );
 };

@@ -9,6 +9,9 @@ import EditUserForm from "../profile/EditUserForm.js";
 import Categories from "../categories/Categories"
 import CategoryInfo from "../categories/CategoryInfo";
 import Quiz from "../quiz/Quiz";
+import Scoreboard from "../scoreboard/Scoreboard";
+
+
 
 
 
@@ -33,6 +36,8 @@ const MyRoutes = () => {
                 <Route path="/categories" element={<Categories />} />
 
                 <Route path="/categories/:category" element={<CategoryInfo />} />
+
+                <Route path="/scoreboard" element={<Scoreboard />} />
 
                 <Route element={<PrivateRoutes /> }>
 

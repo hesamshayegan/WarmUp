@@ -4,6 +4,8 @@ import UserContext from '../common/UserContext';
 import WarmUpApi from '../api/api';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
+import Scoreboard from '../scoreboard/Scoreboard';
+
 
 function Quiz() {
             const { currentUser } = useContext(UserContext);
@@ -18,7 +20,6 @@ function Quiz() {
 
 
             useEffect(() => {
-
 
                 async function fetchQuestions() {
                     try {
@@ -193,6 +194,8 @@ function Quiz() {
                             )
                         }
 
+                        <Scoreboard />
+
                     </div>
 
                
@@ -208,31 +211,38 @@ function Quiz() {
                     
                     <div className="quiz">
 
-                    <h1>Quiz</h1>
-                    <QuizQuestion
-                        questionKey={currentQuestion}
-                        selectedAnswer={
-                            selectedAnswers && selectedAnswers[currentQuestion.id]
+                        <h1>Quiz</h1>
+                        <QuizQuestion
+                            questionKey={currentQuestion}
+                            selectedAnswer={
+                                selectedAnswers && selectedAnswers[currentQuestion.id]
+                                ?
+                                selectedAnswers[currentQuestion.id].choice
+                                :
+                                null
+                            }
+                            onAnswerSelect={handleAnswerSelect}
+                        />
+
+                        {currentQuestionIndex > 0
                             ?
-                            selectedAnswers[currentQuestion.id].choice
+                            <button onClick={handlePreviousQuestion}> Previous </button>
                             :
                             null
                         }
-                        onAnswerSelect={handleAnswerSelect}
-                    />
+                        
+                        
+                        <button onClick={handleNextQuestion}> Next </button>
+                    
+                        
+                        <Scoreboard />
 
-                    {currentQuestionIndex > 0
-                        ?
-                        <button onClick={handlePreviousQuestion}> Previous </button>
-                        :
-                        null
-                    }
-                    
-                    
-                     <button onClick={handleNextQuestion}> Next </button>
-                 
-                
                     </div>
+
+                    
+
+                    
+
                 );
 
             }

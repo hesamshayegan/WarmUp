@@ -117,6 +117,15 @@ class WarmUpApi {
     }
 
 
+    /** get current last scores */
+    static async getCurrentScores(username) {
+
+        let res = await this.request(`quiz/${username}/scores`, {}, 'get')
+        return res.allCurrentScores
+
+    }
+
+
 
 
 }
