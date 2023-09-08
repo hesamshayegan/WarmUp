@@ -7,7 +7,7 @@ import UserContext from './common/UserContext';
 import WarmUpApi from './api/api';
 import useLocalStorage from './hooks/useLocalStorage';
 import MyNav from './routes-nav/MyNav'
-import ScoreContext from './scoreboard/ScoreContext';
+import ScoreContext from './common/ScoreContext';
 
 
 

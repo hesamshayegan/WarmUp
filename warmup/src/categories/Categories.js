@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import WarmUpApi from "../api/api";
 import CategotyCard from "./CategoryCard"
+import Grid from '@mui/material/Grid'
+import { Box } from "@mui/material";
+
+
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
@@ -21,17 +25,19 @@ const Categories = () => {
 
 
     return (
-        <div className="category-container">
 
-                {categories.map(c => (
-                    <CategotyCard
-                        key={c.id}
-                        id={c.id}
-                        category={c.category}
-                    />
-                ))}
-
-        </div>
+        <Box display="flex" justifyContent="center">
+            <Grid container spacing={2}>
+                        {categories.map(c => (
+                            <Grid item key={c.id} xs={12} sm={6} md={4}>
+                                <CategotyCard
+                                    id={c.id}
+                                    category={c.category}
+                                />
+                            </Grid>
+                        ))}
+            </Grid>
+        </Box>
     );
 };
 
@@ -68,3 +74,7 @@ export default Categories;
 // };
 
 // export default Categories;
+
+
+
+

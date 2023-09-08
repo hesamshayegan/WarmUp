@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
 import UserContext from "../common/UserContext";
+import Button from "@mui/material/Button"
 
 
 const Home = () => {
@@ -34,13 +34,11 @@ const Home = () => {
               </h2>
               : (
                   <p className="home">
-                    
-                        <Link to="/login"> Login </Link>
-                    
-                   
-                        <Link to="/signup"> Signup </Link>
-                    
-                    
+
+                        <Button href="/login" variant="contained" color="primary"> Login </Button>
+
+                        <Button href="/signup" variant="outlined" color="secondary"> Signup </Button>
+                        
                   </p>
                   
               )}

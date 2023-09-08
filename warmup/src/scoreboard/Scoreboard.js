@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import UserContext from '../common/UserContext';
 import WarmUpApi from '../api/api';
-import ScoreContext from './ScoreContext';
+import ScoreContext from '../common/ScoreContext';
 import './Scoreboard.css';
 
 

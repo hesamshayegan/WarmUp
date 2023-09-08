@@ -1,27 +1,46 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
-const CategoryCard = ({ category, id }) => {
+const CategoryCard = ({ category}) => {
+    
+    const href = `/categories/${category}`
 
     return (
-        <div className="card-container">
-            <div className="card-wrapper">
-                <div className="card-header">
-                    <div className="card-title"> 
-                        <Link to={`/categories/${category}`} key={id}> { category } </Link>
-                    </div>
-                    <div className="card-content"> 
-                    <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                        width="200"
-                        height="200" 
-                        className="card-image" 
-                        alt="No image">
-                    </img>
-                </div>
-                </div>
-                
-            </div>
-        </div>
+
+        <Card sx={{ maxWidth: 300 }}>
+
+            <CardActionArea>
+                <CardMedia
+                component="img"
+                height="140"
+                image="https://images.unsplash.com/photo-1530587191325-3db32d826c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                alt="green iguana"
+                />
+
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {category}
+                    </Typography>
+
+                    <Typography variant="body2" color="text.secondary">
+                        Description....
+                    </Typography>
+                </CardContent>   
+            </CardActionArea>
+
+            <CardActions>
+                <Button href={href} size="small" color="primary">
+                {category}
+                </Button>
+            </CardActions>
+
+        </Card>
+            
+
     )
     
 }
@@ -29,7 +48,7 @@ const CategoryCard = ({ category, id }) => {
 export default CategoryCard;
 
 
-// // Create a function to map category IDs to images
+// Create a function to map category IDs to images
 // const getCategoryImage = (categoryId) => {
 //     // You can implement logic here to map category IDs to image variables
 //     switch (categoryId) {
@@ -58,3 +77,4 @@ export default CategoryCard;
 //     </div>
 // );
 // };
+
