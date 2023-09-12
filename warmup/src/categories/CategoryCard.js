@@ -1,44 +1,51 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Box } from "@mui/material";
 
 const CategoryCard = ({ category}) => {
-    
-    const href = `/categories/${category}`
 
     return (
 
-        <Card sx={{ maxWidth: 300 }}>
+        
+        <Box display="flex" justifyContent="center" sx={{ alignContent: 'stretch' }}>
+            <Card sx={{ width: '60%' }}>
 
-            <CardActionArea>
-                <CardMedia
-                component="img"
-                height="140"
-                image="https://images.unsplash.com/photo-1530587191325-3db32d826c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                alt="green iguana"
-                />
+                <CardActionArea>
+                    <CardMedia
+                    component="img"
+                    height="140"
+                    image="https://images.unsplash.com/photo-1530587191325-3db32d826c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    alt="green iguana"
+                    />
 
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {category}
-                    </Typography>
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {category}
+                        </Typography>
 
-                    <Typography variant="body2" color="text.secondary">
-                        Description....
-                    </Typography>
-                </CardContent>   
-            </CardActionArea>
+                        <Typography variant="body2" color="text.secondary">
+                            Description....
+                        </Typography>
+                    </CardContent>   
+                </CardActionArea>
 
-            <CardActions>
-                <Button href={href} size="small" color="primary">
-                {category}
-                </Button>
-            </CardActions>
+                <CardActions>
+                    <Button size="small" color="primary">
+                        <Link to={`/categories/${category}`}> 
+                            {category}
+                        </Link>
+                    </Button>
+                </CardActions>
 
-        </Card>
+            </Card>
+        </Box>
+
+    
             
 
     )

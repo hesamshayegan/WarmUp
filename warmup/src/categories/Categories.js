@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import WarmUpApi from "../api/api";
 import CategotyCard from "./CategoryCard"
 import Grid from '@mui/material/Grid'
-import { Box } from "@mui/material";
-
 
 
 const Categories = () => {
@@ -26,10 +24,16 @@ const Categories = () => {
 
     return (
 
-        <Box display="flex" justifyContent="center">
-            <Grid container spacing={2}>
+
+        <Grid
+      container
+      justifyContent="center" // Center horizontally
+      alignItems="center"     // Center vertically
+      style={{ height: "100vh" }} // Set a minimum height for vertical centering
+    >
+            <Grid container spacing={1} sx={{ width: '75%' }} >
                         {categories.map(c => (
-                            <Grid item key={c.id} xs={12} sm={6} md={4}>
+                            <Grid  item key={c.id} xs={12} sm={6} md={4}>
                                 <CategotyCard
                                     id={c.id}
                                     category={c.category}
@@ -37,7 +41,8 @@ const Categories = () => {
                             </Grid>
                         ))}
             </Grid>
-        </Box>
+            </Grid>
+        
     );
 };
 

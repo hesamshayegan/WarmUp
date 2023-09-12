@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import UserContext from "../common/UserContext";
 import PrivateRoutes from "./PrivateRoutes";
 import Home from "../Home/Home";
@@ -24,7 +24,7 @@ const MyRoutes = () => {
     const { loginUser, registerUser, updateUser }  = useContext(UserContext);
    
     return (
-        <div>
+        
             <Routes>
                 
                 <Route path = "/" element = {<Home />} />
@@ -49,7 +49,7 @@ const MyRoutes = () => {
 
                         
             </Routes>
-        </div>
+        
 
     )
 

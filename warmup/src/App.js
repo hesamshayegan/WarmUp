@@ -79,8 +79,6 @@ function App() {
   function logout() {
 
     try {
-      console.log("************currentUser", currentUser.username)
-      console.log('logging out')
       setCurrentUser(null);
       setToken(null);
     } catch(errors) {
@@ -97,7 +95,6 @@ function App() {
   async function deleteUser() {
     
     try {
-      console.log("************currentUser", currentUser.username)
       const user = await WarmUpApi.deleteUser(currentUser.username);
       setCurrentUser(null);
       return { success: true }; 
@@ -146,10 +143,9 @@ function App() {
   
 
   return (
-    <div className="App">
-      <BrowserRouter>
 
-        
+      <BrowserRouter>
+  
         <UserContext.Provider 
           value={{  currentUser, setCurrentUser,
                   setToken, token, userInfoLoaded, 
@@ -172,8 +168,6 @@ function App() {
       </BrowserRouter>
 
 
-
-    </div>
   );
 }
 
