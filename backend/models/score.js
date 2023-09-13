@@ -478,9 +478,6 @@ class Score {
         return result;
 
     }
-
-
-
 }
 
 module.exports = Score
