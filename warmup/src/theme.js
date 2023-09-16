@@ -4,7 +4,7 @@ let theme = createTheme({
 
     palette: {
         primary: {
-            main: '#473E3E'
+            main: '#51B52D'
         }
     },
 
@@ -13,19 +13,6 @@ let theme = createTheme({
         fontFamily: "\"Poppins\", \"Helvetica\", \"Arial\", sans-serif",
 
     },
-    
-    // transitions: {
-    //     easing: {
-
-    //       easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
-
-    //       easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
-
-    //       easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
-
-    //       sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
-    //     },
-    //   }
 
 })
 

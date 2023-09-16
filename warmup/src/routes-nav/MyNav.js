@@ -1,23 +1,21 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link} from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import UserContext from "../common/UserContext";
-import WarmUplogo from "../static/logo/WarmUpLogo.png"
-import { createTheme } from '@mui/material/styles'
+import WarmUplogo from "../static/logo/WarmUpLogo.png";
+import { Drawer, List, ListItem, Divider } from "@mui/material";
+import theme from "../theme";
 
-// underline animated when hover over a link About,... (like NASA)
 
 const pages = ['About', 'Quiz', 'Top Scores'];
 const settings = ['Profile', 'Quiz Progress', 'Logout'];
@@ -32,43 +30,52 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      sm: 600,
-      md: 1024,
-    },
-  },
-});
+const UnderlinedLink = styled(Link)`
+  position: relative;
+  text-decoration: none;
+  color: white;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #286414;
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover {
+    &::after {
+      width: 100%;
+    }
+  }
+`;
+
+
+
 
 
 function MyNav({ logout }) {
   const { currentUser } = useContext(UserContext);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate = useNavigate();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar position="static" style={{
       backgroundImage: 'linear-gradient(to right, #E81123, #FFF100, #BAD801 100%)',
     }}>
 
-    <StyledToolbar>
+    <StyledToolbar  sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters className="Navbar-container">
 
@@ -77,9 +84,11 @@ function MyNav({ logout }) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                width: '80%', 
+                width: '80%',
               }}
           >
+
+            {/* Drawer settings */}
 
             <Box
                   sx={{
@@ -87,44 +96,97 @@ function MyNav({ logout }) {
                     display: { xs: 'flex', md: 'none' },
                     width: '10%',
                   }}
+                 
+                  
             >
-              <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="inherit"
-                  >
-                    <MenuIcon />
-              </IconButton>
 
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                    sx={{
-                      display: { xs: 'block', md: 'none' },
-                    }}
-                  >
+                <IconButton
+                        size="large"
+                        aria-label="Open Drawer"
+                        onClick={toggleDrawer}
+                        color="inherit"
+                      >
+                  <MenuIcon />
+                </IconButton>
 
-                    {pages.map((page) => (
-                      <MenuItem key={page} onClick={handleCloseNavMenu}>
-                        <Typography textAlign="center">{page}</Typography>
-                      </MenuItem>
-                    ))} 
+                <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer} >
+                  <Box className="drawer-container"  
+                       sx={{ 
+                       backgroundColor: "#D8FFCB",
+                       width: "300px",
+                       minHeight: "100vh" }}>
+                    <List>
+                    {currentUser ? (
+                      <Box sx={{ display: 'flex',
+                                 alignItems: 'center',
+                                 justifyContent: 'left',
+                                 alignItems: 'center',
+                                 flexDirection: "column",}}
+                      > 
+                        <IconButton>
+                          <Avatar alt="WarmUp User" src={currentUser.image_profile} />
+                        </IconButton>
+                        <Typography variant="h6" color="#377F37"> {currentUser.username} </Typography>
 
-                  </Menu>
+                      </Box>
+                    ) : (
+                      null
+                     )
+
+                    }
+                      
+                    </List>
+                    <List>
+                      {pages.map((page) => (
+                        <ListItem key={page} onClick={toggleDrawer}>
+                          <Typography textAlign="center">
+                            {page === "About" ? (
+                              <Link  to="/" style={{ textDecoration: "none", color: "#377F37"}}>
+                                {page}
+                              </Link>
+                            ) : page === "Quiz" ? (
+                              <Link to="/categories" style={{ textDecoration: "none", color: "#377F37" }}>
+                                {page}
+                              </Link>
+                            ) : (
+                              <Link to="/" style={{ textDecoration: "none", color: "#377F37" }}>
+                                {page}
+                              </Link>
+                            )}
+                          </Typography>
+                          
+                        </ListItem>
+                      ))}
+                      </List>
+                      <Divider />
+
+                    <List>                                      
+                    {currentUser &&
+                      settings.map((setting) => (
+                        <ListItem key={setting} onClick={toggleDrawer}>
+                          <Typography textAlign="center">
+                            {setting === "Profile" ? (
+                              <Link to="/profile" style={{ textDecoration: "none", color: "#377F37" }}>
+                                {setting}
+                              </Link>
+                            ) : setting === "Quiz Progress" ? (
+                              <Link to="/" style={{ textDecoration: "none", color: "#377F37" }}>
+                                {setting}
+                              </Link>
+                            ): setting === "Logout" ? (
+                              <Link to="/" style={{ textDecoration: "none", color: "#377F37" }} onClick={logout}>
+                                {setting}
+                              </Link>
+                            ) : null}
+                          </Typography>
+                          
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Box>
+                </Drawer>
+                
+
             </Box>
 
                 <Box
@@ -134,21 +196,19 @@ function MyNav({ logout }) {
                     width: '50%',
                   }}
                 >
-                    {pages.map((page) => (
-                      <Button
-                        key={page}
-                        onClick={() => {
 
-                            if (page === 'Quiz') {
-                              navigate("/categories");  
-                            }
-                        
-                        }}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                      >
-                        {page}
-                      </Button>
-                    ))}
+                  {pages.map((page) => (
+                    <Typography key={page} variant="h5" sx={{ margin: 1}}>
+                      {page === "About" ? (
+                        <UnderlinedLink to="/"> {page} </UnderlinedLink>
+                      ) : page === "Quiz" ? (
+                        <UnderlinedLink to="/categories"> {page} </UnderlinedLink>
+                      ) : (
+                        <UnderlinedLink to="/"> {page} </UnderlinedLink>
+                      )}
+                    </Typography>
+                  ))} 
+
                 </Box>
 
 
@@ -170,14 +230,12 @@ function MyNav({ logout }) {
                       />
                       
                       <Typography
-                        variant="h6"
+                        variant="h4"
                         noWrap
                         component="span"
                         sx={{
-                          fontFamily: 'monospace',
                           fontWeight: 700,
-                          letterSpacing: '.3rem',
-                          color: 'white',
+                          color: '#286414',
                           textDecoration: 'none',
                           display: { xs: 'none', md: 'flex' },
                         }}
@@ -189,124 +247,110 @@ function MyNav({ logout }) {
         </Box>
 
           {!currentUser ? (
-
-            <React.Fragment>
-
-                  <Box
-                    className="profile"
-                    sx={{
-                      flexGrow: 1,
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      alignItems: "center",
-                      width: '10%',
-                    }}
-                  >
+            <Box
+            className="profile"
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              width: "10%",
+              flexDirection: "column",
+              [theme.breakpoints.up("md")]: {
+                flexDirection: "row",
+              },
+            }}
+          >
                     <Button
                       href="/signup"
                       variant="outlined"
+                      size='large'
                       sx={{
-                        borderRadius: theme.breakpoints.down('md') ? "30px" : "5px",
+                        borderRadius: theme.breakpoints.down("md")
+                          ? "30px"
+                          : "5px",
                         border: "2px solid white",
                         color: "white",
-                        marginRight: theme.breakpoints.down('md') ? "10px" : "5px",
-                        marginTop: theme.breakpoints.down('md') ? "10px" : "5px",
-                        fontSize: theme.breakpoints.down('md') ? "16px" : "5px",
-                        width: theme.breakpoints.down('md') ? "120px" : "100px",
-                        
+
+                        [theme.breakpoints.up("md")]: {
+                          fontSize: "20px",
+                          marginRight: "5px",
+                          width: "120px",
+                        },
+                        [theme.breakpoints.down("md")]: {
+                          marginRight: "5px",
+                          marginBottom: "5px",
+                          width: "90px",
+                        }
                       }}
                     >
-                      Join Now
+                      Join
                     </Button>
-
-                    
-
+                  
                     <Button
                       href="/login"
                       variant="outlined"
+                      size='large'
                       sx={{
-                        borderRadius: '30px',
+                        borderRadius: "30px",
                         border: "2px solid white",
                         color: "white",
-                        marginRight: theme.breakpoints.down('md') ? "10px" : "5px",
-                        marginTop: theme.breakpoints.down('md') ? "10px" : "5px",
-                        fontSize: theme.breakpoints.down('md') ? "16px" : "5px",
-                        width: theme.breakpoints.down('md') ? "120px" : "100px",
                         
-
-
+                        [theme.breakpoints.up("md")]: { 
+                          fontSize: "20px",
+                          marginRight: "5px",
+                          width: "120px",
+                        }
+                        
                       }}
                     >
                       Login
                     </Button>
-                  </Box>
 
 
-            </React.Fragment>
+         </Box>
 
+        
           ) : (
 
-            <React.Fragment>
-            
               <Box
                   className="profile"
                   sx={{
                     flexGrow: 1,
-                    display: 'flex',
-                    justifyContent: 'flex-end', 
-                    width: '10%',
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    maxWidth: "250px"                    
                   }}>
-
-                  <Tooltip>
-                    <div sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                      <span sx={{ margin: '5px' }}> {currentUser.username} </span>
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="WarmUp User" src={currentUser.image_profile} />
-                    </IconButton>
-                    </div>
-                  </Tooltip>
-                  
-                  <Menu
-                    sx={{ mt: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    {settings.map((setting) => (
-                      <MenuItem
-                        key={setting}
-                        onClick={() => {
-                          handleCloseUserMenu();
-                          if (setting === 'Logout') {
-                            logout();  
-                          }
-                          else if (setting === 'Profile') {
-                            navigate("/profile")
-                          }
-                        }}
-                      >
-                        <Typography textAlign="center">{setting}</Typography>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-
-                  
-
+                      <Box sx={{
+                        display: { xs: 'none', md: 'flex' },
+                        alignItems: "center",
+                      }}>
+                        <Typography variant="h6" color="white"> {currentUser.username} </Typography>
+                        <Link to="/profile">
+                          <IconButton>
+                            <Avatar alt="WarmUp User" src={currentUser.image_profile} />
+                          </IconButton>
+                        </Link>
+                        <Button
+                          variant="outlined"
+                          size='large'
+                          sx={{
+                            borderRadius: "30px",
+                            border: "2px solid white",
+                            color: "white",
+                            fontSize: "18px",
+                            width: "100px",
+                          }}
+                          onClick={logout}
+                        >
+                          Logout
+                        </Button>
+                      </Box>               
                 </Box>
-            </React.Fragment>
-
 
           )}
+
+        
         </Toolbar>
       </Container>
       </StyledToolbar>
@@ -315,3 +359,4 @@ function MyNav({ logout }) {
 }
 
 export default MyNav;
+

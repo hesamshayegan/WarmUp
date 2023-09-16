@@ -10,6 +10,9 @@ import Categories from "../categories/Categories"
 import CategoryInfo from "../categories/CategoryInfo";
 import Quiz from "../quiz/Quiz";
 import Scoreboard from "../scoreboard/Scoreboard";
+import Test from "./test";
+
+
 
 
 
@@ -38,6 +41,8 @@ const MyRoutes = () => {
                 <Route path="/categories/:category" element={<CategoryInfo />} />
 
                 <Route path="/scoreboard" element={<Scoreboard />} />
+
+                <Route path="/test" element={<Test />} />
 
                 <Route element={<PrivateRoutes /> }>
 
