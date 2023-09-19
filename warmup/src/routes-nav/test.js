@@ -6,35 +6,23 @@ import { motion, useDragControls } from "framer-motion";
 
 
 function Test() {
-
-    const [loggedOnce, setLoggedOnce] = useState(false);
-    
-    const handleNextQuestion = () => {
-        if (!loggedOnce) {
-          console.log("works");
-          setLoggedOnce(true);
-        }
-      };
     
     return (
       <>
-        <div>
-        <motion.div drag="x"
-                    dragMomentum={false}
-                    dragConstraints= {{
-                        left: 0,
-                        right: 50
-                    }}
-                    dragElastic={0.5}
-                    onDrag={handleNextQuestion}                  
-
-        >
-            <div>
-            <button >Next</button>
-            
-            </div>
-        </motion.div>
-
+         <div className="App">
+            <motion.h1
+                animate={{ x: [50, 150, 50], opacity: 1, scale: 1 }}
+               
+                transition={{
+                    duration: 5,
+                    delay: 0.3,
+                    ease: [0.5, 0.71, 1, 1.5],
+                }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileHover={{ scale: 1.2 }}
+            >
+                Animation made easy with Framer Motion
+            </motion.h1>
         </div>
       </>
     ) 

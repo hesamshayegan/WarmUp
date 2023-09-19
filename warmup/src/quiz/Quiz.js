@@ -5,9 +5,15 @@ import WarmUpApi from '../api/api';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import Scoreboard from '../scoreboard/Scoreboard';
+import { Box, Button, Grid, Typography } from "@mui/material";
 import "./Quiz.css"
 
-import { Box, Button, Grid, Typography } from "@mui/material";
+
+import plastic from "../static/images/forms/plastic-form.jpg"
+
+
+
+
 
 
 function Quiz() {
@@ -225,11 +231,16 @@ function Quiz() {
 
                         <Grid item xs={12} md={10} >
                             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                <Box sx={{ marginTop: "75px", width: "65%", border: "2px solid green"}}>
+                                <Box sx={{ marginTop: "75px", width: "65%", border: "2px solid white", 
+                                           background: `url(${plastic})`,                                           
+                                           backgroundSize: "cover",
+                                           boxShadow: "30px 30px 30px rgba(0, 0, 0, 0.5)",
+                                           borderRadius: "30px"}}>
                                     
-                                    <Typography>Quiz</Typography>
-
+                                    
+                                    
                                     <QuizQuestion
+                                        key={currentQuestion.id}
                                         questionKey={currentQuestion}
                                         selectedAnswer={
                                             selectedAnswers && selectedAnswers[currentQuestion.id]
@@ -242,11 +253,11 @@ function Quiz() {
                                     />
                                     {currentQuestionIndex > 0
                                         ?
-                                        <Button onClick={handlePreviousQuestion}> Previous </Button>
+                                        <Button sx={{ color: "white"}} onClick={handlePreviousQuestion}> Previous </Button>
                                         :
                                         null
                                     }
-                                    <Button onClick={handleNextQuestion}> Next </Button>
+                                    <Button sx={{ color: "white"}} onClick={handleNextQuestion}> Next </Button>
                                 </Box>
                             </Box>
 
