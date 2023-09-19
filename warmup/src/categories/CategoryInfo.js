@@ -91,7 +91,7 @@ const CategoryInfo = () => {
                     <>
                     <p>Wanna take a quiz?</p>
                     <Link to={`../quiz/categories/${category}`} key={id}>
-                        Start
+                        Play
                     </Link>
                     </>
                 )}
@@ -100,7 +100,7 @@ const CategoryInfo = () => {
                     <>
                     <p>Wanna take a quiz?</p>
                     <Link to={`../quiz/categories/${category}`} key={id}>
-                        Start
+                        Play
                     </Link>
                     </>
                 ) : (

@@ -5,6 +5,9 @@ import WarmUpApi from '../api/api';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import Scoreboard from '../scoreboard/Scoreboard';
+import "./Quiz.css"
+
+import { Box, Button, Grid, Typography } from "@mui/material";
 
 
 function Quiz() {
@@ -18,7 +21,7 @@ function Quiz() {
             const [isSubmitted, setIsSubmitted] = useState(false);
             const [showingAnswers, setShowingAnswers] = useState(false);
 
-
+            
             useEffect(() => {
 
                 async function fetchQuestions() {
@@ -193,7 +196,7 @@ function Quiz() {
                         
                             )
                         }
-
+                        
                         <Scoreboard />
 
                     </div>
@@ -208,40 +211,48 @@ function Quiz() {
             } else {
 
                 return (
-                    
-                    <div className="quiz">
+                             
 
-                        <h1>Quiz</h1>
-                        <QuizQuestion
-                            questionKey={currentQuestion}
-                            selectedAnswer={
-                                selectedAnswers && selectedAnswers[currentQuestion.id]
-                                ?
-                                selectedAnswers[currentQuestion.id].choice
-                                :
-                                null
-                            }
-                            onAnswerSelect={handleAnswerSelect}
-                        />
+                    <Grid container>
+                        <Grid item xs={12} md={2} className="UP*****">        
+                            <Box className="******test" sx={{ height: "100vh", maxWidth: "100vw",
+                                                                display: "flex", justifyContent: "center",
+                                                                backgroundColor: "red"
+                                                                }}>
+                                <Scoreboard />
+                            </Box>
+                        </Grid>
 
-                        {currentQuestionIndex > 0
-                            ?
-                            <button onClick={handlePreviousQuestion}> Previous </button>
-                            :
-                            null
-                        }
-                        
-                        
-                        <button onClick={handleNextQuestion}> Next </button>
-                    
-                        
-                        <Scoreboard />
+                        <Grid item xs={12} md={10} >
+                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <Box sx={{ marginTop: "75px", width: "65%", border: "2px solid green"}}>
+                                    
+                                    <Typography>Quiz</Typography>
 
-                    </div>
+                                    <QuizQuestion
+                                        questionKey={currentQuestion}
+                                        selectedAnswer={
+                                            selectedAnswers && selectedAnswers[currentQuestion.id]
+                                            ?
+                                            selectedAnswers[currentQuestion.id].choice
+                                            :
+                                            null
+                                        }
+                                        onAnswerSelect={handleAnswerSelect}
+                                    />
+                                    {currentQuestionIndex > 0
+                                        ?
+                                        <Button onClick={handlePreviousQuestion}> Previous </Button>
+                                        :
+                                        null
+                                    }
+                                    <Button onClick={handleNextQuestion}> Next </Button>
+                                </Box>
+                            </Box>
 
-                    
+                        </Grid>
+                    </Grid>
 
-                    
 
                 );
 

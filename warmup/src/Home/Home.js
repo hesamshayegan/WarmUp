@@ -67,13 +67,15 @@ const Home = () => {
 
     // Only trigger once when it comes into view
     const [ref, inView] = useInView({
-        triggerOnce: true
+        threshold: 0,
+        triggerOnce: false
     });
 
     // Update the isSectionInView state when the section is in view
     useEffect(() => {
         if (inView) {
           setIsSectionInView(true);
+          console.log("ref", ref);
         }
     }, [inView]);
 
@@ -209,6 +211,8 @@ const Home = () => {
                     </Grid>
                 ) : null}
             </div>
+
+            
 
             <div ref={ref}>
                     {isSectionInView ? (

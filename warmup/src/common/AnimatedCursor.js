@@ -6,12 +6,14 @@ function AnimCursor() {
     return (
         <AnimatedCursor
             innerSize={10}
-            outerSize={12}
+            outerSize={18}
             color='255, 247, 0'
-            outerAlpha={0.5}
+            outerAlpha={0.4}
             innerScale={0.7}
-            outerScale={5}
+            outerScale={2}
+            trailingSpeed={1}
             showSystemCursor={false}
+            innerStyle={null}
             clickables={[
                 'a',
                 'input[type="text"]',

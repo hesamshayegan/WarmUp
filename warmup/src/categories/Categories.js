@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import WarmUpApi from "../api/api";
 import CategotyCard from "./CategoryCard"
 import Grid from '@mui/material/Grid'
+import AnimCursor from "../common/AnimatedCursor"
+import "./Categories.css";
+import { Typography, Box } from "@mui/material";
 
 
 const Categories = () => {
@@ -24,62 +27,50 @@ const Categories = () => {
 
     return (
 
+            <div className="page-wrapper">
+                <Box  sx={{ display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center" }}
+                > 
+                <Typography variant="h4" 
+                            sx={{ color: "white",                                
+                                  fontWeight: "bold",
+                                  margin: "15px",                                
+                                  textAlign: 'center'}}
+                >
+                    Which topic are you more curious about? 
+                </Typography>
+                <Typography variant="h5"
+                            sx={{ color: "white",                                
+                                  fontWeight: "bold",
+                                  margin: "15px",                                
+                                  textAlign: 'center'}}>
+                    Take a quiz to test your knowledge and learn something new!
+                </Typography>
+                </Box>
+                <AnimCursor />
+                <Grid
+                    container
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ minHeight: "100vh" }}     
+                >
+                    <Grid container spacing={2} sx={{ width: '80%', marginTop: "20px" }} >
+                                {categories.map(c => (
+                                    <Grid  className="container*********************" item key={c.id} xs={12} sm={6} md={4}
+                                        sx={{ backgroundColor: "transparent" }}>
+                                        <CategotyCard
+                                            id={c.id}
+                                            category={c.category}
+                                        />
+                                    </Grid>
+                                ))}
+                    </Grid>
+                </Grid>
+            </div>
 
-        <Grid
-      container
-      justifyContent="center" // Center horizontally
-      alignItems="center"     // Center vertically
-      style={{ height: "100vh" }} // Set a minimum height for vertical centering
-    >
-            <Grid container spacing={1} sx={{ width: '75%' }} >
-                        {categories.map(c => (
-                            <Grid  item key={c.id} xs={12} sm={6} md={4}>
-                                <CategotyCard
-                                    id={c.id}
-                                    category={c.category}
-                                />
-                            </Grid>
-                        ))}
-            </Grid>
-            </Grid>
-        
     );
 };
 
 export default Categories;
-
-// import React, { useState } from "react";
-// import WarmUpApi from "../api/api";
-
-// const Categories = () => {
-//     const [categories, setCategories] = useState([]);
-
-//     async function fetchCategories() {
-//         try {
-//             const response = await WarmUpApi.getAllCategories();
-//             const fetchedCategories = response.categories;
-//             setCategories(fetchedCategories);
-//         } catch (error) {
-//             console.error("Error fetching categories:", error);
-//         }
-//     }
-
-//     // Fetch categories when the component renders
-//     fetchCategories();
-
-//     return (
-//         <div>
-//             <ul>
-//                 {categories.map(c => (
-//                     <li key={c.id}> {c.category} </li>
-//                 ))}
-//             </ul>
-//         </div>
-//     );
-// };
-
-// export default Categories;
-
-
-
-
