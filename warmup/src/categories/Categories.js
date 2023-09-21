@@ -33,21 +33,21 @@ const Categories = () => {
                             justifyContent: "center",
                             alignItems: "center" }}
                 > 
-                <Typography variant="h4" 
-                            sx={{ color: "white",                                
-                                  fontWeight: "bold",
-                                  margin: "15px",                                
-                                  textAlign: 'center'}}
-                >
-                    Which topic are you more curious about? 
-                </Typography>
-                <Typography variant="h5"
-                            sx={{ color: "white",                                
-                                  fontWeight: "bold",
-                                  margin: "15px",                                
-                                  textAlign: 'center'}}>
-                    Take a quiz to test your knowledge and learn something new!
-                </Typography>
+                    <Typography variant="h4" 
+                                sx={{ color: "white",                                
+                                    fontWeight: "bold",
+                                    margin: "15px",                                
+                                    textAlign: 'center'}}
+                    >
+                        Which topic are you more curious about? 
+                    </Typography>
+                    <Typography variant="h5"
+                                sx={{ color: "white",                                
+                                    fontWeight: "bold",
+                                    margin: "15px",                                
+                                    textAlign: 'center'}}>
+                        Take a quiz to test your knowledge and learn something new!
+                    </Typography>
                 </Box>
                 <AnimCursor />
                 <Grid
@@ -58,7 +58,7 @@ const Categories = () => {
                 >
                     <Grid container spacing={2} sx={{ width: '80%', marginTop: "20px" }} >
                                 {categories.map(c => (
-                                    <Grid  className="container*********************" item key={c.id} xs={12} sm={6} md={4}
+                                    <Grid item key={c.id} xs={12} sm={6} md={4}
                                         sx={{ backgroundColor: "transparent" }}>
                                         <CategotyCard
                                             id={c.id}

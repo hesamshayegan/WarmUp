@@ -1,59 +1,8 @@
-import React, { useState }from 'react';
-import { Box, Button, Grid, Typography, ListItem, List, Radio, FormControlLabel, FormControl, RadioGroup } from "@mui/material";
+import React from 'react';
+import { Box, Typography, Radio, FormControlLabel, FormControl, RadioGroup } from "@mui/material";
 import { AnimatePresence, motion } from 'framer-motion';
 
-// function QuizQuestion({ questionKey, selectedAnswer, onAnswerSelect }) {
-
-  
-//   return (
-
-//     <Box sx={{ border: "2px solid green", maxWidth: "100%", margin: "15px"}}>
-//       <Typography>{questionKey.question}</Typography>
-//       <Typography>{questionKey.category}</Typography>
-//       <Typography>{questionKey.complexity}</Typography>
-
-//       <FormControl >
-//         <RadioGroup sx={{ margin: "15px" }}>
-//             {Object.keys(questionKey)
-//               .filter((key) => key.startsWith('choice_'))
-//               .map((choiceKey) => {
-//                 const choice = questionKey[choiceKey];
-//                 return (
-//                     <FormControlLabel
-//                       control={<Radio />}
-//                       value={choice.answer}
-//                       checked={selectedAnswer === choiceKey}
-//                       onChange={() => onAnswerSelect(choiceKey)}
-//                       label={choice.answer}
-//                     />                
-//                 );
-//               })}
-//         </RadioGroup>
-//       </FormControl> 
-
-//     </Box>
-//   );
-// }
-
-// export default QuizQuestion;
-
-
-{/* <li key={choiceKey}>                
-                  <Radio
-                    value={choice.answer}
-                    checked={selectedAnswer === choiceKey}
-                    onChange={() => onAnswerSelect(choiceKey)}
-                  />
-                  <Typography>
-                      {choice.answer}
-                  </Typography>
-                
-</li> */}
-
 function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
-
-  console.log("Q", (questionKey))
-
   
   return (
 
@@ -71,15 +20,29 @@ function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
       </motion.div>
 
       
-
-      <Typography variant="subtitle1" sx={{ color: "white"}}>{questionKey.category}</Typography>
-      <Box>
-      <Typography variant="subtitle1" sx={{ color: "white", 
+      <Box sx={{ display: "flex", margin: "5px" }}>
+      <Typography variant="subtitle2" sx={{ color: "white", 
                                             borderRadius: "30px",
                                             border: "2px solid white",
-                                            disply: "flex",
-                                            justifyContent: "center"}} >
-      {questionKey.complexity}</Typography>
+                                            padding: "5px",
+                                            background: 'radial-gradient(circle, rgba(0,0,0,1) 39%, rgba(255,255,255,1) 100%)'                                            
+                                            }}
+      > 
+      {questionKey.category === "fossil-fuels" ? "fossil fuels"
+      : questionKey.category === "food-production" ? "food production"
+      : questionKey.category }
+      </Typography>
+      
+      <Typography variant="subtitle2" sx={{ color: "white", 
+                                            borderRadius: "30px",
+                                            border: "2px solid white",
+                                            marginLeft: "5px",
+                                            padding: "5px",
+                                            background: 'radial-gradient(circle, rgba(0,0,0,1) 39%, rgba(255,255,255,1) 100%)'                                            
+                                            }}
+      >
+      {questionKey.complexity} </Typography>
+      
       </Box>
       <FormControl >
         <RadioGroup sx={{ margin: "15px" }}>

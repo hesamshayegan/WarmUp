@@ -1,0 +1,13 @@
+.container-quiz {
+    overflow: hidden;
+}
+.video {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    z-index: -1;
+    min-width: 100%;
+    min-height: 100%;
+
+}

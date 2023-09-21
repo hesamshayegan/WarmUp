@@ -5,12 +5,17 @@ import WarmUpApi from '../api/api';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import Scoreboard from '../scoreboard/Scoreboard';
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import "./Quiz.css"
 
 
 import plastic from "../static/images/forms/plastic-form.jpg"
-
+import fossil from "../static/images/forms/fossil-form.jpg"
+import deforestation from "../static/images/forms/deforestation.jpg"
+import agriculture from "../static/images/forms/agriculture.jpg"
+import transportation from "../static/images/forms/transportation.jpg"
+import food from "../static/images/forms/food.jpg"
+import climate from "./climate-video.mp4"
 
 
 
@@ -27,7 +32,6 @@ function Quiz() {
             const [isSubmitted, setIsSubmitted] = useState(false);
             const [showingAnswers, setShowingAnswers] = useState(false);
 
-            
             useEffect(() => {
 
                 async function fetchQuestions() {
@@ -219,20 +223,27 @@ function Quiz() {
                 return (
                              
 
-                    <Grid container>
-                        <Grid item xs={12} md={2} className="UP*****">        
-                            <Box className="******test" sx={{ height: "100vh", maxWidth: "100vw",
-                                                                display: "flex", justifyContent: "center",
-                                                                backgroundColor: "red"
-                                                                }}>
-                                <Scoreboard />
-                            </Box>
-                        </Grid>
+                    <Grid className="container-quiz" container sx={{height: "100%" }}>
+                        
+                        <video className="video" autoPlay muted loop>
+                            <source src={climate} type='video/mp4' />
+                        </video>
 
-                        <Grid item xs={12} md={10} >
+                        <Grid className='test*****'item xs={12} md={2} >
+                            <Scoreboard />
+                        </Grid>
+                        
+                        <Grid item xs={12} md={10}>
                             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                <Box sx={{ marginTop: "75px", width: "65%", border: "2px solid white", 
-                                           background: `url(${plastic})`,                                           
+                                <Box sx={{ marginTop: "75px", width: "65%", border: "2px solid white", height: "100%" ,
+                                           background: 
+                                           currentQuestion.category === 'plastic' ? `url(${plastic})`
+                                           : currentQuestion.category === 'fossil-fuels' ? `url(${fossil})`
+                                           : currentQuestion.category === 'deforestation' ? `url(${deforestation})`
+                                           : currentQuestion.category === 'agriculture' ? `url(${agriculture})`
+                                           : currentQuestion.category === 'transportation' ? `url(${transportation})`
+                                           : currentQuestion.category === 'food-production' ? `url(${food})`
+                                           : null,                                                               
                                            backgroundSize: "cover",
                                            boxShadow: "30px 30px 30px rgba(0, 0, 0, 0.5)",
                                            borderRadius: "30px"}}>
@@ -251,19 +262,36 @@ function Quiz() {
                                         }
                                         onAnswerSelect={handleAnswerSelect}
                                     />
+
+                                    <Box sx={{ display: "flex",
+                                               justifyContent: "center",
+                                               
+                                                margin: "5px"}}
+                                    >
                                     {currentQuestionIndex > 0
                                         ?
-                                        <Button sx={{ color: "white"}} onClick={handlePreviousQuestion}> Previous </Button>
+                                        <Button sx={{ color: "white",
+                                                      borderRadius: "30px",
+                                                      border: "2px solid white",
+                                                      marginRight: "5px",
+                                                      backgroundColor: "#59c6dd" }}
+                                                onClick={handlePreviousQuestion}> Previous </Button>
                                         :
                                         null
                                     }
-                                    <Button sx={{ color: "white"}} onClick={handleNextQuestion}> Next </Button>
+                                    <Button sx={{ color: "white",
+                                                      borderRadius: "30px",
+                                                      border: "2px solid white",
+                                                      backgroundColor: "#59c6dd" }}
+                                            onClick={handleNextQuestion}> Next </Button>
+                                    </Box>
+
                                 </Box>
                             </Box>
 
                         </Grid>
+                                            
                     </Grid>
-
 
                 );
 
