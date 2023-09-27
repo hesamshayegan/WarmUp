@@ -12,6 +12,7 @@ import Quiz from "../quiz/Quiz";
 import Scoreboard from "../scoreboard/Scoreboard";
 import ScoreProgress from "../score-progress/ScoreProgress.js";
 import Test from "./test";
+import ScoreBars from '../score-progress/ScoreBars.js'
 
 
 
@@ -43,7 +44,7 @@ const MyRoutes = () => {
 
                 <Route path="/scoreboard" element={<Scoreboard />} />
 
-                <Route path="/test" element={<Test />} />
+                <Route path="/test" element={<ScoreBars />} />
 
                 <Route element={<PrivateRoutes /> }>
 

@@ -1,147 +1,106 @@
-import React from "react";
-import { Grid, Box, Typography } from "@mui/material";
+
+import React, { useState, useEffect } from "react";
 import {
   XYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
   HorizontalGridLines,
-  VerticalBarSeries
-} from 'react-vis' ;
+  VerticalBarSeries,
+  LabelSeries
+} from "react-vis";
+// import { Motion, spring } from "react-motion";
+// In your render...
 
-import 'react-vis/dist/style.css'
+const greenData = [
+  { x: "A", y: 0 },
+  { x: "B", y: 0 },
+  { x: "C", y: 0 },
+  { x: "L", y: 0 },
+  { x: "K", y: 0 },
+  { x: "D", y: 0 },
+  { x: "E", y: 0 },
+  { x: "G", y: 0 },
+  { x: "H", y: 0 },
+  { x: "N", y: 0 }
+];
 
-function Test() {
+const blueData = [
+  { x: "A", y: 0 },
+  { x: "B", y: 0 },
+  { x: "C", y: 0 },
+  { x: "L", y: 0 },
+  { x: "K", y: 0 },
+  { x: "D", y: 0 },
+  { x: "E", y: 0 },
+  { x: "G", y: 0 },
+  { x: "H", y: 0 },
+  { x: "N", y: 0 }
+];
 
+const labelData = greenData.map((d, idx) => ({
+  x: d.x,
+  y: Math.max(greenData[idx].y, blueData[idx].y)
+}));
+
+// const X = props => {
+//   return (
+//     <Motion defaultStyle={{ x: 0 }} style={{ x: spring(10) }}>
+//       {value => <div>{value.x}</div>}
+//     </Motion>
+//   );
+// };
+export default function Test(props) {
+  const [gData, setGreenData] = useState(greenData);
+  const [bData, setBlueData] = useState(blueData);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setGreenData([
+        { x: "A", y: 9 },
+        { x: "B", y: 11 },
+        { x: "C", y: 20 },
+        { x: "L", y: 24 },
+        { x: "K", y: 7 },
+        { x: "D", y: 8 },
+        { x: "E", y: 22 },
+        { x: "G", y: 2 },
+        { x: "H", y: 9 },
+        { x: "N", y: 4 }
+      ]);
+    }, 20);
+    setBlueData([
+      { x: "A", y: 20 },
+      { x: "B", y: 21 },
+      { x: "C", y: 10 },
+      { x: "L", y: 14 },
+      { x: "K", y: 3 },
+      { x: "D", y: 8 },
+      { x: "E", y: 20 },
+      { x: "G", y: 2 },
+      { x: "H", y: 9 },
+      { x: "N", y: 9 }
+    ]);
+  }, []);
+
+  const BarSeries = VerticalBarSeries;
   return (
-    
-    <Box sx={{ marginTop: '10px'}}>
-      <XYPlot margin={{bottom: 70}} xType="ordinal" width={300} height={300}>
-      <VerticalGridLines />
-      <HorizontalGridLines />
-      <XAxis tickLabelAngle={-45} />
-      <YAxis />
-      <VerticalBarSeries
-        data={[
-          {x: 'May 23 2017', y: 10},
-          {x: 'May 23 2018', y: 5},
-          {x: 'May 23 2019', y: 15}
-        ]}
-      />
-      
+    <div>
+      <XYPlot xType="ordinal" width={700} height={300} xDistance={100}>
+        <VerticalGridLines />
+        <HorizontalGridLines />
+        <XAxis />
+        <YAxis />
+        <BarSeries
+          className="vertical-bar-series-example"
+          data={gData}
+          animation={{ damping: 10, stiffness: 20 }}
+        />
+        <BarSeries data={bData} animation={{ damping: 50, stiffness: 1000 }} />
+        <LabelSeries data={labelData} getLabel={d => d.x} animation />
       </XYPlot>
-    </Box>
-
+    </div>
   );
-
-} 
-
-export default Test;
+}
 
 
-
-
-
-
-
-
-
-
-// React.useEffect(() => {
-//   if (dialogOpen) {
-//     const { current: descriptionElement } = descriptionElementRef;
-//     if (descriptionElement !== null) {
-//       descriptionElement.focus();
-//     }
-//   }
-// }, [dialogOpen]);
-
-// return (
-  
-//   <div>
-
-//     <Icon className="custom-icon" > star</Icon>
-       
-//       <Button onClick={handleClickOpen('paper')}> Show Answers </Button>
-
-//       <Dialog
-//         open={dialogOpen}
-//         onClose={handleClose}
-//         scroll={scroll}
-//         aria-labelledby="scroll-dialog-title"
-//         aria-describedby="scroll-dialog-description"
-//       >
-
-      
-//       <div class="scrollbar-answers"> 
-//         <DialogTitle id="scroll-dialog-title"> Check out the correct answers </DialogTitle>
-        
-//         <DialogContent dividers={scroll === 'paper'}>
-        
-//           <DialogContentText
-//             id="scroll-dialog-description"
-//             ref={descriptionElementRef}
-//             tabIndex={-1}
-//           >
-//             {[...new Array(50)]
-//               .map(
-//                 () => `Cras mattis consectetur purus sit amet fermentum.
-//                       Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-//                       Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-//                       Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-//                                     )
-//               .join('\n')}
-//           </DialogContentText>
-          
-//         </DialogContent>
-        
-//         <DialogActions>
-//           <Button onClick={handleClose}>Close</Button>          
-//         </DialogActions>
-        
-//       </div>
-
-//       </Dialog>
-    
-//   </div>
-
-
-
-{/* <RadarChart
-            data={DATA}
-            domains={DOMAIN}
-            style={{
-                polygons: {
-                    fillOpacity: 0.35,
-                    strokeWidth: 3,
-                    strokeOpacity: 1,
-                    fill: 'green',
-                    stroke: 'darkgreen'  
-                },
-                axes: {
-                    text: { opacity: 0.45, fill: 'blue' },
-                    
-                },
-                labels: {
-                    textAnchor: 'middle',
-                    fontSize: 12,
-                    fontFamily: "\"Poppins\", \"Helvetica\", \"Arial\", sans-serif",
-                    fontWeight: 500,
-                    fill: 'red',                                                                                                         
-                },     
-            }}
-            margin={{
-                left: 70,
-                top: 70,
-                bottom: 70,
-                right: 70
-            }}
-            width={500}
-            height={500}
-            >
-
-            <CircularGridLines
-                style={{fill: 'orange', fillOpacity: .3, opacity: 0.5, stroke: 'green'}}
-                tickValues={[...new Array(10)].map((v, i) => i / 10 - 1)}
-            />
-          </RadarChart> */}

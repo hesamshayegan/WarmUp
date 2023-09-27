@@ -1,7 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import UserContext from '../common/UserContext';
 import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
+
 
 import {
   RadarChart,
@@ -14,10 +15,12 @@ import {
   VerticalBarSeries,
   DiscreteColorLegend,
 } from 'react-vis' ;
-import { motion } from "framer-motion";
 
-import { Grid, Box, Typography } from "@mui/material";
+
 import 'react-vis/dist/style.css'
+import { Grid, Box, Typography } from "@mui/material";
+import Test from '../routes-nav/test.js'
+import ScoreBars from './ScoreBars';
 
 const DOMAIN = [
   {name: 'plastic', domain: [0, 100]},
@@ -28,21 +31,32 @@ const DOMAIN = [
   {name: 'foodProduction', domain: [0, 100]}
 ];
 
-const CATEGORIES = [
-  'plastic',
-  'fossilFuels',
-  'deforestation',
-  'agriculture',
-  'transportation',
-  'foodProduction',
-];
 
 
+
+const initial = [
+  {x: 'Sep 23, 2023', y: 0},
+  {x: 'Sep 25, 2023', y: 0},
+  {x: 'Sep 25, 2023', y: 0},
+  ]
+
+const initial2 =  [
+    {x: 'Sep 22, 2023', y: 0},
+    {x: 'Sep 22, 2023', y: 0},
+    {x: 'Sep 23, 2023', y: 0}, 
+    {x: 'Sep 25, 2023', y: 0}
+    ]
 
 function ScoreProgress() {
 
         const { currentUser } = useContext(UserContext);
         const { scoreLog, setScoreLog } = useContext(ScoreContext);
+        const BarSeries = VerticalBarSeries;
+        const [plasticData, setPlasticData] = useState(initial);
+        const [deforestationData, setDeforestationData] = useState(initial2);
+        
+       console.log(scoreCat(2))
+        
 
         useEffect(() => {
             async function fetchScoreHistory() {
@@ -98,8 +112,42 @@ function ScoreProgress() {
             for (let log of scoreLogCat) {
               data.push({ x: formatDate(log.time_stamp), y: Math.round(log.score * 100) });
             }
-            return data;
+
+            const initialData = dataInitial(data);
+
+            return { originalData: data, initialData };
         }
+
+        function dataInitial (data) {
+          return ( 
+              data.map(item => ({
+                  x: item.x,
+                  y: 0,
+            }))
+          )
+        }
+
+        // useEffect(() => {
+                 
+        //   setTimeout(() => {
+        //     setPlasticData([
+        //       {x: 'Sep 23, 2023', y: 10},
+        //       {x: 'Sep 25, 2023', y: 3},
+        //       {x: 'Sep 25, 2023', y: 5},
+        //       ], 20);
+        //     setDeforestationData([
+        //       {x: 'Sep 22, 2023', y: 20},
+        //       {x: 'Sep 22, 2023', y: 15},
+        //       {x: 'Sep 23, 2023', y: 6}, 
+        //       {x: 'Sep 25, 2023', y: 10}
+        //       ]);
+        //   });
+        // }, [scoreLog]);
+
+        
+        
+        
+
 
         
         return (
@@ -182,43 +230,44 @@ function ScoreProgress() {
             </Grid>
 
             <Grid item xs={12} md={8} sx={{ border: "2px solid orange"}}>
-              <Box sx={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: '10px'}}>
+
+              {/* <Test /> */}
+              <ScoreBars />
+              {/* <Box sx={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: '10px'}}>
                 <XYPlot margin={{bottom: 70}} xType="ordinal" width={300} height={300}>
                 <VerticalGridLines />
                 <HorizontalGridLines />
                 <XAxis tickLabelAngle={-45} />
                 <YAxis />
                 
-                <VerticalBarSeries
-                  data={scoreCat(1)}
-                  color="#cd3b54"
-                  stroke="blue"                 
-                  
-
-                />
-                 <VerticalBarSeries
-                  data={scoreCat(2)}
+                
+                 <BarSeries
+                  data={plasticData}
                   color="#59b830"
-                  stroke="red"                 
+                  stroke="red"
+                  animation={{ damping: 10, stiffness: 20 }}                
                 />
 
-                <VerticalBarSeries
-                  data={scoreCat(3)}
+                <BarSeries
+                  data={deforestationData}
                   color="#ba4fb9"
+                  animation={{ damping: 10, stiffness: 20 }} 
                 />
-                <VerticalBarSeries
+
+                
+                {/* <BarSeries
                   data={scoreCat(4)}
                   color="#fff153"
                 />
-                <VerticalBarSeries
+                <BarSeries
                   data={scoreCat(5)}
                   color="#59b953"
                 />
-                <VerticalBarSeries
+                <BarSeries
                   data={scoreCat(6)}
                   color="#ba4fb9"
-                />
-                </XYPlot>
+                /> */}
+                {/* </XYPlot>
                 <DiscreteColorLegend height={250}
                                      width={150}
                                      items={CATEGORIES} 
@@ -229,7 +278,8 @@ function ScoreProgress() {
                                               "#59b953", 
                                               "#ba4fb9" ]}
                 />
-              </Box>
+              </Box> */}
+
             </Grid>
 
         </Grid>
