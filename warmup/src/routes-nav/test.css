@@ -1,0 +1,31 @@
+/* .scrollbar-answers {
+  display: block;
+  width: 500px;
+  overflow: auto;
+  height: 500px;
+}
+
+.scrollbar-answers::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar-answers::-webkit-scrollbar {
+    border-radius: 8px;
+    background-color: #f0f4f5;
+    border: 1px solid #1f7a89
+}
+
+.scrollbar-answers::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #1f7a89;
+} */
+
+
+
+/* text-anchor="top" x="367.0614872174387" y="71.99999999999999" transform="rotate(0,367.0614872174387,71.99999999999999)"
+ font-size="12" font-weight="500" color="red">plastic</text> */
+
+ .rv-xy-plot__grid-lines__line {
+    stroke: gray;
+    stroke-width: 1;
+  }

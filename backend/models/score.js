@@ -453,26 +453,21 @@ class Score {
 
 
     // get all the score history for a cateogry
-    static async getScoreHistory({username, category}) {
-        console.log('works')
+    static async getScoreHistory({username}) {
+        
         // Fetch user id
         const user_id = await this.getUserId(username);
-        
-        // Fetch category id
-        const cat_id = await this.getCategoryId(category);
-
+                
         const historyQuery = await db.query(`
                 SELECT * 
                 FROM user_quiz_history
                 WHERE user_id = $1
-                AND cat_id = $2
                 `,
-                [user_id, cat_id],
+                [user_id],
                 )
 
         const result = historyQuery.rows;
         
-
         if (result.length === 0) throw new NotFoundError(`No score found`);
 
         return result;

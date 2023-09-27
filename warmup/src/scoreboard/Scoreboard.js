@@ -1,4 +1,5 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react'; 
+import { useParams } from 'react-router-dom';
 import UserContext from '../common/UserContext';
 import WarmUpApi from '../api/api';
 import ScoreContext from '../common/ScoreContext';
@@ -25,9 +26,12 @@ const UnderWhite = styled('div')({
 function Scoreboard() {
 
             const { currentUser } = useContext(UserContext);
-            const { scores, setScores } = useContext(ScoreContext);
+            const { category } = useParams();
+            const { scores, setScores } = useContext(ScoreContext);            
+            const { scoreLog, setScoreLog } = useContext(ScoreContext);
 
             
+
             useEffect(() => {
                 async function fetchCurrentSores() {
                     try {
@@ -48,6 +52,29 @@ function Scoreboard() {
             }, []);
 
 
+            useEffect(() => {
+              async function fetchScoreHistory() {
+                  try {
+
+                    const username = currentUser.username;
+                    const fetchedScoreHistory = await WarmUpApi.getScoreHistory({ username });
+                    setScoreLog(fetchedScoreHistory);
+
+                  } catch (error) {
+
+                    console.error("Error fetching current scores:", error);
+
+                  }
+              }
+              
+              fetchScoreHistory();
+              
+                  
+            }, []);
+
+          console.log("scoreLog",scoreLog)
+          console.log("scoreLog",typeof(scoreLog))
+          
 
             return (
               <Box className="scoreboard" sx={{ background: `url(${world})`,
@@ -91,21 +118,42 @@ function Scoreboard() {
                   </Typography>                 
                     
                     <Box sx={{ marginLeft: "10px", display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
-                      <img src={plasticBadge} width="85px"  style={{ opacity: 1 }} />
-                      <img src={fossilBadge} width="85px" style={{ opacity: 1 }}  />
-                      <img src={deforestationBadge} width="85px" style={{ opacity: 0.4 }} />
-                      <img src={agricultureBadge} width="85px" style={{ opacity: 0.4 }} />
-                      <img src={transportationBadge} width="85px" style={{ opacity: 0.4 }}  />
-                      <img src={foodBadge} width="85px" style={{ opacity: 0.4 }} />
+                      {scoreLog.find((el) => el.cat_id === 1 && el.score >= 0.8) ? (
+                          <img src={plasticBadge} width="85px"  style={{ opacity: 1 }} />  
+                      ) : (
+                          <img src={plasticBadge} width="85px"  style={{ opacity: 0.4 }} />
+                      )}
+                      {scoreLog.find((el) => el.cat_id === 2 && el.score >= 0.8) ? (
+                          <img src={fossilBadge} width="85px" style={{ opacity: 1 }} />  
+                      ) : (
+                          <img src={fossilBadge} width="85px" style={{ opacity: 0.4 }} />
+                      )}
+                      {scoreLog.find((el) => el.cat_id === 3 && el.score >= 0.8) ? (
+                          <img src={deforestationBadge} width="85px" style={{ opacity: 1 }} />  
+                      ) : (
+                          <img src={deforestationBadge} width="85px" style={{ opacity: 0.4 }} />
+                      )}
+                      {scoreLog.find((el) => el.cat_id === 4 && el.score >= 0.8) ? (
+                          <img src={agricultureBadge} width="85px" style={{ opacity: 1 }} />  
+                      ) : (
+                          <img src={agricultureBadge} width="85px" style={{ opacity: 0.4 }} />
+                      )}
+                      {scoreLog.find((el) => el.cat_id === 5 && el.score >= 0.8) ? (
+                          <img src={transportationBadge} width="85px" style={{ opacity: 1 }}  />  
+                      ) : (
+                          <img src={transportationBadge} width="85px" style={{ opacity: 0.4 }}  />
+                      )}
+                      {scoreLog.find((el) => el.cat_id === 6 && el.score >= 0.8) ? (
+                          <img src={foodBadge} width="85px" style={{ opacity: 1 }} /> 
+                      ) : (
+                          <img src={foodBadge} width="85px" style={{ opacity: 0.4 }} />
+                      )} 
                     </Box>
                     
                 </Box>
 
               </Box>               
               );
-
-             
-              
 
 }
 

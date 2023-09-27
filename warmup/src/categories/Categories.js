@@ -24,7 +24,19 @@ const Categories = () => {
         
     }, []);
 
+    console.log("cursor before", document.body.style.cursor) 
 
+    // Reset cursor to default when the component unmounts
+    useEffect(() => {
+
+        return () => {
+
+          document.body.style.cursor = "default";
+
+        };
+    }, []);
+
+    console.log("cursor", document.body.style.cursor)
     return (
 
             <div className="page-wrapper">

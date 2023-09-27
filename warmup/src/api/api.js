@@ -126,6 +126,14 @@ class WarmUpApi {
     }
 
 
+    /** get all scores' history for a category */
+    static async getScoreHistory({username}) {
+
+        let res = await this.request(`quiz/${username}/score/history`, {}, 'get')
+        return res.scoreHisotry
+
+    }
+
 
 
 }

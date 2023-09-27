@@ -37,8 +37,8 @@ const CategoryInfo = () => {
             getRecord();
         }, []);
 
-
-
+        
+        
         const handleRestartQuiz = async () => {
             
             const username = currentUser.username;
@@ -52,7 +52,7 @@ const CategoryInfo = () => {
 
 
     return (
-        <div className="category-container">
+        <div className="category-container" >
             <div className="category-info">
                 <h1> {categoryInfo.name} </h1>
                 <p> {categoryInfo.info} </p>

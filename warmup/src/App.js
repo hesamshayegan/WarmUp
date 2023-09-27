@@ -19,6 +19,7 @@ function App() {
   const [token, setToken] = useLocalStorage(null);
   const [userInfoLoaded, setUserInfoLoaded] = useState(false);
   const [scores, setScores] = useState([])
+  const [scoreLog, setScoreLog] = useState([])
 
 
   async function loginUser(data) {
@@ -156,8 +157,8 @@ function App() {
 
           <MyNav logout={logout}/>
 
-          <ScoreContext.Provider value={{ scores, setScores }}>
-
+          <ScoreContext.Provider value={{ scores, setScores, 
+                                          scoreLog, setScoreLog }}>
           <main>
           {userInfoLoaded ? <MyRoutes /> : null}
           </main>

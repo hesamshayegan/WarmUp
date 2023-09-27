@@ -68,14 +68,14 @@ const Home = () => {
     // Only trigger once when it comes into view
     const [ref, inView] = useInView({
         threshold: 0,
-        triggerOnce: false
+        triggerOnce: true,
     });
 
     // Update the isSectionInView state when the section is in view
     useEffect(() => {
         if (inView) {
           setIsSectionInView(true);
-          console.log("ref", ref);
+          
         }
     }, [inView]);
 
@@ -173,9 +173,8 @@ const Home = () => {
                                 
                             </Grid>
             </Grid>
-
-            <div ref={ref}>
-                {isSectionInView ? (
+            
+            
                     <Grid
                         container
                         justifyContent="center"
@@ -183,8 +182,6 @@ const Home = () => {
                         style={{ backgroundColor: '#F9E309',
                                 minHeight: '200px'}}
                         >
-
-
                                     <Typography variant='h4'
                                                 style={{
                                                 fontWeight: '600',
@@ -206,14 +203,11 @@ const Home = () => {
                                             </Link>
                                         
                                     </Typography>
-
-                                                
+                            
                     </Grid>
-                ) : null}
-            </div>
+
 
             
-
             <div ref={ref}>
                     {isSectionInView ? (
                         <Grid
@@ -325,28 +319,6 @@ const Home = () => {
                 ) : null}
             </div>
 
-
-            
-            <Grid  item xs={12} md={6}>
-                                
-                            <Grow in={scrolledOnce}
-                                  style={{ transformOrigin: { vertical: 'bottom', horizontal: 'center' }}}
-                                  {...(scrolledOnce ? { timeout: 3500 } : {})}
-                            >  
-
-                                <Typography variant='h4' 
-                                            style={{ 
-                                                color: 'black',
-                                                marginLeft: "20px",
-                                            }}
-                                >    
-                                        Test
-                                    
-                                </Typography>
-
-                            </Grow>          
-
-            </Grid>
         </div> 
 
     )

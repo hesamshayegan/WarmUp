@@ -10,6 +10,7 @@ import Categories from "../categories/Categories"
 import CategoryInfo from "../categories/CategoryInfo";
 import Quiz from "../quiz/Quiz";
 import Scoreboard from "../scoreboard/Scoreboard";
+import ScoreProgress from "../score-progress/ScoreProgress.js";
 import Test from "./test";
 
 
@@ -49,6 +50,8 @@ const MyRoutes = () => {
                     <Route path="/profile" element={<EditUserForm updateUser={updateUser} />} />
 
                     <Route path="/quiz/categories/:category" element={<Quiz />} />
+
+                    <Route path="/progress" element={<ScoreProgress />} />
 
                 </Route>
 

@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import UserContext from '../common/UserContext';
 import WarmUpApi from '../api/api';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import Scoreboard from '../scoreboard/Scoreboard';
-import { Box, Button, Grid } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { Box, Button, Grid, Typography, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Paper } from "@mui/material";
+import theme from "../theme";
 import "./Quiz.css"
 
 
@@ -19,6 +21,24 @@ import climate from "./climate-video.mp4"
 
 
 
+const StyledPaper = styled(Paper)`
+  border-radius: 30px;
+  border: 2mm inset rgba(0, 0, 0, .6);
+
+  @media (max-width: 768px) {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+    background-color: rgba(255, 255, 255, 0.5);
+`;
+
+const buttonStyle = {
+    color: "white",
+    borderRadius: "30px",
+    border: "2px solid white",
+    marginRight: "5px",
+    backgroundColor: "#59c6dd",
+};
 
 
 function Quiz() {
@@ -31,6 +51,10 @@ function Quiz() {
             const [isQuizCompleted, setIsQuizCompleted] = useState(false);
             const [isSubmitted, setIsSubmitted] = useState(false);
             const [showingAnswers, setShowingAnswers] = useState(false);
+            const [isOpen, setIsOpen] = useState(true);
+            const [dialogOpen, setDialogOpen] = useState(false);
+            const [scroll, setScroll] = useState('paper');
+
 
             useEffect(() => {
 
@@ -147,14 +171,32 @@ function Quiz() {
             }
 
 
-            const showAnswers = () => {
+            const showAnswers = (scrollType) => () => {
 
                 console.log(questions)
                 console.log("selectedAnswers", selectedAnswers)
 
                 setShowingAnswers(true);
-                
+                setDialogOpen(true);
+                setScroll(scrollType);
+
             }
+           
+            const handleCloseAnswers = () => {
+                setDialogOpen(false);
+            };
+
+            
+            const descriptionElementRef = useRef(null);
+
+            useEffect(() => {
+                if (dialogOpen) {
+                const { current: descriptionElement } = descriptionElementRef;
+                if (descriptionElement !== null) {
+                    descriptionElement.focus();
+                }
+                }
+            }, [dialogOpen]);
 
 
             let score = 0
@@ -162,54 +204,151 @@ function Quiz() {
                 
                 score = Object.values(selectedAnswers).filter(answer => answer.score === 1).length;
                 console.log(score)
+
                 return (
+        
+                    <Grid className="container-quiz" container sx={{height: "100%" }}>
 
-                    <div>
+                        <video className="video" autoPlay muted loop>
+                            <source src={climate} type='video/mp4' />
+                        </video>
 
+                        <Grid item xs={12} md={2} >
+                            <Scoreboard />
+                        </Grid>
+
+                        <Grid item xs={12} md={10}>
+                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px"}}>
                         {isSubmitted
 
                             ? (
 
                             <>
-                            {showingAnswers
-                                ? (
-                                    <div>
-                                        <QuizAnswer
-                                            questionItems={questions}
-                                            selectedAnswers={
-                                                selectedAnswers
-                                                ?
-                                                selectedAnswers
-                                                :
-                                                null
-                                            }
-                                        />
-                                    </div>
-                                ) : (
 
-                                    <div>
-                                        <p> You answered {score} of {questions.length} questions correctly. </p>
-                                        <button onClick={showAnswers}>Show Answers</button>
+                                <Box sx={{
+                                    width: "40%",
+                                    height: "150px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    border: "2px solid white",
+                                    borderRadius: "30px",
+                                    marginTop: "30px",
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    [theme.breakpoints.down("md")]: {
+                                        width: "60%",
+                                    }
+                                }}>
+
+                                    <Typography variant="h6" sx={{ color: "white",
+                                                                marginTop: "10px",
+                                                                [theme.breakpoints.down("md")]: {
+                                                                    width: "90%",
+                                                                }
+                                    }}>
+                                        You got {score} of {questions.length} questions correctly.
+                                    </Typography>
+                                    <Box sx={{ marginBottom: "5px" }}>
+                                        <Box component={Link} to="/categories" >
+                                            <Button  sx={buttonStyle}>
+                                                Continue
+                                            </Button>
+                                        </Box>
+                                            <Button onClick={showAnswers('paper')} 
+                                                    sx={buttonStyle}>
+                                                Show Answers
+                                            </Button>
+                                    </Box>
+                                        
+                                    
+                                </Box>
+
+                                <Dialog
+                                    open={dialogOpen}
+                                    onClose={handleCloseAnswers}
+                                    scroll={scroll}
+                                    aria-labelledby="scroll-dialog-title"
+                                    aria-describedby="scroll-dialog-description"                                       
+                                >
+                                    <div class="scrollbar-answers">
+                                        <DialogTitle id="scroll-dialog-title" sx={{backgroundColor: "#59c6dd"}}>
+                                            <Typography variant="h5" color="white"> Check out the correct answers </Typography>
+                                        </DialogTitle>
+                                            <DialogContent dividers={scroll === 'paper'}
+                                                            sx={{ backgroundColor: '#dcf4fa' }}>
+                                                <DialogContentText
+                                                        id="scroll-dialog-description"
+                                                        ref={descriptionElementRef}
+                                                        tabIndex={-1}    
+                                                >
+                                                    <Box   >
+                                                        <QuizAnswer
+                                                                    questionItems={questions}
+                                                                selectedAnswers={
+                                                                selectedAnswers
+                                                                ?
+                                                                selectedAnswers
+                                                                :
+                                                                null
+                                                            }
+                                                        />
+                                                    </Box>
+                                                    
+                                                </DialogContentText>
+                                            </DialogContent>
+
+                                            <DialogActions sx= {{ backgroundColor: "#f0f4f5"}}>
+                                                <Button onClick={handleCloseAnswers} sx={buttonStyle}> Close </Button>          
+                                            </DialogActions>
                                     </div>
-                                )
-                            }
-                                
+                                </Dialog>
+                                     
                             </>
                             
                             ) : (
 
-                            <>
-                                <button onClick={handlePreviousQuestion}> Previous </button>
+                                <Box>
 
-                                <button onClick={handleSubmit}> Submit </button>
-                            </>
-                        
+                                    <Dialog
+                                        onClose={handlePreviousQuestion}
+                                        open={isOpen}
+                                        disableEscapeKeyDown={true}
+                                        PaperComponent={StyledPaper}
+                                    >
+                                    
+                                        <DialogContent>
+                                            <Typography variant="h6" sx={{ color: "black",
+                                                                           marginTop: "10px",
+                                                                           [theme.breakpoints.down("md")]: {
+                                                                            width: "90%"}
+                                                                        }}
+                                            >
+                                            Do you want to submit your answers?
+                                            </Typography>
+                                        </DialogContent>
+                                        
+                                        <DialogActions>
+                                            <Box sx={{ marginBottom: "5px"}}>
+                                            <Button onClick={handlePreviousQuestion} sx={buttonStyle}>
+                                                Go Back  
+                                            </Button>
+                                        
+                                            <Button onClick={handleSubmit} sx={buttonStyle}>
+                                                Submit
+                                            </Button>
+                                            </Box>
+                                        </DialogActions>
+                                    </Dialog>
+                                  </Box>
+
                             )
+                            
                         }
+                            </Box>
+                        </Grid>                       
                         
-                        <Scoreboard />
-
-                    </div>
+                    </Grid>
 
                
                 );
@@ -223,13 +362,13 @@ function Quiz() {
                 return (
                              
 
-                    <Grid className="container-quiz" container sx={{height: "100%" }}>
+                    <Grid className="container-quiz" container sx={{height: "100%" }} >
                         
                         <video className="video" autoPlay muted loop>
                             <source src={climate} type='video/mp4' />
                         </video>
 
-                        <Grid className='test*****'item xs={12} md={2} >
+                        <Grid item xs={12} md={2} >
                             <Scoreboard />
                         </Grid>
                         
@@ -264,25 +403,17 @@ function Quiz() {
                                     />
 
                                     <Box sx={{ display: "flex",
-                                               justifyContent: "center",
-                                               
+                                               justifyContent: "center",                                               
                                                 margin: "5px"}}
                                     >
                                     {currentQuestionIndex > 0
                                         ?
-                                        <Button sx={{ color: "white",
-                                                      borderRadius: "30px",
-                                                      border: "2px solid white",
-                                                      marginRight: "5px",
-                                                      backgroundColor: "#59c6dd" }}
+                                        <Button sx={ buttonStyle }
                                                 onClick={handlePreviousQuestion}> Previous </Button>
                                         :
                                         null
                                     }
-                                    <Button sx={{ color: "white",
-                                                      borderRadius: "30px",
-                                                      border: "2px solid white",
-                                                      backgroundColor: "#59c6dd" }}
+                                    <Button sx={buttonStyle}
                                             onClick={handleNextQuestion}> Next </Button>
                                     </Box>
 

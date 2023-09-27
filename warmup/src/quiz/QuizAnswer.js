@@ -1,15 +1,18 @@
 import React from 'react';
 import Scoreboard from '../scoreboard/Scoreboard';
+import { List, ListItem, Box, Typography, Icon } from "@mui/material";
+
 
 
 const QuizAnswer = ({ questionItems, selectedAnswers }) => {
     
   return (
     <div className="quiz-answer">
-      {questionItems.map((item, index) => (
-        <div key={index}>
-          <h1>{item.question}</h1>
-          <ul>
+        
+        {questionItems.map((item, index) => (
+        <Box key={index}>
+          <Typography variant="h6" color="black">{item.question}</Typography>
+          <List>
 
             {Object.keys(item)
             
@@ -20,23 +23,24 @@ const QuizAnswer = ({ questionItems, selectedAnswers }) => {
                 const isCorrect = choice.isCorrect || false;
                 const selectedChoice = selectedAnswers[item.id]?.choice || ''; 
                 const liStyle = {
-                    backgroundColor: isCorrect && selectedChoice === choiceKey ? 'green' : selectedChoice === choiceKey ? 'red' : null,
+                    backgroundColor: isCorrect && selectedChoice === choiceKey ? 'rgba(0, 255, 0, 0.3)' : selectedChoice === choiceKey ? 'rgba(255, 0, 0, 0.3)' : null,
                     border: isCorrect ? '2px solid green' : null
                 };
 
                 return (
-                  <li key={choiceKey} style={liStyle}>
-                    {choice.answer}
-                  </li>
+                  <ListItem key={choiceKey} 
+                            sx={{...liStyle}}>
+                    <Typography variant="h7"> {choice.answer} </Typography>
+                  </ListItem>
                 );
                 
               })}
 
-          </ul>
-        </div>
+          </List>
+        </Box>
       ))}
 
-      <Scoreboard />
+      
 
     </div>
   );

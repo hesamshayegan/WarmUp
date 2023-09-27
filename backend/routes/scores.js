@@ -171,11 +171,11 @@ router.delete("/:username/:category/record", ensureCorrectUser, async function (
 
 
 // get a score history
-router.get("/:username/:category/score/history", ensureCorrectUser, async function (req, res, next) {
+router.get("/:username/score/history", ensureCorrectUser, async function (req, res, next) {
 
     try {
-        const { username, category } = req.params
-        const scoreHisotry = await Score.getScoreHistory({ username, category});
+        const { username } = req.params
+        const scoreHisotry = await Score.getScoreHistory({ username });
         
         return res.json({ scoreHisotry })
         
