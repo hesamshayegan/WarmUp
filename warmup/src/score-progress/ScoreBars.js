@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import UserContext from '../common/UserContext';
 import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
+import theme from "../theme";
+import "./ScoreBars.css"
 import { Grid, Box, Typography } from "@mui/material";
 import {
   XYPlot,
@@ -10,19 +12,25 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
   VerticalBarSeries,
-  DiscreteColorLegend
+  DiscreteColorLegend,
+  FlexibleXYPlot,
+  Hint
 } from "react-vis";
 
 const CATEGORIES = [
-  'plastic',
-  'fossilFuels',
-  'deforestation',
-  'agriculture',
-  'transportation',
-  'foodProduction',
-];
+  {title: 'plastic', color: "#cd3b54"},
+  {title: 'fossilFuels', color: "#59b830"},
+  {title: 'deforestation', color: "#ba4fb9"},
+  {title: 'agriculture', color: "#fff153"},
+  {title: 'transportation', color: "blue"},
+  {title: 'foodProduction', color: "red"},
+]
 
-function ScoreBars() {
+const defaultProps = {
+  margin: {top: 20, left: 30, right: 10, bottom: 60}
+};
+
+function ScoreBars ({height, width}) {
 
         const { currentUser } = useContext(UserContext);
         const { scoreLog, setScoreLog } = useContext(ScoreContext);
@@ -33,6 +41,7 @@ function ScoreBars() {
         const [agricultureData, setAgricultureData] = useState([]);
         const [transportationData, setTransportationData] = useState([]);
         const [foodProductionData, setFoodProductionData] = useState([]);
+        const [hoveredCell, setHoveredCell] = useState(null);
 
 
         useEffect(() => {
@@ -117,72 +126,139 @@ function ScoreBars() {
 
 
 
+        const handleMouseOver = (value, label) => {
+          setHoveredCell(label);
+        };
+      
+        const handleMouseOut = () => {
+          setHoveredCell(null);
+        };
+
+
         const BarSeries = VerticalBarSeries;
         
 
         return (
-          <Box sx={{ display: "flex", 
-                     justifyContent: "center",
-                     alignContent: "center",
-                     flowDirection: "column", 
-                     marginTop: '20px',
-                     height: '400px'}}>
-            
-            
-            <XYPlot className="plot" xType="ordinal" width={700} height={400} xDistance={60}>
-            <DiscreteColorLegend  height={100}
+          
+            <Box className="container"  
+            sx={{                    
+              display: 'flex', // Use Flexbox
+              flexDirection: 'column', // Vertically align items
+              justifyContent: 'center', // Horizontally align items
+              alignItems: 'center', // Vertically align items
+                     width: width || '100vh',
+                     height: height || '60vh',
+                     [theme.breakpoints.down("md")]: { 
+                      width: width || '45vh',
+                      height: height || '60vh'
+                    }                                                                              
+                  }}
+            > 
+              <Box>
+                <DiscreteColorLegend  
                                   width={500}
+                                  style={{
+                                    position: 'absolute',                                                                                                          
+                                    border: "2px solid red",
+                                    borderRadius: "10px",                                  
+                                  }}                             
                                   orientation="horizontal"
-                                  items={CATEGORIES} 
-                                  colors={["#cd3b54",
-                                            "#59b830",
-                                            "#ba4fb9",
-                                            "#fff153",
-                                            "blue", 
-                                            "red" ]}
-            />
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis tickLabelAngle={-45} tickPadding={2} style={{
-                                            line: {stroke: 'red'},
-                                            ticks: {stroke: 'green'},
-                                            text: {stroke: 'none', fill: '#6b6b76', fontWeight: 600} }} />
+                                  items={CATEGORIES}                              
+              />
+            </Box>
+            <Box
+              className="flexible-vis"
+              sx={{ display: 'flex', // Use Flexbox
+               // Vertically align items
+              justifyContent: 'end', // Horizontally align items
+              alignItems: 'center',}} // Vertically align items}}
+              style={{width: '100%', height: '100%', border: '1px solid red'}}
+            >
+                      
+              <FlexibleXYPlot xType="ordinal"
+                yDomain={[0, 120]} 
+                {...defaultProps}
+                sx={{ display: 'flex', // Use Flexbox
+               // Vertically align items
+              justifyContent: 'end', // Horizontally align items
+              alignItems: 'center',}}>
               
-              <YAxis tickValues={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]} title="Scores(%)"/>
-              <BarSeries          
-                data={plasticData}
-                color="#cd3b54"
-                animation={{ damping: 10, stiffness: 20 }}
-              />
-              <BarSeries
-                data={fossilFuelsData}
-                color="#59b830"
-                animation={{ damping: 10, stiffness: 20 }}
-              />
-              <BarSeries
-                data={deforestationData}
-                color="#ba4fb9"
-                animation={{ damping: 10, stiffness: 20 }}
-              />
-              <BarSeries
-                data={agricultureData}
-                color="#fff153"
-                animation={{ damping: 10, stiffness: 20 }}
-              />
-              <BarSeries
-                data={transportationData}
-                color="blue"
-                animation={{ damping: 10, stiffness: 20 }}
-              />
-              <BarSeries
-                data={foodProductionData}
-                color="red"
-                animation={{ damping: 10, stiffness: 20 }}
-              />
- 
-            </XYPlot>
+                <VerticalGridLines />
+                <HorizontalGridLines />
+                <XAxis tickLabelAngle={-45}  
+                      style={{
+                        line: {stroke: 'black'},                      
+                        text: {stroke: 'none', fill: 'black', fontWeight: 601},
+                      }} 
+                />
+                
+                <YAxis className="y-axis" title="Scores(%)"
+                      tickValues={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+                      style={{ 
+                        line: {stroke: 'black'},
+                        text: {stroke: 'none', fill: 'black', fontWeight: 600},
+                        }}
+                />
+                      
+                <BarSeries          
+                  data={plasticData}
+                  color="#cd3b54"
+                  animation={{ damping: 10, stiffness: 20 }}                
+                  onValueMouseOver={value => handleMouseOver(value, 'plastic')}
+                  onValueMouseOut={handleMouseOut}
+                />
+                {hoveredCell !== null && (
+                  <Hint value={hoveredCell}
+                        align={{vertical: 'bottom', horizontal: 'right'}} >
+                    <div style={{background: 'black', color: 'blue'}}>
+                      <p  style={{ color: 'red'}}>{hoveredCell}</p>
+                    </div>
+                  </Hint>
+                )}
+                              
+                <BarSeries
+                  data={fossilFuelsData}
+                  color="#59b830"
+                  animation={{ damping: 10, stiffness: 20 }}
+                  onValueMouseOver={value => handleMouseOver(value, 'fossilFuels')}
+                  onValueMouseOut={handleMouseOut}
+                />
+                {hoveredCell !== null && (
+                  <Hint value={hoveredCell}
+                  align={{vertical: 'bottom', horizontal: 'right'}} >
+                    <div>
+                      <p>{hoveredCell}</p>
+                    </div>
+                  </Hint>
+                )}
 
-          </Box>
+                <BarSeries
+                  data={deforestationData}
+                  color="#ba4fb9"
+                  animation={{ damping: 10, stiffness: 20 }}
+                />
+                <BarSeries
+                  data={agricultureData}
+                  color="#fff153"
+                  animation={{ damping: 10, stiffness: 20 }}
+                />
+                <BarSeries
+                  data={transportationData}
+                  color="blue"
+                  animation={{ damping: 10, stiffness: 20 }}
+                />
+                <BarSeries
+                  data={foodProductionData}
+                  color="red"
+                  animation={{ damping: 10, stiffness: 20 }}
+                />
+              
+              </FlexibleXYPlot>
+            
+            </Box>
+            </Box>
+
+           
         );
 }
 

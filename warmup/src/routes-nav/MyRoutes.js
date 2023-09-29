@@ -44,7 +44,7 @@ const MyRoutes = () => {
 
                 <Route path="/scoreboard" element={<Scoreboard />} />
 
-                <Route path="/test" element={<ScoreBars />} />
+                <Route path="/test" element={<Test />} />
 
                 <Route element={<PrivateRoutes /> }>
 
