@@ -13,6 +13,9 @@ import Scoreboard from "../scoreboard/Scoreboard";
 import ScoreProgress from "../score-progress/ScoreProgress.js";
 import Test from "./test";
 import ScoreBars from '../score-progress/ScoreBars.js'
+import ScoreRadar from "../score-progress/ScoreRadar";
+import ScoreCard from "../score-progress/ScoreCard";
+
 
 
 
@@ -44,7 +47,7 @@ const MyRoutes = () => {
 
                 <Route path="/scoreboard" element={<Scoreboard />} />
 
-                <Route path="/test" element={<Test />} />
+                <Route path="/test" element={<ScoreCard />} />
 
                 <Route element={<PrivateRoutes /> }>
 

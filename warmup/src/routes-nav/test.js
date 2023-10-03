@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
 import {
   XYPlot,
   XAxis,
@@ -7,225 +6,149 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
   VerticalBarSeries,
-  LabelSeries,
-  FlexibleWidthXYPlot,
-  FlexibleHeightXYPlot,
-  FlexibleXYPlot,
-  Hint
-} from "react-vis";
-// import { Motion, spring } from "react-motion";
-// In your render...
+  LineSeries,
+} from 'react-vis';
 
-// const greenData = [
-//   { x: "A", y: 0 },
-//   { x: "B", y: 0 },
-//   { x: "C", y: 0 },
-//   { x: "L", y: 0 },
-//   { x: "K", y: 0 },
-//   { x: "D", y: 0 },
-//   { x: "E", y: 0 },
-//   { x: "G", y: 0 },
-//   { x: "H", y: 0 },
-//   { x: "N", y: 0 }
-// ];
-
-// const blueData = [
-//   { x: "A", y: 0 },
-//   { x: "B", y: 0 },
-//   { x: "C", y: 0 },
-//   { x: "L", y: 0 },
-//   { x: "K", y: 0 },
-//   { x: "D", y: 0 },
-//   { x: "E", y: 0 },
-//   { x: "G", y: 0 },
-//   { x: "H", y: 0 },
-//   { x: "N", y: 0 }
-// ];
-
-// const labelData = greenData.map((d, idx) => ({
-//   x: d.x,
-//   y: Math.max(greenData[idx].y, blueData[idx].y)
-// }));
-
-// const X = props => {
-//   return (
-//     <Motion defaultStyle={{ x: 0 }} style={{ x: spring(10) }}>
-//       {value => <div>{value.x}</div>}
-//     </Motion>
-//   );
-// };
-const data = [
-  {x: 0, y: 8},
-  {x: 1, y: 5},
-  {x: 2, y: 4},
-  {x: 3, y: 9},
-  {x: 4, y: 1},
-  {x: 5, y: 7},
-  {x: 6, y: 6},
-  {x: 7, y: 3},
-  {x: 8, y: 2}
-];
-
-const defaultProps = {
-  margin: {top: 10, left: 10, right: 10, bottom: 10}
-};
+import scoreLog from "./data"
 
 
+// Sort the data by time_stamp
+scoreLog.sort((a, b) => new Date(a.time_stamp) - new Date(b.time_stamp));
 
-function Test ({height, width}) {
 
-  const [hoveredCell, setHoveredCell] = useState(null);
-  
-  const handleMouseOver = value => {
-    setHoveredCell(value);
-  };
-  
-  const handleMouseOut = () => {
-    setHoveredCell(null);
-  };
-
-  return (
-  <div>
-    
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        // position: 'relative',
-        width: width || '30vw',
-        height: height || '50vh'
-      }}
-    >
-      {/* <div
-        className="flexible-width"
-        style={{width: '30%', height: '100%', border: '1px solid #ccc'}}
-      >
-        <FlexibleWidthXYPlot {...defaultProps} height={100}>
-          <VerticalBarSeries data={data} />
-        </FlexibleWidthXYPlot>
-      </div>
-      <div
-        className="flexible-height"
-        style={{width: '30%', height: '100%', border: '1px solid #ccc'}}
-      >
-        <FlexibleHeightXYPlot {...defaultProps} width={100}>
-          <VerticalBarSeries data={data} />
-        </FlexibleHeightXYPlot>
-      </div> */}
-      <div
-        className="flexible-vis"
-        style={{width: '100%', height: '100%', border: '1px solid red'}}
-      >
-        <FlexibleXYPlot {...defaultProps} width={100}>
-          <VerticalBarSeries
-            onValueMouseOver={handleMouseOver}
-            onValueMouseOut={handleMouseOut}            
-            data={data}                         
-          />
-          {hoveredCell && (
-          <Hint value={hoveredCell}>            
-            <div>
-              <p>{hoveredCell.x}</p>             
-            </div>
-          </Hint>
-        )}
-          {console.log(hoveredCell)}
-        </FlexibleXYPlot>
-      </div>
-    </div>
-  </div>
-  )
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  const month = monthNames[date.getMonth()];
+  const day = date.getDate().toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${month} ${day} ${year}`;
 }
 
-export default Test;
 
-// const greenData = [
-//   { x: "A", y: 0 },
-//   { x: "B", y: 0 },
-//   { x: "C", y: 0 },
-//   { x: "L", y: 0 },
-//   { x: "K", y: 0 },
-//   { x: "D", y: 0 },
-//   { x: "E", y: 0 },
-//   { x: "G", y: 0 },
-//   { x: "H", y: 0 },
-//   { x: "N", y: 0 }
-// ];
+// Step 1: Group data by cat_id
+const groupedData = scoreLog.reduce((result, item) => {
+  if (!result[item.cat_id]) {
+    result[item.cat_id] = [];
+  }
+  result[item.cat_id].push(item);
+  return result;
+}, {});
 
-// const blueData = [
-//   { x: "A", y: 0 },
-//   { x: "B", y: 0 },
-//   { x: "C", y: 0 },
-//   { x: "L", y: 0 },
-//   { x: "K", y: 0 },
-//   { x: "D", y: 0 },
-//   { x: "E", y: 0 },
-//   { x: "G", y: 0 },
-//   { x: "H", y: 0 },
-//   { x: "N", y: 0 }
-// ];
 
-// const labelData = greenData.map((d, idx) => ({
-//   x: d.x,
-//   y: Math.max(greenData[idx].y, blueData[idx].y)
-// }));
+// Create a new object to store average score for each category
+const aveScore = {};
 
-// // const X = props => {
-// //   return (
-// //     <Motion defaultStyle={{ x: 0 }} style={{ x: spring(10) }}>
-// //       {value => <div>{value.x}</div>}
-// //     </Motion>
-// //   );
-// // };
-// export default function Test(props) {
-//   const [gData, setGreenData] = useState(greenData);
-//   const [bData, setBlueData] = useState(blueData);
+// Iterate through each category
+for (const categoryId in groupedData) {
+  const categoryData = groupedData[categoryId];
 
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setGreenData([
-//         { x: "A", y: 9 },
-//         { x: "B", y: 11 },
-//         { x: "C", y: 20 },
-//         { x: "L", y: 24 },
-//         { x: "K", y: 7 },
-//         { x: "D", y: 8 },
-//         { x: "E", y: 22 },
-//         { x: "G", y: 2 },
-//         { x: "H", y: 9 },
-//         { x: "N", y: 4 }
-//       ]);
-//     }, 20);
-//     setBlueData([
-//       { x: "A", y: 20 },
-//       { x: "B", y: 21 },
-//       { x: "C", y: 10 },
-//       { x: "L", y: 14 },
-//       { x: "K", y: 3 },
-//       { x: "D", y: 8 },
-//       { x: "E", y: 20 },
-//       { x: "G", y: 2 },
-//       { x: "H", y: 9 },
-//       { x: "N", y: 9 }
-//     ]);
-//   }, []);
+  if (categoryData.length > 0) {
+    // Calculate the average score for the category
+    const averageScore =
+      categoryData.reduce((sum, item) => sum + item.score, 0) / categoryData.length;
 
-//   const BarSeries = VerticalBarSeries;
-//   return (
-//     <div>
-//       <XYPlot xType="ordinal" width={700} height={300} xDistance={100}>
-//         <VerticalGridLines />
-//         <HorizontalGridLines />
-//         <XAxis />
-//         <YAxis />
-//         <BarSeries
-//           className="vertical-bar-series-example"
-//           data={gData}
-//           animation={{ damping: 10, stiffness: 20 }}
-//         />
-//         <BarSeries data={bData} animation={{ damping: 50, stiffness: 1000 }} />
-//         <LabelSeries data={labelData} getLabel={d => d.x} animation />
-//       </XYPlot>
-//     </div>
-//   );
-// }
+    // Get the first and last dates
+    const firstDate = categoryData[0].time_stamp;
+    const lastDate = categoryData[categoryData.length - 1].time_stamp;
+
+    // Create an array with only two points for each category
+    const aveScoreData = [
+      { x: firstDate, y: averageScore * 100 },
+      { x: lastDate, y: averageScore * 100 },
+    ];
+
+    // Assign the transformed data to the corresponding category key
+    aveScore[categoryId] = aveScoreData;
+  }
+}
+
+// Step 2: Extract unique time_stamp values
+const uniqueTimeStamps = [...new Set(scoreLog.map(item => item.time_stamp))];
+console.log('uniqueTimeStamps', uniqueTimeStamps)
+
+export default function Test() {
+  const BarSeries = VerticalBarSeries;
+  
+
+  const [selectedCategory, setSelectedCategory] = useState(1); // Initial category
+
+  // Function to filter data by category
+  const filteredData = groupedData[selectedCategory] || [];
+
+  // Function to handle the "Next Category" button click
+  const handleNextCategory = () => {
+    const categoryIds = Object.keys(groupedData);
+    const currentIndex = categoryIds.indexOf(selectedCategory);
+    if (currentIndex < categoryIds.length - 1) {
+      setSelectedCategory(categoryIds[currentIndex + 1]);
+    }
+  };
+
+  // Function to handle the "Previous Category" button click
+  const handlePreviousCategory = () => {
+    const categoryIds = Object.keys(groupedData);
+    const currentIndex = categoryIds.indexOf(selectedCategory);
+    if (currentIndex > 0) {
+      setSelectedCategory(categoryIds[currentIndex - 1]);
+    }
+  };
+
+  console.log('groupedData', groupedData)
+  console.log([selectedCategory][0].cat_id)
+  console.log('selectedCategory', selectedCategory)
+  console.log('aveScore',aveScore)
+  console.log('****', aveScore[selectedCategory])
+  return (
+    <div>
+      <div>
+        <button onClick={handlePreviousCategory}> Previous Category </button>
+        {selectedCategory && (
+          <span>
+              { groupedData[selectedCategory][0].cat_id === 1 ? "Plastic"
+              : groupedData[selectedCategory][0].cat_id === 2 ? "Fossil Fuels"
+              : groupedData[selectedCategory][0].cat_id === 3 ? "Deforestation"
+              : groupedData[selectedCategory][0].cat_id === 4 ? "Agriculture"
+              : groupedData[selectedCategory][0].cat_id === 5 ? "Transportation"
+              : groupedData[selectedCategory][0].cat_id === 6 ? "Food Production"
+              : null              
+              }
+          </span>
+        )}
+        <button onClick={handleNextCategory}> Next Category </button>
+      </div>
+      <XYPlot xType="ordinal" yDomain={[0, 120]} width={1000} height={300}>
+        <HorizontalGridLines />
+        <VerticalGridLines />
+        <XAxis
+          title="Time Stamp"
+          tickFormat={v => formatDate(v)}
+          tickValues={uniqueTimeStamps}
+          tickLabelAngle={45}
+        />
+         
+        <YAxis title="Score" />
+        <BarSeries
+          key={selectedCategory}
+          data={filteredData.map(item => ({
+            x: item.time_stamp,
+            y: item.score * 100
+          }))}
+          barWidth={0.25}
+        />
+        {console.log('filteredData', filteredData)}
+        <LineSeries
+          data={aveScore[selectedCategory]}
+          style={{
+            // note that this can not be translated to the canvas version
+            strokeDasharray: '2 2',
+            stroke: "red"
+          }}          
+        />        
+      </XYPlot>
+    </div>
+  );
+}
