@@ -3,17 +3,24 @@ import UserContext from '../common/UserContext';
 import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
 import theme from "../theme";
-
-
+import { Box, Typography } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import 'react-vis/dist/style.css'
 import {
   RadarChart,
   CircularGridLines,
 } from 'react-vis' ;
 
 
-import 'react-vis/dist/style.css'
-import { Box, Typography } from "@mui/material";
 
+
+const UnderGreen= styled('div')({
+  textDecoration: 'underline',
+  textDecorationColor: 'green',
+  textDecorationThickness: '3px',
+  display: 'inline' 
+  
+})
 const DOMAIN = [
     {name: 'plastic', domain: [0, 100]},
     {name: 'fossilFuels', domain: [0, 100]},
@@ -73,27 +80,27 @@ function ScoreRadar() {
 
         return (
 
-            <Box sx={{ 
-                backgroundColor: 'white',
+            <Box sx={{                 
                 width: '90vw',
                 height: '80vh',
                 [theme.breakpoints.down("md")]: { 
-                    width: '89vw',
-                    height: '60vh'
+                    width: '90vw',
+                    height: '60vh',
+                    marginLeft: "15px"
                     },
                 }}>
                     <Typography variant="h4"
                                 sx={{
                                     textAlign: "center",
-                                    textTransform: "uppercase"
+                                    textTransform: "uppercase",                                    
                                     }}
                     >
                         Max scores
                     </Typography>
                     <Box sx={{ 
                             display: "flex",
-                            justifyContent: "center"
-                            
+                            justifyContent: "center",                            
+                            width: '100%',
                          }}
                     >
                     <RadarChart
@@ -108,15 +115,15 @@ function ScoreRadar() {
                             stroke: 'darkgreen'  
                         },
                         axes: {
-                            text: { opacity: 1, fill: 'red', stroke: "red" },
+                            text: { opacity: 0.25, stroke: "black" },
                             
                         },
                         labels: {
                             textAnchor: 'middle',
-                            fontSize: 12,
+                            fontSize: 16,
                             fontFamily: "\"Poppins\", \"Helvetica\", \"Arial\", sans-serif",
                             fontWeight: 500,
-                            fill: 'red',                                                                                                         
+                            fill: 'black',
                         },     
                     }}
                     margin={{
@@ -126,7 +133,7 @@ function ScoreRadar() {
                         right: 70
                     }}
                     width={400}
-                    height={500}
+                    height={400}
                     >
 
                     <CircularGridLines
@@ -135,6 +142,14 @@ function ScoreRadar() {
                     />
                 </RadarChart>
                 </Box>
+                <Typography variant="h6"
+                                sx={{
+                                    textAlign: "center",                                    
+                                    }}
+                    >
+                      The radar chart shows your top scores (%) for each category.
+                      The <UnderGreen> green area </UnderGreen> shows which topics have been covered more so far. 
+                </Typography>
             </Box>
 
         )

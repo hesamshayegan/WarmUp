@@ -24,18 +24,18 @@ const defaultProps = {
 
 const Btn = {
   borderRadius: '30px',
-  border: "3px solid #BFFFBF",
+  border: "3px solid darkgreen",
   color: "black",    
 };
 
 
 const CATEGORIES = [
-  {title: 'plastic', color: "#cd3b54"},
-  {title: 'fossilFuels', color: "#59b830"},
-  {title: 'deforestation', color: "#ba4fb9"},
-  {title: 'agriculture', color: "#fff153"},
-  {title: 'transportation', color: "blue"},
-  {title: 'foodProduction', color: "red"},
+  {title: 'plastic', color: "#409aeb"},
+  {title: 'fossilFuels', color: "#d7880d"},
+  {title: 'deforestation', color: "#14af0d"},
+  {title: 'agriculture', color: "#8e1ecc"},
+  {title: 'transportation', color: "#846f6f"},
+  {title: 'foodProduction', color: "#44cacc"},
   {title: 'average score', color: "red", strokeDasharray: '3 3'},
 ]
 
@@ -136,7 +136,7 @@ function ScoreBars () {
         
         
         if (Object.keys(groupedData).length === 0) {
-          return <div>Loading...</div>;
+          return <div> Loading... </div>;
         }
 
         return (          
@@ -147,20 +147,32 @@ function ScoreBars () {
                     flexDirection: "column",                  
                     width: '90vw',
                     height: '100vh',                    
-                    [theme.breakpoints.down("md")]: { 
+                    [theme.breakpoints.down("md")]: {
+                    marginTop: "100px",
                     width: '90vw',
                     height: '100vh'
                     },                                                                                                  
                   }}
           >
-              
+            <Typography variant="h4" 
+                            sx={{
+                              textAlign: "center",
+                              textTransform: "uppercase",
+                              margin: "15px",                              
+                            }}
+                > 
+                  Score Timeline
+                </Typography>  
             <Box sx={{
                       display: "flex",
                       justifyContent: "center",                      
                       height: '50px',                      
                   }}>
-              <Button onClick={handlePreviousCategory} sx={Btn}> Previous Category </Button>
-              <Box sx={{ margin: "10px"}}>
+              
+                <Button onClick={handlePreviousCategory} sx={Btn}> Previous Category </Button>
+              
+              <Box sx={{ margin: "10px", width: "150px",display: "flex",
+                      justifyContent: "center", }}>
                 {selectedCategory && (                  
                   groupedData[selectedCategory][0].cat_id === 1 ? <Typography> Plastic </Typography> 
                   : groupedData[selectedCategory][0].cat_id === 2 ? <Typography> Fossil Fuels </Typography>
@@ -170,25 +182,29 @@ function ScoreBars () {
                   : groupedData[selectedCategory][0].cat_id === 6 ? <Typography> Food Production </Typography>
                   : null
                 )}
-              </Box>           
-              <Button onClick={handleNextCategory} sx={Btn}> Next Category </Button>
+              </Box >
+
+                <Button onClick={handleNextCategory} sx={Btn}> Next Category </Button>
+              
             </Box>
 
             <Box className="legend" 
                   sx={{
                       display: "flex",
                       justifyContent: "center",                      
-                      height: '50px',
+                      height: '100px',
+                      
+
                   }}
             >
-                  <DiscreteColorLegend  
-                          sx={{
-                            border: "2px solid red",
-                            borderRadius: "10px",
-                            width: "100%"
-                          }}                                                              
+                  <DiscreteColorLegend                                                  
                           orientation="horizontal"
-                          items={CATEGORIES}                              
+                          items={CATEGORIES}
+                          style={{
+                            fontSize: "14px",                            
+                            height: "80px",
+                            margin: "5px"
+                          }}                           
                   />
             </Box>
 
@@ -196,7 +212,7 @@ function ScoreBars () {
                 className="plot"
                 sx={{                            
                   width: '100%',
-                  height: '100%',                            
+                  height: '100%',                  
                 }}                          
             >
                 
@@ -206,8 +222,16 @@ function ScoreBars () {
                           yDomain={[0, 120]}                          
                   >
                   
-                  <HorizontalGridLines />
-                  <VerticalGridLines />
+                  <HorizontalGridLines
+                        style={{
+                          stroke: '#BFB3B3'                          
+                        }} 
+                  />
+                  <VerticalGridLines 
+                        style={{
+                          stroke: '#BFB3B3'                          
+                        }}
+                  />
                   
                   <XAxis 
                         tickFormat={v => formatDate(v)}

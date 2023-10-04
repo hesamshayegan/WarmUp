@@ -6,92 +6,95 @@ import ScoreRadar from './ScoreRadar';
 
 import 'react-vis/dist/style.css'
 import { Grid, Box, Typography } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import ScoreBars from './ScoreBars';
 import ScoreCard from './ScoreCard';
+import Badges from './Badges'
 
-const DOMAIN = [
-  {name: 'plastic', domain: [0, 100]},
-  {name: 'fossilFuels', domain: [0, 100]},
-  {name: 'deforestation', domain: [0, 100]},
-  {name: 'agriculture', domain: [0, 100]},
-  {name: 'transportation', domain: [0, 100]},
-  {name: 'foodProduction', domain: [0, 100]}
-];
+import scoreBg1 from "../static/images/progress/score-bg1.jpg"
 
 
 function ScoreProgress() {
 
         const { currentUser } = useContext(UserContext);
-        const { scoreLog, setScoreLog } = useContext(ScoreContext);
-                
-      
-        useEffect(() => {
-            async function fetchScoreHistory() {
-                try {
-
-                  const username = currentUser.username;
-                  const fetchedScoreHistory = await WarmUpApi.getScoreHistory({ username });
-                  setScoreLog(fetchedScoreHistory);
-
-                } catch (error) {
-
-                  console.error("Error fetching current scores:", error);
-
-                }
-            }
-            
-            fetchScoreHistory();
-            
-          }, []);
-
         
         return (
            
-          <Grid className="container-quiz" container sx={{height: "100%",border: "2px solid red" }}>
+          <Grid className="container-quiz" container 
+          sx={{   backgroundImage: `url(${scoreBg1})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+                       height: "100%"}}
+          >
 
-            <Grid item md={12} sx={{ border: "2px solid black"}}>
+            <Grid item md={12} >
                 <Box sx={{ margin: "10px"}}>
-                  <Typography variant="h5" sx={{ color: 'blue' }}>
-                    {currentUser.username}'s Score Tracker </Typography>
+                  <Typography variant="h5" sx={{ fontWeight: "600", marginLeft: "10px"}}>
+                    {currentUser.username}'s Score Tracker 
+                  </Typography>                    
                 </Box>
+                
             </Grid>
 
-            <Grid item md={6} sx={{ border: "2px solid green"}}>
+            <Grid container>
+            <Grid item md={6}>
               
-              <Box> 
+              <Box sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",             
+                      height: '100%',
+                    }}>                 
                 <ScoreCard />
-              </Box>
-
-                {/* <Box sx={{ margin: "10px"}}>
-                  <Typography variant="h5" sx={{ color: 'blue' }}>
-                    {currentUser.username}'s Total Score </Typography>
+                
+                <Typography variant="h4" 
+                            sx={{
+                              textAlign: "center",
+                              textTransform: "uppercase",
+                              margin: "10px",                              
+                            }}
+                > 
+                  Green Awards
+                </Typography>
+                <Box sx={{
+                      border: "3px solid #8ec809",
+                      borderRadius: "30px"
+                    }}>
+                <Badges />
                 </Box>
-                <Box sx={{ margin: "10px"}}>
-                  <Typography variant="h5" sx={{ color: 'blue' }}>
-                    {currentUser.username}'s Average Score </Typography>
-                </Box> */}
+
+                
+
+              </Box>
+              
+              
             </Grid>
             <Grid item md={6} >
                 <Box  sx={{
                       display: "flex",
                       justifyContent: "center",                      
-                      height: '100%',
+                      height: '100%',                      
                     }}
                 >
                     <ScoreRadar />
                 </Box>
                 
             </Grid>
+            </Grid>
+
+            
 
             <Grid item md={12} >
-              
-              <Box  sx={{
+             <Box  sx={{
                       display: "flex",
                       justifyContent: "center",                      
                       height: '100%',
                     }}
-              > 
+              >
+                
                   <ScoreBars />
+
               </Box>
             </Grid>
 
