@@ -6,15 +6,9 @@ import ScoreContext from '../common/ScoreContext';
 import { Box, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import './Scoreboard.css';
+import Badges from "../score-progress/Badges.js"
 
 import world from "../static/images/forms/world.jpg"
-import plasticBadge from "../static/images/badges/plastic-badge.png"
-import fossilBadge from "../static/images/badges/fossil-badge.png"
-import deforestationBadge from "../static/images/badges/deforestation-badge.png"
-import agricultureBadge from "../static/images/badges/agriculture-badge.png"
-import transportationBadge from "../static/images/badges/transportation-badge.png"
-import foodBadge from "../static/images/badges/food-badge.png"
-
 
 const UnderWhite = styled('div')({
   textDecoration: 'underline',
@@ -27,11 +21,9 @@ function Scoreboard() {
 
             const { currentUser } = useContext(UserContext);
             const { category } = useParams();
-            const { scores, setScores } = useContext(ScoreContext);            
-            const { scoreLog, setScoreLog } = useContext(ScoreContext);
+            const { scores, setScores } = useContext(ScoreContext);           
 
             
-
             useEffect(() => {
                 async function fetchCurrentSores() {
                     try {
@@ -50,33 +42,9 @@ function Scoreboard() {
                 fetchCurrentSores();
                 
             }, []);
-
-
-            useEffect(() => {
-              async function fetchScoreHistory() {
-                  try {
-
-                    const username = currentUser.username;
-                    const fetchedScoreHistory = await WarmUpApi.getScoreHistory({ username });
-                    setScoreLog(fetchedScoreHistory);
-
-                  } catch (error) {
-
-                    console.error("Error fetching current scores:", error);
-
-                  }
-              }
-              
-              fetchScoreHistory();
-              
                   
-            }, []);
 
-          console.log("scoreLog",scoreLog)
-          console.log("scoreLog",typeof(scoreLog))
-          
-
-            return (
+          return (
               <Box className="scoreboard" sx={{ background: `url(${world})`,
                                               border: "2px solid white",
                                               borderTopRightRadius: "30px",                                              
@@ -109,52 +77,22 @@ function Scoreboard() {
                   ))}
                   
                   
-                  <Box> 
-                  <Typography variant="h5" textTransform="uppercase" 
-                              sx={{textAlign: "center",
-                                   color: "#00ff58",
-                                   marginTop: "10px" }}>
-                    <UnderWhite> Green Awards </UnderWhite>
-                  </Typography>                 
-                    
-                    <Box sx={{ marginLeft: "10px", display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
-                      {scoreLog.find((el) => el.cat_id === 1 && el.score >= 0.8) ? (
-                          <img src={plasticBadge} width="85px"  style={{ opacity: 1 }} />  
-                      ) : (
-                          <img src={plasticBadge} width="85px"  style={{ opacity: 0.4 }} />
-                      )}
-                      {scoreLog.find((el) => el.cat_id === 2 && el.score >= 0.8) ? (
-                          <img src={fossilBadge} width="85px" style={{ opacity: 1 }} />  
-                      ) : (
-                          <img src={fossilBadge} width="85px" style={{ opacity: 0.4 }} />
-                      )}
-                      {scoreLog.find((el) => el.cat_id === 3 && el.score >= 0.8) ? (
-                          <img src={deforestationBadge} width="85px" style={{ opacity: 1 }} />  
-                      ) : (
-                          <img src={deforestationBadge} width="85px" style={{ opacity: 0.4 }} />
-                      )}
-                      {scoreLog.find((el) => el.cat_id === 4 && el.score >= 0.8) ? (
-                          <img src={agricultureBadge} width="85px" style={{ opacity: 1 }} />  
-                      ) : (
-                          <img src={agricultureBadge} width="85px" style={{ opacity: 0.4 }} />
-                      )}
-                      {scoreLog.find((el) => el.cat_id === 5 && el.score >= 0.8) ? (
-                          <img src={transportationBadge} width="85px" style={{ opacity: 1 }}  />  
-                      ) : (
-                          <img src={transportationBadge} width="85px" style={{ opacity: 0.4 }}  />
-                      )}
-                      {scoreLog.find((el) => el.cat_id === 6 && el.score >= 0.8) ? (
-                          <img src={foodBadge} width="85px" style={{ opacity: 1 }} /> 
-                      ) : (
-                          <img src={foodBadge} width="85px" style={{ opacity: 0.4 }} />
-                      )} 
-                    </Box>
-                    
+                  <Box>
+
+                    <Typography variant="h5" textTransform="uppercase" 
+                                sx={{textAlign: "center",
+                                    color: "#00ff58",
+                                    marginTop: "10px" }}>
+                      <UnderWhite> Green Awards </UnderWhite>
+                    </Typography>
+
+                    <Badges />   
+
                 </Box>
 
-              </Box>               
-              );
+              </Box>
 
+            );
 }
 
 export default Scoreboard;

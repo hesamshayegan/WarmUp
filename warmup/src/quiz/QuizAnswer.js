@@ -1,6 +1,5 @@
 import React from 'react';
-import Scoreboard from '../scoreboard/Scoreboard';
-import { List, ListItem, Box, Typography, Icon } from "@mui/material";
+import { List, ListItem, Box, Typography } from "@mui/material";
 
 
 

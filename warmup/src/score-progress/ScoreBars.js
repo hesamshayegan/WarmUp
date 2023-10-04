@@ -35,7 +35,7 @@ const CATEGORIES = [
   {title: 'deforestation', color: "#14af0d"},
   {title: 'agriculture', color: "#8e1ecc"},
   {title: 'transportation', color: "#846f6f"},
-  {title: 'foodProduction', color: "#44cacc"},
+  {title: 'foodProduction', color: "#fff80c"},
   {title: 'average score', color: "red", strokeDasharray: '3 3'},
 ]
 

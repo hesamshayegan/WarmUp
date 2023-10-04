@@ -17,7 +17,7 @@ import { Drawer, List, ListItem, Divider } from "@mui/material";
 import theme from "../theme";
 
 
-const pages = ['About', 'Quiz', 'Top Scores'];
+const pages = ['About', 'Quiz', 'Top Scores', 'Progress'];
 const settings = ['Profile', 'Quiz Progress', 'Logout'];
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -148,6 +148,10 @@ function MyNav({ logout }) {
                               <Link to="/categories" style={{ textDecoration: "none", color: "#377F37" }}>
                                 {page}
                               </Link>
+                            ) : page === "Progress" ? (
+                              <Link to="/progress" style={{ textDecoration: "none", color: "#377F37" }}>
+                                {page}
+                              </Link>
                             ) : (
                               <Link to="/" style={{ textDecoration: "none", color: "#377F37" }}>
                                 {page}
@@ -169,11 +173,7 @@ function MyNav({ logout }) {
                               <Link to="/profile" style={{ textDecoration: "none", color: "#377F37" }}>
                                 {setting}
                               </Link>
-                            ) : setting === "Quiz Progress" ? (
-                              <Link to="/" style={{ textDecoration: "none", color: "#377F37" }}>
-                                {setting}
-                              </Link>
-                            ): setting === "Logout" ? (
+                            ) : setting === "Logout" ? (
                               <Link to="/" style={{ textDecoration: "none", color: "#377F37" }} onClick={logout}>
                                 {setting}
                               </Link>
@@ -203,8 +203,12 @@ function MyNav({ logout }) {
                         <UnderlinedLink to="/"> {page} </UnderlinedLink>
                       ) : page === "Quiz" ? (
                         <UnderlinedLink to="/categories"> {page} </UnderlinedLink>
-                      ) : (
+                      ) : page === "Top Scores" ? (
                         <UnderlinedLink to="/"> {page} </UnderlinedLink>
+                      ) : page === "Progress" && currentUser? (
+                        <UnderlinedLink to="/progress"> {page} </UnderlinedLink>
+                      ) : (
+                        null
                       )}
                     </Typography>
                   ))} 

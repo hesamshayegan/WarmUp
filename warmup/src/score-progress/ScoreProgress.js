@@ -37,50 +37,51 @@ function ScoreProgress() {
             </Grid>
 
             <Grid container>
-            <Grid item md={6}>
-              
-              <Box sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                      alignItems: "center",             
-                      height: '100%',
-                    }}>                 
-                <ScoreCard />
+              <Grid item md={6}>
                 
-                <Typography variant="h4" 
-                            sx={{
-                              textAlign: "center",
-                              textTransform: "uppercase",
-                              margin: "10px",                              
-                            }}
-                > 
-                  Green Awards
-                </Typography>
                 <Box sx={{
-                      border: "3px solid #8ec809",
-                      borderRadius: "30px"
-                    }}>
-                <Badges />
-                </Box>
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        alignItems: "center",             
+                        height: '100%',
+                      }}>                 
+                  <ScoreCard />
+                  
+                  <Typography variant="h4" 
+                              sx={{
+                                textAlign: "center",
+                                textTransform: "uppercase",
+                                margin: "10px",
+                                marginTop: "20px"
+                              }}
+                  > 
+                    Green Awards
+                  </Typography>
+                  <Box sx={{
+                        border: "3px solid #8ec809",
+                        borderRadius: "30px"
+                      }}>
+                  <Badges />
+                  </Box>
 
-                
+                  
 
-              </Box>
-              
-              
-            </Grid>
-            <Grid item md={6} >
-                <Box  sx={{
-                      display: "flex",
-                      justifyContent: "center",                      
-                      height: '100%',                      
-                    }}
-                >
-                    <ScoreRadar />
                 </Box>
                 
-            </Grid>
+                
+              </Grid>
+              <Grid item md={6} >
+                  <Box  sx={{
+                        display: "flex",
+                        justifyContent: "center",                      
+                        height: '100%',                      
+                      }}
+                  >
+                      <ScoreRadar />
+                  </Box>
+                  
+              </Grid>
             </Grid>
 
             
