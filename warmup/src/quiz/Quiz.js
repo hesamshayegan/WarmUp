@@ -284,7 +284,7 @@ function Quiz() {
                                                 >
                                                     <Box   >
                                                         <QuizAnswer
-                                                                    questionItems={questions}
+                                                                questionItems={questions}
                                                                 selectedAnswers={
                                                                 selectedAnswers
                                                                 ?

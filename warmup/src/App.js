@@ -8,7 +8,7 @@ import WarmUpApi from './api/api';
 import useLocalStorage from './hooks/useLocalStorage';
 import MyNav from './routes-nav/MyNav'
 import ScoreContext from './common/ScoreContext';
-import MyFooter from './routes-nav/Footer';
+
 
 
 
@@ -165,8 +165,7 @@ function App() {
 
           </ScoreContext.Provider>
 
-          {/* <MyFooter /> */}
-
+          
         </UserContext.Provider >
 
       </BrowserRouter>

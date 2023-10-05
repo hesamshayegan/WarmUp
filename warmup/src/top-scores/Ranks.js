@@ -7,7 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { Button, Box } from "@mui/material";
+import theme from "../theme";
 import WarmUpApi from '../api/api';
+import { motion } from 'framer-motion';
 
 
 
@@ -21,12 +23,27 @@ const CATEGORIES = [
 ];
 
 const cellStyle = {
-  display: 'flex',
-  justifyContent: "center",
-  alignContent: "center"
+  display: 'flex',  
+  alignItems: "center",
+  color: "white"
 }
 
-export default function Test() {
+const ButtonStyle = {
+    background: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",
+    borderRadius: "30px",
+    border: 0,
+    color: "white",
+    height: "48px",
+    padding: "10px",
+    boxShadow: "0 3px 5px 2px rgba(255, 255, 102, 0.3)",
+    transition: "box-shadow 0.3s ease-in-out",
+    "&:hover": {
+        boxShadow: "0 6px 10px 4px rgba(0, 255, 102, 0.3)",
+        border: "none",
+    }
+}
+
+function Ranks() {
 
         const [AllScoresLogs, setAllScoresLogs] = useState();        
         const [sortedLogs, setSortedLogs] = useState({});
@@ -115,28 +132,48 @@ export default function Test() {
               
               <Box>
 
-                <Box sx={{ width: "800px"}}>
+                <Box sx={{ display: "flex",
+                           justifyContent: 'space-evenly',
+                           width: "800px",
+                           [theme.breakpoints.down("md")]: {                                    
+                                maxWidth: '370px',                                                                        
+                                }
+                            }}
+                           
+                >
                     {CATEGORIES.map((cat) => (
                       <Button
                         key={cat.id}
                         variant={selectedCategory === cat.id ? 'contained' : 'outlined'}
-                        onClick={() => handleCategoryChange(cat.id)}
+                        onClick={() => handleCategoryChange(cat.id)}                        
+                        sx={ButtonStyle}
                       >
                         {cat.name}
+                        
                       </Button>
                     ))}              
                 </Box>
 
+                <motion.div
+                    key={selectedCategory}
+                    
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                >
                 <TableContainer>                          
-                  <Table sx={{ width: "800px" }}>
+                  <Table sx={{ width: "800px",
+                               [theme.breakpoints.down("md")]: {                                    
+                                    maxWidth: '370px',                                                                        
+                                    } }}>
                     
                     <TableHead>
-                      <TableRow>
-                        <TableCell align='center'> Rank </TableCell>
-                        <TableCell align='center'> Player </TableCell>
-                        <TableCell align='center'> Score(%)&nbsp; </TableCell>
-                        <TableCell align='center' sx={{ width: "600px"}}> Date&nbsp; </TableCell>
-                        <TableCell align='center'> Comment&nbsp; </TableCell>
+                      <TableRow sx={{ color: "red"}}>
+                        <TableCell align='center' sx={{ color: "white"}}> Rank </TableCell>
+                        <TableCell align='center' sx={{ color: "white"}}> Player </TableCell>
+                        <TableCell align='center' sx={{ color: "white"}}> Score(%)&nbsp; </TableCell>
+                        <TableCell align='center' sx={{ width: "600px", color: "white"}}> Date&nbsp; </TableCell>
+                        <TableCell align='center' sx={{ color: "white"}}> Comment&nbsp; </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -158,15 +195,17 @@ export default function Test() {
                         }
 
                         return (                          
-                          <TableRow key={index + 1} sx={{ backgroundColor: "red"}}>
-                            <TableCell component="th" scope="row" sx={cellStyle}>
-                              {rank}
-                              {showIcon && <EmojiEventsOutlinedIcon sx={{ color: 'orange' }} />}
+                          <TableRow key={index + 1}>
+                            <TableCell component="th" scope="row">
+                              <Box sx={cellStyle}>
+                                {rank}
+                                {showIcon && <EmojiEventsOutlinedIcon sx={{ color: 'orange' }} />}
+                              </Box>
                             </TableCell>
-                            <TableCell align='center'> {row.username} </TableCell>
-                            <TableCell align='center'> {Math.round(row.score * 100)} </TableCell>
-                            <TableCell align='center'> {formatDate(row.time_stamp)} </TableCell>
-                            <TableCell align='center'> Test </TableCell>
+                            <TableCell align='center' sx={{ color: "white"}}> {row.username} </TableCell>
+                            <TableCell align='center' sx={{ color: "white"}}> {Math.round(row.score * 100)} </TableCell>
+                            <TableCell align='center' sx={{ color: "white"}}> {formatDate(row.time_stamp)} </TableCell>
+                            <TableCell align='center' sx={{ color: "white"}}> Test </TableCell>
                           </TableRow>
                         );
                       })}
@@ -174,7 +213,10 @@ export default function Test() {
                     
                   </Table>
                 </TableContainer>
+                </motion.div>
               </Box>
             );
         }
 }
+
+export default Ranks;

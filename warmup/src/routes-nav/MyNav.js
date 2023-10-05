@@ -18,7 +18,7 @@ import theme from "../theme";
 
 
 const pages = ['About', 'Quiz', 'Top Scores', 'Progress'];
-const settings = ['Profile', 'Quiz Progress', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: 'flex-start',
@@ -153,7 +153,7 @@ function MyNav({ logout }) {
                                 {page}
                               </Link>
                             ) : (
-                              <Link to="/" style={{ textDecoration: "none", color: "#377F37" }}>
+                              <Link to="/topscores" style={{ textDecoration: "none", color: "#377F37" }}>
                                 {page}
                               </Link>
                             )}
@@ -204,7 +204,7 @@ function MyNav({ logout }) {
                       ) : page === "Quiz" ? (
                         <UnderlinedLink to="/categories"> {page} </UnderlinedLink>
                       ) : page === "Top Scores" ? (
-                        <UnderlinedLink to="/"> {page} </UnderlinedLink>
+                        <UnderlinedLink to="/topscores"> {page} </UnderlinedLink>
                       ) : page === "Progress" && currentUser? (
                         <UnderlinedLink to="/progress"> {page} </UnderlinedLink>
                       ) : (

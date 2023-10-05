@@ -3,7 +3,6 @@ import UserContext from '../common/UserContext';
 import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
 import theme from "../theme";
-import "./ScoreBars.css"
 import { Box, Typography, Button } from "@mui/material";
 
 import {
@@ -57,7 +56,7 @@ function ScoreBars () {
               const fetchedScoreHistory = await WarmUpApi.getScoreHistory({ username });
               setScoreLog(fetchedScoreHistory);
             } catch (error) {
-              console.error("Error fetching current scores:", error);
+              console.error("Error fetching scores:", error);
             }
           }
       

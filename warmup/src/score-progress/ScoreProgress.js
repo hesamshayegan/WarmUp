@@ -1,12 +1,9 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import UserContext from '../common/UserContext';
-import ScoreContext from '../common/ScoreContext';
-import WarmUpApi from '../api/api';
 import ScoreRadar from './ScoreRadar';
 
 import 'react-vis/dist/style.css'
 import { Grid, Box, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
 import ScoreBars from './ScoreBars';
 import ScoreCard from './ScoreCard';
 import Badges from './Badges'
@@ -20,11 +17,13 @@ function ScoreProgress() {
         
         return (
            
-          <Grid className="container-quiz" container 
-          sx={{   backgroundImage: `url(${scoreBg1})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-                       height: "100%"}}
+          <Grid className="container-quiz"
+                container 
+                sx={{
+                  backgroundImage: `url(${scoreBg1})`,
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  height: "100%"}}
           >
 
             <Grid item md={12} >

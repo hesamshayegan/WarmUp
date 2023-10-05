@@ -473,6 +473,26 @@ class Score {
         return result;
 
     }
+
+    // get all the score histories
+    static async getAllScoresHistory() {
+        
+        
+        const historyQuery = await db.query(`
+                SELECT uqh.*, u.username
+                FROM user_quiz_history AS uqh
+                JOIN users AS u ON uqh.user_id = u.id                               
+                `                
+                )
+
+        const result = historyQuery.rows;
+        
+        if (result.length === 0) throw new NotFoundError(`No score found`);
+
+        return result;
+
+    }
+
 }
 
 module.exports = Score

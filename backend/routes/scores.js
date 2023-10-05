@@ -185,6 +185,21 @@ router.get("/:username/score/history", ensureCorrectUser, async function (req, r
 
 })
 
+// get all score histories
+router.get("/scoreshistory", async function (req, res, next) {
+
+    try {
+        
+        const AllScoresHisotry = await Score.getAllScoresHistory();
+        
+        return res.json({ AllScoresHisotry })
+        
+    } catch(err) {
+        return next(err)
+    }
+
+})
+
 
 
 
