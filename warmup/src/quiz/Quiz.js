@@ -267,18 +267,15 @@ function Quiz() {
                                 <Dialog
                                     open={dialogOpen}
                                     onClose={handleCloseAnswers}
-                                    scroll={scroll}
-                                    aria-labelledby="scroll-dialog-title"
-                                    aria-describedby="scroll-dialog-description"                                       
+                                    scroll={scroll}                                    
                                 >
                                     <div class="scrollbar-answers">
-                                        <DialogTitle id="scroll-dialog-title" sx={{backgroundColor: "#59c6dd"}}>
+                                        <DialogTitle sx={{backgroundColor: "#59c6dd"}}>
                                             <Typography variant="h5" color="white"> Check out the correct answers </Typography>
                                         </DialogTitle>
                                             <DialogContent dividers={scroll === 'paper'}
                                                             sx={{ backgroundColor: '#dcf4fa' }}>
-                                                <DialogContentText
-                                                        id="scroll-dialog-description"
+                                                <DialogContentText                                                        
                                                         ref={descriptionElementRef}
                                                         tabIndex={-1}    
                                                 >
@@ -312,7 +309,7 @@ function Quiz() {
 
                                     <Dialog
                                         onClose={handlePreviousQuestion}
-                                        open={isOpen}
+                                        open={true}
                                         disableEscapeKeyDown={true}
                                         PaperComponent={StyledPaper}
                                     >
@@ -409,11 +406,11 @@ function Quiz() {
                                     {currentQuestionIndex > 0
                                         ?
                                         <Button sx={ buttonStyle }
-                                                onClick={handlePreviousQuestion}> Previous </Button>
+                                            onClick={handlePreviousQuestion}> Previous </Button>
                                         :
                                         null
                                     }
-                                    <Button sx={buttonStyle}
+                                        <Button sx={buttonStyle}
                                             onClick={handleNextQuestion}> Next </Button>
                                     </Box>
 

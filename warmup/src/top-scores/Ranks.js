@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,10 +6,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
-import { Button, Box } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { 
+    Box, Button, Typography, DialogActions,
+    DialogContent, DialogTitle, Dialog, Link 
+} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import theme from "../theme";
 import WarmUpApi from '../api/api';
 import { motion } from 'framer-motion';
+
 
 
 
@@ -28,7 +35,7 @@ const cellStyle = {
   color: "white"
 }
 
-const ButtonStyle = {
+const btnStyle = {
     background: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",
     borderRadius: "30px",
     border: 0,
@@ -43,11 +50,44 @@ const ButtonStyle = {
     }
 }
 
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+      padding: theme.spacing(2),
+      width: '360px',
+      height: '360px',
+      backgroundColor: '#f0f0f0',
+      
+    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+      backgroundColor: '#41548c',
+    },
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1),
+      backgroundColor: '#41548c',
+    }, 
+}));
+
+const readStyle = {
+    backgroundColor: 'transparent',  // Transparent background
+    color: 'white',                  // Text color
+    border: 'none',       // Border color and style
+    borderRadius: '4px',            // Rounded corners
+    padding: '8px 16px',            // Padding
+    cursor: 'pointer',             // Cursor style
+    '&:hover': {
+      backgroundColor: 'transparent',      // Background color on hover
+      color: '#f8e11b',             // Text color on hover
+    },
+};
+
 function Ranks() {
 
         const [AllScoresLogs, setAllScoresLogs] = useState();        
         const [sortedLogs, setSortedLogs] = useState({});
         const [selectedCategory, setSelectedCategory] = useState(1);
+        const [open, setOpen] = useState(false);
        
       
         
@@ -121,6 +161,13 @@ function Ranks() {
           setSelectedCategory(category);
         };
 
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+          const handleClose = () => {
+            setOpen(false);
+        };
+
         
         if (Object.keys(sortedLogs).length === 0) {
 
@@ -146,7 +193,7 @@ function Ranks() {
                         key={cat.id}
                         variant={selectedCategory === cat.id ? 'contained' : 'outlined'}
                         onClick={() => handleCategoryChange(cat.id)}                        
-                        sx={ButtonStyle}
+                        sx={btnStyle}
                       >
                         {cat.name}
                         
@@ -168,12 +215,12 @@ function Ranks() {
                                     } }}>
                     
                     <TableHead>
-                      <TableRow sx={{ color: "red"}}>
-                        <TableCell align='center' sx={{ color: "white"}}> Rank </TableCell>
-                        <TableCell align='center' sx={{ color: "white"}}> Player </TableCell>
-                        <TableCell align='center' sx={{ color: "white"}}> Score(%)&nbsp; </TableCell>
-                        <TableCell align='center' sx={{ width: "600px", color: "white"}}> Date&nbsp; </TableCell>
-                        <TableCell align='center' sx={{ color: "white"}}> Comment&nbsp; </TableCell>
+                      <TableRow>
+                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Rank </TableCell>
+                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Player </TableCell>
+                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Score(%)&nbsp; </TableCell>
+                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Date&nbsp; </TableCell>
+                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Comment&nbsp; </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -205,7 +252,14 @@ function Ranks() {
                             <TableCell align='center' sx={{ color: "white"}}> {row.username} </TableCell>
                             <TableCell align='center' sx={{ color: "white"}}> {Math.round(row.score * 100)} </TableCell>
                             <TableCell align='center' sx={{ color: "white"}}> {formatDate(row.time_stamp)} </TableCell>
-                            <TableCell align='center' sx={{ color: "white"}}> Test </TableCell>
+                            
+                            <TableCell align='center' sx={{ color: "white"}}> 
+                                        Questions are...
+                                        <Link onClick={handleClickOpen} sx={readStyle}>                                        
+                                            Read More
+                                        </Link>
+                            </TableCell>
+
                           </TableRow>
                         );
                       })}
@@ -214,6 +268,47 @@ function Ranks() {
                   </Table>
                 </TableContainer>
                 </motion.div>
+                
+                
+                <Box>
+                    <BootstrapDialog
+                        onClose={handleClose}                    
+                        open={open}
+                        
+                    >
+                        <DialogTitle sx={{ m: 0, p: 2, color: "white"}}>
+                            Check out the comment
+                        </DialogTitle> 
+                        <IconButton                    
+                            onClick={handleClose}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                        >
+                            <CloseIcon sx={{ color: "white"}} />
+                        </IconButton>
+                        <DialogContent>
+                        <Typography gutterBottom>
+                            
+                        </Typography>
+                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                            consectetur ac, vestibulum at eros.dsadsadsads 
+                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                            consectetur ac, vestibulum at eros.dsadsadsads
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleClose} sx={readStyle}>                    
+                            close
+                        </Button>
+                        </DialogActions>
+                    </BootstrapDialog>
+                </Box>
+                
               </Box>
             );
         }
