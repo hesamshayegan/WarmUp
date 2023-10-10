@@ -144,6 +144,26 @@ class WarmUpApi {
     }
 
 
+    /** get all scores' history */
+    static async getAllcomments({username}) {
+
+        let res = await this.request(`comment/${username}/content`, {}, 'get')
+        
+        return res.comments
+
+    }
+
+
+    /** Register a comment */
+    static async registerComment({username}, data) {
+
+        let res = await this.request(`comment/${username}/write`, data, 'post')
+        
+        return res
+
+    }
+
+
 
 }
 

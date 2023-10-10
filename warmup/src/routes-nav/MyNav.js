@@ -17,7 +17,7 @@ import { Drawer, List, ListItem, Divider } from "@mui/material";
 import theme from "../theme";
 
 
-const pages = ['About', 'Quiz', 'Top Scores', 'Progress'];
+const pages = ['About', 'Quiz', 'Top Scores', 'Progress', 'Feedback'];
 const settings = ['Profile', 'Logout'];
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -152,6 +152,10 @@ function MyNav({ logout }) {
                               <Link to="/progress" style={{ textDecoration: "none", color: "#377F37" }}>
                                 {page}
                               </Link>
+                            ) : page === "Feedback" ? (
+                              <Link to="/feedback" style={{ textDecoration: "none", color: "#377F37" }}>
+                                {page}
+                              </Link>
                             ) : (
                               <Link to="/topscores" style={{ textDecoration: "none", color: "#377F37" }}>
                                 {page}
@@ -198,7 +202,7 @@ function MyNav({ logout }) {
                 >
 
                   {pages.map((page) => (
-                    <Typography key={page} variant="h5" sx={{ margin: 1}}>
+                    <Typography key={page} variant="h6" sx={{ margin: 1}}>
                       {page === "About" ? (
                         <UnderlinedLink to="/"> {page} </UnderlinedLink>
                       ) : page === "Quiz" ? (
@@ -207,6 +211,8 @@ function MyNav({ logout }) {
                         <UnderlinedLink to="/topscores"> {page} </UnderlinedLink>
                       ) : page === "Progress" && currentUser? (
                         <UnderlinedLink to="/progress"> {page} </UnderlinedLink>
+                      ) : page === "Feedback" && currentUser? (
+                        <UnderlinedLink to="/feedback"> {page} </UnderlinedLink>
                       ) : (
                         null
                       )}

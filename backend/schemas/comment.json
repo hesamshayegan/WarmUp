@@ -9,11 +9,12 @@
         "content": {
         "type": "string",
         "minLength": 10
-        }
+        },
+        "category": {
+            "type": "string"
+          }
     },
     "additionalProperties": false,
-    "required": [
-        "content"
-    ]
+    "required": ["category", "content"]
 }
   

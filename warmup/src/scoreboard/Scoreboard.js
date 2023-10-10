@@ -19,8 +19,7 @@ const UnderWhite = styled('div')({
 
 function Scoreboard() {
 
-            const { currentUser } = useContext(UserContext);
-            const { category } = useParams();
+            const { currentUser } = useContext(UserContext);            
             const { scores, setScores } = useContext(ScoreContext);           
 
             

@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Box, Button, Grid, Typography, 
-    Dialog, DialogActions, DialogContent, 
-    DialogTitle, DialogContentText, Paper }
-from "@mui/material";
+import React from 'react';
+import { Box, Grid, Typography } from "@mui/material";
 import Slide from '@mui/material/Slide';
 import Ranks from './Ranks';
 

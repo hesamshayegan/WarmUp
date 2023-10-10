@@ -14,7 +14,7 @@ const router = express.Router();
 
 
 // register a comment
-router.post("/:username/:category/", ensureCorrectUser, async function (req, res, next) {
+router.post("/:username/write", ensureCorrectUser, async function (req, res, next) {
     try {
 
         const validator = jsonschema.validate(req.body, commentSchema);
@@ -22,12 +22,13 @@ router.post("/:username/:category/", ensureCorrectUser, async function (req, res
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
+        
+        const { username } = req.params
+        const { category, content } = req.body
+        const comment = await Comment.registerComment({ username },
+                                                    { category, content });
 
-        const { username, category } = req.params
-        const { content } = req.body
-        const score = await Comment.registerComment({ username, category },
-                                                    { content });
-        return res.json({ score })
+        return res.json({ comment })
 
     } catch(err) {
         next(err)
@@ -36,7 +37,7 @@ router.post("/:username/:category/", ensureCorrectUser, async function (req, res
 
 
 // edit a comment
-router.patch("/:username/:category/edit", ensureCorrectUser, async function (req, res, next) {
+router.patch("/:username/edit", ensureCorrectUser, async function (req, res, next) {
     try {
 
         const validator = jsonschema.validate(req.body, commentSchema);
@@ -45,11 +46,11 @@ router.patch("/:username/:category/edit", ensureCorrectUser, async function (req
             throw new BadRequestError(errs);
         }
 
-        const { username, category } = req.params
-        const { content } = req.body
-        const score = await Comment.editComment({ username, category },
-                                                    { content });
-        return res.json({ score })
+        const { username } = req.params
+        const { category, content } = req.body
+        const comment = await Comment.editComment({ username },
+                                                    { category, content });
+        return res.json({ comment })
 
     } catch(err) {
         next(err)
@@ -58,13 +59,14 @@ router.patch("/:username/:category/edit", ensureCorrectUser, async function (req
 
 
 // remove a comment
-router.delete("/:username/:category/delete", ensureCorrectUser, async function (req, res, next) {
+router.delete("/:username/delete", ensureCorrectUser, async function (req, res, next) {
 
     try {
-        const { username, category } = req.params
-        await Comment.removeComment({ username, category});
+        const { username } = req.params
+        const { category } = req.body
+        await Comment.removeComment({ username }, category);
 
-        return res.json({ deleted: `username:${req.params.username}, category:${req.params.category} comment` });
+        return res.json({ deleted: `username:${req.params.username}, category:${category} comment` });
         
     } catch(err) {
         return next(err)
@@ -73,6 +75,21 @@ router.delete("/:username/:category/delete", ensureCorrectUser, async function (
 })
 
 
+// get a comment
+router.get("/:username/content", ensureCorrectUser, async function (req, res, next) {
+
+    try {
+        const { username } = req.params
+        
+        const comments = await Comment.getComment(username);
+
+        return res.json({ comments })
+        
+    } catch(err) {
+        return next(err)
+    }
+
+})
 
 
 module.exports = router

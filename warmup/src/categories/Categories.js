@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WarmUpApi from "../api/api";
-import CategotyCard from "./CategoryCard"
+import CategoryCard from "./CategoryCard"
 import Grid from '@mui/material/Grid'
 import AnimCursor from "../common/AnimatedCursor"
 import "./Categories.css";
@@ -72,7 +72,7 @@ const Categories = () => {
                                 {categories.map(c => (
                                     <Grid item key={c.id} xs={12} sm={6} md={4}
                                         sx={{ backgroundColor: "transparent" }}>
-                                        <CategotyCard
+                                        <CategoryCard
                                             id={c.id}
                                             category={c.category}
                                         />

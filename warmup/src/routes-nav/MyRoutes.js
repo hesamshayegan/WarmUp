@@ -9,14 +9,11 @@ import EditUserForm from "../profile/EditUserForm.js";
 import Categories from "../categories/Categories"
 import CategoryInfo from "../categories/CategoryInfo";
 import Quiz from "../quiz/Quiz";
-import Scoreboard from "../scoreboard/Scoreboard";
 import ScoreProgress from "../score-progress/ScoreProgress.js";
 import Test from "./test";
-import ScoreBars from '../score-progress/ScoreBars.js'
-import ScoreRadar from "../score-progress/ScoreRadar";
-import ScoreCard from "../score-progress/ScoreCard";
-import Badges from "../score-progress/Badges.js"
 import TopScores from "../top-scores/TopScores";
+import Feedback from "../feedback/Feedback";
+
 
 
 
@@ -46,9 +43,7 @@ const MyRoutes = () => {
                 
                 <Route path="/categories" element={<Categories />} />
 
-                <Route path="/categories/:category" element={<CategoryInfo />} />
-
-                <Route path="/scoreboard" element={<Scoreboard />} />
+                <Route path="/categories/:category" element={<CategoryInfo />} />                
 
                 <Route path="/topscores" element={<TopScores />} />
 
@@ -61,6 +56,8 @@ const MyRoutes = () => {
                     <Route path="/quiz/categories/:category" element={<Quiz />} />
 
                     <Route path="/progress" element={<ScoreProgress />} />
+
+                    <Route path="/feedback" element={<Feedback />} />
 
                 </Route>
 
