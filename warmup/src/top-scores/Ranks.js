@@ -70,15 +70,15 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const readStyle = {
-    backgroundColor: 'transparent',  // Transparent background
-    color: 'white',                  // Text color
-    border: 'none',       // Border color and style
-    borderRadius: '4px',            // Rounded corners
-    padding: '8px 16px',            // Padding
-    cursor: 'pointer',             // Cursor style
+    backgroundColor: 'transparent',  
+    color: 'white',                 
+    border: 'none',       
+    borderRadius: '4px',            
+    padding: '8px 16px',            
+    cursor: 'pointer',             
     '&:hover': {
-      backgroundColor: 'transparent',      // Background color on hover
-      color: '#f8e11b',             // Text color on hover
+      backgroundColor: 'transparent',      
+      color: '#f8e11b',
     },
 };
 
@@ -220,7 +220,7 @@ function Ranks() {
                         <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Player </TableCell>
                         <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Score(%)&nbsp; </TableCell>
                         <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Date&nbsp; </TableCell>
-                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Comment&nbsp; </TableCell>
+                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Feedback&nbsp; </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -277,7 +277,7 @@ function Ranks() {
                         
                     >
                         <DialogTitle sx={{ m: 0, p: 2, color: "white"}}>
-                            Check out the comment
+                            Check out the user's feedback
                         </DialogTitle> 
                         <IconButton                    
                             onClick={handleClose}

@@ -163,6 +163,22 @@ class WarmUpApi {
 
     }
 
+    /** Edit a comment */
+    static async editComment({username}, data) {
+
+        let res = await this.request(`comment/${username}/edit`, data, 'patch')
+        
+        return res
+
+    }
+
+    /** Delete a comment */
+    static async deleteComment({username}, data) {
+
+        await this.request(`comment/${username}/delete`, data, 'delete')
+
+    }
+
 
 
 }
