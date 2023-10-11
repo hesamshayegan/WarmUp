@@ -118,8 +118,13 @@ function Feedback() {
                                                 id={c.id}
                                                 category={c.category}
                                                 content={(comments.find((comment) => comment.category === c.category)?.content) || null}
-                                            />                                           
+                                            />
+                                            
+                                            {console.log('categories', categories)}
+                                            {console.log('comments', comments)}
+                                            {console.log('comment', comments.find((comment) => comment.category === c.category)?.content)}
                                         </Grid>
+                                        
                                     ))}
                             
                         </Grid>                     

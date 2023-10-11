@@ -92,5 +92,21 @@ router.get("/:username/content", ensureCorrectUser, async function (req, res, ne
 })
 
 
+// get all comments
+router.get("/allcontent", async function (req, res, next) {
+
+    try {
+        
+        const allComments = await Comment.getAllComment();
+
+        return res.json({ allComments })
+        
+    } catch(err) {
+        return next(err)
+    }
+
+})
+
+
 module.exports = router
 

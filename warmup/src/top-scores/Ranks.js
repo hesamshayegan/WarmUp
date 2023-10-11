@@ -29,11 +29,7 @@ const CATEGORIES = [
   { id: 6, name: 'Food Production' },
 ];
 
-const cellStyle = {
-  display: 'flex',  
-  alignItems: "center",
-  color: "white"
-}
+
 
 const btnStyle = {
     background: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",
@@ -44,11 +40,27 @@ const btnStyle = {
     padding: "10px",
     boxShadow: "0 3px 5px 2px rgba(255, 255, 102, 0.3)",
     transition: "box-shadow 0.3s ease-in-out",
+    [theme.breakpoints.down("md")]: {                                    
+      height: "30px",
+      width: "100px",
+      fontSize: "10px",
+      marginTop: "5px"
+
+      },
     "&:hover": {
         boxShadow: "0 6px 10px 4px rgba(0, 255, 102, 0.3)",
         border: "none",
     }
 }
+
+const selectedBtnStyle = {
+  ...btnStyle,
+  border: "3px solid #f8e11b",
+  "&:hover": {
+    boxShadow: "0 6px 10px 4px rgba(0, 255, 102, 0.3)",
+    border: "3px solid #f8e11b",
+  }
+};
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -82,12 +94,43 @@ const readStyle = {
     },
 };
 
+
+const headStyle = {
+    color: "#f8e11b",
+    fontSize: "1.1rem",
+    [theme.breakpoints.down("md")]: {                                    
+      fontSize: "12px",
+      margin: "1px",
+      padding: "8px"
+      }              
+}
+
+const rankStyle = {
+  display: 'flex',  
+  alignItems: "center",
+  color: "white",
+  fontSize: "12px", 
+  padding: "8px"
+}
+
+const cellStyle = {
+  color: "white",
+  [theme.breakpoints.down("md")]: {                                    
+    fontSize: "12px",
+    margin: "1px",
+    padding: "8px"
+    }              
+}
+
+
 function Ranks() {
 
         const [AllScoresLogs, setAllScoresLogs] = useState();        
         const [sortedLogs, setSortedLogs] = useState({});
         const [selectedCategory, setSelectedCategory] = useState(1);
         const [open, setOpen] = useState(false);
+        const [comments, setComments] = useState();
+        const [selectedCommentContent, setSelectedCommentContent] = useState('');
        
       
         
@@ -144,6 +187,29 @@ function Ranks() {
         }, [AllScoresLogs]);
 
 
+        // Get all comments
+        useEffect(() => {
+          async function fetchAllComments() {
+            try {
+              const fetchedAllComments = await WarmUpApi.getAllComments();
+              setComments(fetchedAllComments);
+            } catch (error) {
+              console.error("Error fetching comments:", error);
+            }
+          }
+      
+          fetchAllComments();
+        }, []);
+
+
+        function findCommentContent(id) {
+          if (comments) {            
+            const comment = comments.find((comment) => comment.comment_id === id);
+            return comment ? comment.content : '';
+          }
+          return '';
+        }
+
 
         function formatDate(dateStr) {
           const date = new Date(dateStr);
@@ -161,12 +227,33 @@ function Ranks() {
           setSelectedCategory(category);
         };
 
-        const handleClickOpen = () => {
-            setOpen(true);
+        const handleClickOpen = (commentContent) => {
+          
+          setSelectedCommentContent(commentContent);
+          setOpen(true);  
+          
         };
+
           const handleClose = () => {
+            
+            setSelectedCommentContent('');
             setOpen(false);
+            
         };
+
+
+        
+        function truncateText(text) {
+          if (text) {
+              if (text.length <= 20) {
+              return text;
+              } else {
+              return text.slice(0, 20) + "...";
+              }
+          } else {
+              return null
+          }
+        }
 
         
         if (Object.keys(sortedLogs).length === 0) {
@@ -181,9 +268,10 @@ function Ranks() {
 
                 <Box sx={{ display: "flex",
                            justifyContent: 'space-evenly',
+                           flexWrap: 'wrap',
                            width: "800px",
                            [theme.breakpoints.down("md")]: {                                    
-                                maxWidth: '370px',                                                                        
+                                maxWidth: '100vw'                                
                                 }
                             }}
                            
@@ -191,9 +279,9 @@ function Ranks() {
                     {CATEGORIES.map((cat) => (
                       <Button
                         key={cat.id}
-                        variant={selectedCategory === cat.id ? 'contained' : 'outlined'}
-                        onClick={() => handleCategoryChange(cat.id)}                        
-                        sx={btnStyle}
+                        variant={selectedCategory === cat.id ? 'contained' : 'outlined'}                        
+                        sx={selectedCategory === cat.id ? selectedBtnStyle : btnStyle}
+                        onClick={() => handleCategoryChange(cat.id)}
                       >
                         {cat.name}
                         
@@ -211,18 +299,20 @@ function Ranks() {
                 <TableContainer>                          
                   <Table sx={{ width: "800px",
                                [theme.breakpoints.down("md")]: {                                    
-                                    maxWidth: '370px',                                                                        
-                                    } }}>
+                                    width: '370px',                                                                        
+                                    }}}
+                  >
                     
                     <TableHead>
                       <TableRow>
-                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Rank </TableCell>
-                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Player </TableCell>
-                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Score(%)&nbsp; </TableCell>
-                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Date&nbsp; </TableCell>
-                        <TableCell align='center' sx={{ color: "#f8e11b", fontSize: "1.1rem"}}> Feedback&nbsp; </TableCell>
+                        <TableCell align='center' sx={headStyle}> Rank </TableCell>
+                        <TableCell align='center' sx={headStyle}> Player </TableCell>
+                        <TableCell align='center' sx={headStyle}> Score(%)&nbsp; </TableCell>
+                        <TableCell align='center' sx={headStyle}> Date&nbsp; </TableCell>
+                        <TableCell align='center' sx={headStyle}> Feedback&nbsp; </TableCell>
                       </TableRow>
                     </TableHead>
+
                     <TableBody>
                       {sortedLogs[selectedCategory].map((row, index, array) => {
                         let rank = 1; 
@@ -241,23 +331,33 @@ function Ranks() {
                           showIcon = true;
                         }
 
+                        
+                        // Get the comment content for the current item, using the concept of Closure
+                        const commentContent = findCommentContent(row.id);
+
                         return (                          
                           <TableRow key={index + 1}>
                             <TableCell component="th" scope="row">
-                              <Box sx={cellStyle}>
+                              <Box sx={rankStyle}>
                                 {rank}
                                 {showIcon && <EmojiEventsOutlinedIcon sx={{ color: 'orange' }} />}
                               </Box>
                             </TableCell>
-                            <TableCell align='center' sx={{ color: "white"}}> {row.username} </TableCell>
-                            <TableCell align='center' sx={{ color: "white"}}> {Math.round(row.score * 100)} </TableCell>
-                            <TableCell align='center' sx={{ color: "white"}}> {formatDate(row.time_stamp)} </TableCell>
+                            <TableCell align='center' sx={cellStyle}> {row.username} </TableCell>
+                            <TableCell align='center' sx={cellStyle}> {Math.round(row.score * 100)} </TableCell>
+                            <TableCell align='center' sx={cellStyle}> {formatDate(row.time_stamp)} </TableCell>
                             
-                            <TableCell align='center' sx={{ color: "white"}}> 
-                                        Questions are...
-                                        <Link onClick={handleClickOpen} sx={readStyle}>                                        
-                                            Read More
-                                        </Link>
+                            <TableCell align='center' sx={cellStyle}>
+
+                              {commentContent ? truncateText(commentContent) : '-'}
+                              {commentContent && (
+                                <Box>
+                                  <Link onClick={() => handleClickOpen(commentContent)} sx={readStyle}>
+                                    Read More                                 
+                                  </Link>
+                                </Box>
+                                
+                              )}
                             </TableCell>
 
                           </TableRow>
@@ -273,8 +373,7 @@ function Ranks() {
                 <Box>
                     <BootstrapDialog
                         onClose={handleClose}                    
-                        open={open}
-                        
+                        open={open}                        
                     >
                         <DialogTitle sx={{ m: 0, p: 2, color: "white"}}>
                             Check out the user's feedback
@@ -284,26 +383,21 @@ function Ranks() {
                             sx={{
                                 position: 'absolute',
                                 right: 8,
-                                top: 8,
-                                color: (theme) => theme.palette.grey[500],
+                                top: 8,                                
                             }}
                         >
                             <CloseIcon sx={{ color: "white"}} />
                         </IconButton>
                         <DialogContent>
-                        <Typography gutterBottom>
-                            
-                        </Typography>
-                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                            consectetur ac, vestibulum at eros.dsadsadsads 
-                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                            consectetur ac, vestibulum at eros.dsadsadsads
+
+                          <Typography gutterBottom>
+                            {selectedCommentContent}                          
+                          </Typography>
+
                         </DialogContent>
                         <DialogActions>
                         <Button onClick={handleClose} sx={readStyle}>                    
-                            close
+                            Close
                         </Button>
                         </DialogActions>
                     </BootstrapDialog>

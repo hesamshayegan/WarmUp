@@ -180,6 +180,16 @@ class WarmUpApi {
     }
 
 
+    /** get all comments */
+    static async getAllComments() {
+
+        let res = await this.request(`comment/allcontent`, {}, 'get')
+        
+        return res.allComments
+
+    }
+
+
 
 }
 

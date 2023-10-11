@@ -192,7 +192,24 @@ const {
             const result = commentIdQuery.rows            
             return result
             
-        }       
+        }
+        
+        
+        static async getAllComment() {
+               
+                const commentIdQuery = await db.query(
+                    `SELECT *
+                    FROM comments
+                    `,
+                    )
+                    
+                if ((commentIdQuery.rows).length === 0) throw new NotFoundError(`No comment found`);
+    
+    
+                const result = commentIdQuery.rows            
+                return result
+                
+            }  
 
 
 }

@@ -43,7 +43,7 @@ const CategoryCommentCard = ({ id, category, content}) => {
             const { currentUser } = useContext(UserContext);
             const [open, setOpen] = useState(false);
             const [formInput, setFormInput] = useState('');
-
+            console.log(id, content)
             useEffect(() => {
                 async function fetchScoreHistory() {
                 try {
@@ -146,8 +146,7 @@ const CategoryCommentCard = ({ id, category, content}) => {
                 try {
                     const username = currentUser.username;
                     
-                    await WarmUpApi.deleteComment({ username }, {category});
-                    debugger;
+                    await WarmUpApi.deleteComment({ username }, {category});                    
                     handleClose();                    
                     window.location.reload();
                     
@@ -240,7 +239,12 @@ const CategoryCommentCard = ({ id, category, content}) => {
                                         
                                             <Dialog open={open} onClose={handleClose}>
 
-                                                <DialogTitle> Feedback </DialogTitle>
+                                                <DialogTitle> 
+                                                    Feedback about 
+                                                    {category === "fossil-fuels" ? " fossil fuels"
+                                                    : category === "food-production" ? " food production"
+                                                    : ` ${category}` }
+                                                </DialogTitle>
 
                                                 <DialogContent>
 

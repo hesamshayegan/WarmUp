@@ -13,8 +13,10 @@ function TopScores() {
         <Grid container>
 
             <Grid   item md={4} 
-                    sx={{ backgroundImage: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",
-                          height: "100vh"}}>
+                    sx={{ 
+                        backgroundImage: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",
+                    }}
+            >
                 <Slide direction="right" 
                     in={true} 
                     mountOnEnter 
@@ -59,12 +61,16 @@ function TopScores() {
                 </Slide>
             </Grid>
 
-            <Grid item md={8} sx={{ backgroundColor: "#41548c" }}>
+            <Grid item md={8} 
+                  sx={{ 
+                    backgroundColor: "#41548c",
+                    height: "100vh"
+                  }}
+            >
                 <Box sx={{
                     display: "flex",
                     justifyContent: "center",
-                    marginTop: "30px",
-                    
+                    marginTop: "30px",                    
                     }}
                 >
                     <Ranks /> 
