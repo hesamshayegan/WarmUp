@@ -1,16 +1,33 @@
 import React from "react";
+import { 
+Box, Typography
+} from "@mui/material";
+
+function cleanErrorMessage(error) {
+  if (error.startsWith('instance.')) {
+    return error.substring('instance.'.length);
+  }
+  return error;
+}
+
 
 function Alert({ type = "danger", messages = [] }) {
   console.debug("Alert", "type=", type, "messages=", messages);
 
   return (
-      <div className={`alert alert-${type}`} role="alert">
+      <Box className={`alert alert-${type}`} role="alert">
         {messages.map(error => (
-            <p key={error}>
-              {error}
-            </p>
+            <Typography
+              key={error}
+              sx={{
+                color: "red",
+                margin: "10px"
+              }}
+            >
+              {cleanErrorMessage(error)}
+            </Typography>
         ))}
-      </div>
+      </Box>
   );
 }
 

@@ -220,7 +220,8 @@ const EditUserForm = ({ updateUser }) => {
 
                         {formErrors.length
                             ? <Alert type="danger" messages={formErrors} />
-                            : null}
+                            : null
+                            }
                         
                     </Box>
 
