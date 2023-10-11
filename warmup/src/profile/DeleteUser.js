@@ -1,6 +1,18 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../common/UserContext";
+import { Button } from "@mui/material";
+
+const deleteBtnStyle = {
+  background: "#E57D74",
+  borderRadius: "30px",
+  border: "1px solid red",
+  color: "#953129",
+  height: "48px",
+  width: "100px",
+  padding: "5px",
+  marginRight: "5px"
+}
 
 const DeleteUser = () => {
   const navigate = useNavigate();
@@ -19,9 +31,9 @@ const DeleteUser = () => {
 
   return (
     
-    <button onClick={handleDelete} className="delete-button">
+    <Button className="delete-button" onClick={handleDelete} sx={deleteBtnStyle}>
       Delete
-    </button>
+    </Button>
   );
 };
 

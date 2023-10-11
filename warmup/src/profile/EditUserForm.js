@@ -1,12 +1,56 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import UserContext from "../common/UserContext";
+import { styled } from '@mui/material/styles';
 import Alert from "../common/Alert";
 import DeleteUser from "./DeleteUser";
+import { 
+Box, Grid, Typography, Button,
+FormControl, InputLabel, FilledInput,
+InputAdornment, IconButton
+} from "@mui/material";
+import {
+Visibility, VisibilityOff
+} from '@mui/icons-material'
+
+import theme from "../theme";
+import img from "../static/images/profile/profile-avatar.png"
+
+
+const SubmitBtnStyle = {
+    background: "#1CA168",
+    borderRadius: "30px",
+    border: "1px solid #93FF00",
+    color: "white",
+    height: "48px",
+    width: "100px",
+    padding: "5px",
+    marginRight: "5px"
+}
+
+const formStyle = {
+    width: "350px",
+    m: 2
+}
+
+const UnderGreen= styled('div')({
+    textDecoration: 'underline',
+    textDecorationColor: '#93FF00',
+    textDecorationThickness: '4px',
+    display: 'inline' 
+    
+})
 
 const EditUserForm = ({ updateUser }) => {
 
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     console.debug(
         "userContext=",  useContext(UserContext)
@@ -73,66 +117,153 @@ const EditUserForm = ({ updateUser }) => {
         }));
     }
 
+
+    console.log(formData)
+
     return (
-        <div className="page-container">
-            <form className="EditForm"onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label htmlFor="username" className="label">
-                        Username
-                    </label>
-                    <p>{currentUser ? currentUser.username : ""}</p>
-                </div>
 
-                <div className="input-group">
-                    <label htmlFor="password" className="label">
-                        Password
-                    </label>
-                    <input
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="input"
-                        type="password"
-                    />
-                </div>
-               
-                <div className="input-group">
-                    <label htmlFor="email" className="label">
-                        Email
-                    </label>
-                    <input
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="input"
-                    />
-                </div>
-
-                <div className="input-group">
-                    <label htmlFor="image_profile" className="label">
-                        Image profile
-                    </label>
-                    <input
-                        id="image_profile"
-                        name="image_profile"
-                        value={formData.image_profile}
-                        onChange={handleChange}
-                        className="input"
-                    />
-                </div>
-
-                {formErrors.length
-                    ? <Alert type="danger" messages={formErrors} />
-                    : null}
+        <Grid container>
+            <Grid item md={2} 
+                sx={{ backgroundColor: "#41548c",
+                    width: "100vw",
+                }}
                 
-                <button>Submit</button>
-            </form>
+            >
+                <Box sx={{ width: "100%" }}>
+                    <Box sx={{ 
+                            display: "flex",                            
+                            flexDirection: "column",
+                            alignItems: "center",
+                            marginTop: "30px"}}> 
+                        <img
+                            src={currentUser.image_profile ? currentUser.image_profile : img}                        
+                            style={{ height: "150px",
+                                     width: "150px",
+                                     borderRadius: "50%"
+                            }}                      
+                        />
+                        <Typography variant="h6" sx={{ fontWeight: 600, m: 2, color: "white" }}>
+                            <UnderGreen> USERNAME </UnderGreen>
+                        </Typography>
+                        <Typography sx={{ fontStyle: 'italic', color: "white" }} >
+                                    <UnderGreen> {currentUser ? currentUser.username : ""} </UnderGreen>
+                        </Typography>
+                    </Box>
+                </Box>
+            </Grid>
 
-            <DeleteUser />
-            
-        </div>
+
+            <Grid item md={5} 
+                  sx={{ backgroundColor: "#F0F8FF",
+                        height: "100vh",
+                        [theme.breakpoints.down("md")]: {
+                            height: "100%"
+                        }  
+                    }}
+            >
+                
+                <Box sx={{ width: "100%" }}>
+
+                    <Box  sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center", 
+                            marginTop: "30px",
+                            [theme.breakpoints.down("md")]: {
+                                width: "100vw"
+                            }
+                          }}
+                    >
+                                     
+                        <FormControl sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                    >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
+                        <FormControl fullWidth sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}                        
+                            />
+                        </FormControl>
+
+                        <FormControl fullWidth sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-image_profile">Image Profile URL</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-image_profile"
+                                name="image_profile"
+                                value={formData.image_profile}
+                                onChange={handleChange}                       
+                            />
+                        </FormControl>
+
+                        {formErrors.length
+                            ? <Alert type="danger" messages={formErrors} />
+                            : null}
+                        
+                    </Box>
+
+                        <Box sx={{ display: "flex", justifyContent: "center"}}> 
+                            <Button onClick={handleSubmit} sx={SubmitBtnStyle}> Submit </Button>
+                            <DeleteUser />
+                        </Box>
+                    
+                    </Box>
+                
+                
+            </Grid>
+
+            <Grid item md={5} 
+                    sx={{ 
+                    backgroundImage: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",                            
+                    }}
+            >   
+                <Box sx={{ marginTop: "30px" }}>
+                    <Typography variant="h4" 
+                                sx={{
+                                    textAlign: "center",                                
+                                    margin: "10px",
+                                    marginTop: "20px",
+                                    color: "white"
+                                }}
+                    >
+                        Edit Profile
+                    </Typography>                           
+                    <Typography variant="h6" 
+                                sx={{
+                                    textAlign: "center",                               
+                                    margin: "10px",
+                                    marginTop: "20px",
+                                    color: "white"
+                                }}
+                    > 
+                        Update your WarmUp profile image and email to match your personality and style.
+                    </Typography>
+                </Box>
+                </Grid>
+        </Grid>
+        
 
     )
 
