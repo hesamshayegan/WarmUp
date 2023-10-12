@@ -5,7 +5,8 @@ import Alert from "../common/Alert";
 import { 
 Box, Grid, Typography, Button,
 FormControl, InputLabel, FilledInput,
-InputAdornment, IconButton, TextField
+InputAdornment, IconButton, TextField,
+Slide
 } from "@mui/material";
 import {
 Visibility, VisibilityOff
@@ -161,31 +162,41 @@ const LoginForm = ({ loginUser }) => {
                       height: "100vh",
                       width: "100vw"
                     }}
-            >   
-                <Box sx={{ marginTop: "30px" }}>
-                    <Typography variant="h4" 
-                                sx={{
-                                    textAlign: "center",                                
-                                    margin: "10px",
-                                    marginTop: "20px",
-                                    color: "#336d1a",
-                                    fontWeight: 700,
-                                    textTransform: "uppercase"
-                                }}
-                    >
-                        Login
-                    </Typography>                           
-                    <Typography variant="h6" 
-                                sx={{
-                                    textAlign: "center",                               
-                                    margin: "10px",
-                                    marginTop: "20px",
-                                    color: "#336d1a"
-                                }}
-                    > 
-                        Sign in using your WarmUp account!
-                    </Typography>
-                </Box>
+            >
+                <Slide direction="left" 
+                    in={true} 
+                    mountOnEnter 
+                    unmountOnExit
+                    easing={{
+                        enter: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                    timeout={{ enter: 1000, exit: 0 }}
+                >
+                    <Box sx={{ marginTop: "30px" }}>
+                        <Typography variant="h4" 
+                                    sx={{
+                                        textAlign: "center",
+                                        margin: "10px",
+                                        marginTop: "20px",
+                                        color: "#336d1a",
+                                        fontWeight: 700,
+                                        textTransform: "uppercase"
+                                    }}
+                        >
+                            Login
+                        </Typography>                           
+                        <Typography variant="h6" 
+                                    sx={{
+                                        textAlign: "center",
+                                        margin: "10px",
+                                        marginTop: "20px",
+                                        color: "#336d1a"
+                                    }}
+                        > 
+                            Sign in using your WarmUp account!
+                        </Typography>
+                    </Box>
+                </Slide>  
             </Grid>
 
       </Grid>

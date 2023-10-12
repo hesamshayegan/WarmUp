@@ -4,7 +4,7 @@ import Alert from "../common/Alert";
 import { 
 Box, Grid, Typography, Button,
 FormControl, InputLabel, FilledInput,
-InputAdornment, IconButton
+InputAdornment, IconButton, Slide
 } from "@mui/material";
 import {
 Visibility, VisibilityOff
@@ -189,32 +189,42 @@ const NewUserForm = ({ registerUser }) => {
                     backgroundSize: 'cover',
                     height: "100vh",
                     }}
-            >   
-                <Box sx={{ marginTop: "30px" }}>
-                    <Typography variant="h4" 
-                                sx={{
-                                    textAlign: "center",                                
-                                    margin: "10px",
-                                    marginTop: "20px",
-                                    color: "#336d1a",
-                                    fontWeight: 700,
-                                    textTransform: "uppercase"
-                                }}
-                    >
-                        Sign Up
-                    </Typography>                           
-                    <Typography variant="h6"
-                                sx={{
-                                    textAlign: "center",                               
-                                    margin: "10px",
-                                    marginTop: "20px",
-                                    color: "#336d1a"
-                                }}
-                    > 
-                        Create your WarmUp profile and try the first climate quiz today!
-                    </Typography>
-                </Box>
-                </Grid>
+            >
+                <Slide direction="left" 
+                    in={true} 
+                    mountOnEnter 
+                    unmountOnExit
+                    easing={{
+                        enter: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                    timeout={{ enter: 1000, exit: 0 }}
+                >
+                    <Box sx={{ marginTop: "30px" }}>
+                        <Typography variant="h4" 
+                                    sx={{
+                                        textAlign: "center",                                
+                                        margin: "10px",
+                                        marginTop: "20px",
+                                        color: "#336d1a",
+                                        fontWeight: 700,
+                                        textTransform: "uppercase"
+                                    }}
+                        >
+                            Sign Up
+                        </Typography>                           
+                        <Typography variant="h6"
+                                    sx={{
+                                        textAlign: "center",                               
+                                        margin: "10px",
+                                        marginTop: "20px",
+                                        color: "#336d1a"
+                                    }}
+                        > 
+                            Create your WarmUp profile and try the first climate quiz today!
+                        </Typography>
+                    </Box>
+                </Slide>
+            </Grid>
         </Grid>
 
     )

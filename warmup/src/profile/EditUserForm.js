@@ -7,7 +7,7 @@ import DeleteUser from "./DeleteUser";
 import { 
 Box, Grid, Typography, Button,
 FormControl, InputLabel, FilledInput,
-InputAdornment, IconButton
+InputAdornment, IconButton, Slide
 } from "@mui/material";
 import {
 Visibility, VisibilityOff
@@ -240,32 +240,42 @@ const EditUserForm = ({ updateUser }) => {
                     sx={{ 
                     backgroundImage: `url(${bg5})`,
                     }}
-            >   
-                <Box sx={{ marginTop: "30px" }}>
-                    <Typography variant="h4" 
-                                sx={{
-                                    textAlign: "center",                                
-                                    margin: "10px",
-                                    marginTop: "20px",
-                                    color: "#336d1a",
-                                    fontWeight: 700,
-                                    textTransform: "uppercase"
-                                }}
-                    >
-                        Edit Profile
-                    </Typography>                           
-                    <Typography variant="h6" 
-                                sx={{
-                                    textAlign: "center",                               
-                                    margin: "10px",
-                                    marginTop: "20px",
-                                    color: "#336d1a"
-                                }}
-                    > 
-                        Update your WarmUp profile image and email to match your personality and style.
-                    </Typography>
-                </Box>
-                </Grid>
+            >
+                <Slide direction="left" 
+                    in={true} 
+                    mountOnEnter 
+                    unmountOnExit
+                    easing={{
+                        enter: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                    timeout={{ enter: 1000, exit: 0 }}
+                >  
+                    <Box sx={{ marginTop: "30px" }}>
+                        <Typography variant="h4" 
+                                    sx={{
+                                        textAlign: "center",
+                                        margin: "10px",
+                                        marginTop: "20px",
+                                        color: "#336d1a",
+                                        fontWeight: 700,
+                                        textTransform: "uppercase"
+                                    }}
+                        >
+                            Edit Profile
+                        </Typography>   
+                        <Typography variant="h6" 
+                                    sx={{
+                                        textAlign: "center",
+                                        margin: "10px",
+                                        marginTop: "20px",
+                                        color: "#336d1a"
+                                    }}
+                        > 
+                            Update your WarmUp profile image and email to match your personality and style.
+                        </Typography>
+                    </Box>
+                </Slide>
+            </Grid>
         </Grid>
         
 

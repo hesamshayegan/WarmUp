@@ -8,8 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { styled } from '@mui/material/styles';
 import { 
-    Box, Button, Typography, DialogActions,
-    DialogContent, DialogTitle, Dialog, Link 
+Box, Button, Typography, DialogActions,
+DialogContent, DialogTitle, Dialog, Link 
 } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -17,6 +17,7 @@ import theme from "../theme";
 import WarmUpApi from '../api/api';
 import { motion } from 'framer-motion';
 
+import img from "../static/images/profile/profile-avatar.png";
 
 
 
@@ -105,6 +106,18 @@ const headStyle = {
       }              
 }
 
+const playerStyle = {
+  color: "#f8e11b",
+  fontSize: "1.1rem",
+  padding: "0px",
+  margin: "0px",
+  [theme.breakpoints.down("md")]: {                                    
+    fontSize: "12px",
+    margin: "0px",
+    padding: "0px"
+    }              
+}
+
 const rankStyle = {
   display: 'flex',  
   alignItems: "center",
@@ -131,9 +144,26 @@ function Ranks() {
         const [open, setOpen] = useState(false);
         const [comments, setComments] = useState();
         const [selectedCommentContent, setSelectedCommentContent] = useState('');
+        const [users, setAllUsers] = useState({}); 
        
       
-        
+        // Feteching users' info from the API
+        useEffect(() => {
+          async function fetchAllUsers() {
+            try {
+              const fetchedAllUsers = await WarmUpApi.findAllUsers();
+              setAllUsers(fetchedAllUsers);
+            } catch (error) {
+              console.error("Error fetching users:", error);
+            }
+          }
+      
+          fetchAllUsers();
+        }, []);
+
+        console.log('users', users)
+
+
         // Feteching scores' history from the API
         useEffect(() => {
           async function fetchAllScoreHistory() {
@@ -146,7 +176,7 @@ function Ranks() {
           }
       
           fetchAllScoreHistory();
-        }, []);      
+        }, []);
 
 
         
@@ -202,10 +232,22 @@ function Ranks() {
         }, []);
 
 
+
         function findCommentContent(id) {
           if (comments) {            
             const comment = comments.find((comment) => comment.comment_id === id);
             return comment ? comment.content : '';
+          }
+          return '';
+        }
+
+  
+
+        function findImageProfile(user_id) {
+          if (users) {            
+            const user = users.find((user) => user.id === user_id);
+            return user ? user.image_profile : '';
+            
           }
           return '';
         }
@@ -255,7 +297,7 @@ function Ranks() {
           }
         }
 
-        
+        console.log('sortedLogs', sortedLogs)
         if (Object.keys(sortedLogs).length === 0) {
 
           return <div> Loading... </div>;
@@ -306,7 +348,8 @@ function Ranks() {
                     <TableHead>
                       <TableRow>
                         <TableCell align='center' sx={headStyle}> Rank </TableCell>
-                        <TableCell align='center' sx={headStyle}> Player </TableCell>
+                        <TableCell align='center' sx={playerStyle}>  </TableCell>
+                        <TableCell align='left' sx={headStyle}> Player </TableCell>
                         <TableCell align='center' sx={headStyle}> Score(%)&nbsp; </TableCell>
                         <TableCell align='center' sx={headStyle}> Date&nbsp; </TableCell>
                         <TableCell align='center' sx={headStyle}> Feedback&nbsp; </TableCell>
@@ -332,8 +375,10 @@ function Ranks() {
                         }
 
                         
-                        // Get the comment content for the current item, using the concept of Closure
+                        // Get the comment content & image profile for the current item, using the concept of Closure
                         const commentContent = findCommentContent(row.id);
+                        {console.log('row', row)}
+                        const imageProfile = findImageProfile(row.user_id)
 
                         return (                          
                           <TableRow key={index + 1}>
@@ -343,7 +388,16 @@ function Ranks() {
                                 {showIcon && <EmojiEventsOutlinedIcon sx={{ color: 'orange' }} />}
                               </Box>
                             </TableCell>
-                            <TableCell align='center' sx={cellStyle}> {row.username} </TableCell>
+                            <TableCell align='right' sx={playerStyle}>
+                              <img
+                                src={imageProfile ? imageProfile : img}
+                                style={{ height: "30px",
+                                        width: "30px",
+                                        borderRadius: "50%"
+                                }}                      
+                              />                               
+                            </TableCell>
+                            <TableCell align='left' sx={cellStyle}> {row.username} </TableCell>
                             <TableCell align='center' sx={cellStyle}> {Math.round(row.score * 100)} </TableCell>
                             <TableCell align='center' sx={cellStyle}> {formatDate(row.time_stamp)} </TableCell>
                             

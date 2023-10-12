@@ -45,7 +45,8 @@ function TopScores() {
                                         color: "white"
                                     }}
                         > 
-                        Discover Top Achievements: Explore remarkable accomplishments across categories from Plastic Reduction to Food Production!
+                        Discover Top Achievements: Explore remarkable accomplishments 
+                        across categories from Plastic Reduction to Food Production!
                         </Typography>
                         <Typography variant="h6" 
                                     sx={{

@@ -67,6 +67,15 @@ class WarmUpApi {
     }
     
 
+    /** Get all users */
+
+    static async findAllUsers() {
+        let res = await this.request(`users/`, {}, 'get');
+        return res.users
+    }
+
+    
+
     /** get all categories. */
 
     static async getAllCategories() {
