@@ -1,6 +1,34 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Alert from "../common/Alert";
+import { 
+Box, Grid, Typography, Button,
+FormControl, InputLabel, FilledInput,
+InputAdornment, IconButton
+} from "@mui/material";
+import {
+Visibility, VisibilityOff
+} from '@mui/icons-material'
+
+import theme from "../theme";
+import bg5 from "../static/images/bg5.jpg"
+
+const SubmitBtnStyle = {
+    background: "#1CA168",
+    borderRadius: "30px",
+    border: "1px solid #93FF00",
+    color: "white",
+    height: "48px",
+    width: "100px",
+    padding: "5px",
+    marginRight: "5px"
+}
+
+const formStyle = {
+    width: "350px",
+    m: 2
+}
+
 
 const NewUserForm = ({ registerUser }) => {
     const INITIAL_STATE = {
@@ -10,9 +38,16 @@ const NewUserForm = ({ registerUser }) => {
         image_profile: ""
     };
 
-    const [formData, setFormData] = useState(INITIAL_STATE);
-    const [formErrors, setFormErrors] = useState([]);
     const navigate = useNavigate();
+    const [formData, setFormData] = useState(INITIAL_STATE);
+    const [formErrors, setFormErrors] = useState([]);    
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     console.debug(
         "LoginForm",
@@ -54,76 +89,133 @@ const NewUserForm = ({ registerUser }) => {
 
 
     return (
-        <div className="page-container">
-            
-            <form className="SignupForm" onSubmit={handleSubmit}>
-            <h1> Sign Up </h1>
-                <div className="input-group">
+
+        <Grid container>
+
+            <Grid item md={7} 
+                  sx={{ backgroundColor: "#F0F8FF",
+                        height: "100vh",
+                        [theme.breakpoints.down("md")]: {
+                            height: "100%"
+                        }  
+                    }}
+            >
+                
+                <Box sx={{ width: "100%" }}>
+
+                    <Box  sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center", 
+                            marginTop: "30px",
+                            [theme.breakpoints.down("md")]: {
+                                width: "100vw"
+                            }
+                          }}
+                    >
+
+                        <FormControl sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-username">Username</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-username"                                
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                                     
+                        <FormControl sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                    >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
+                        <FormControl fullWidth sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}                        
+                            />
+                        </FormControl>
+
+                        <FormControl fullWidth sx={formStyle} variant="filled">
+                            <InputLabel htmlFor="filled-adornment-image_profile">Image Profile URL</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-image_profile"
+                                name="image_profile"
+                                value={formData.image_profile}
+                                onChange={handleChange}                       
+                            />
+                        </FormControl>
+
+                        {formErrors.length
+                            ? <Alert type="danger" messages={formErrors} />
+                            : null
+                            }
+                        
+                    </Box>
+
+                        <Box sx={{ display: "flex", justifyContent: "center"}}> 
+                            <Button onClick={handleSubmit} sx={SubmitBtnStyle}> Submit </Button>                            
+                        </Box>
                     
-                    <label htmlFor="username" className="label" >
-                        Username
-                    </label>
-                    <input
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        className="input"
-                        placeholder="Username"
-                    />
-                </div>
+                    </Box>
+                
+                
+            </Grid>
 
-                <div className="input-group">
-                    <label htmlFor="password" className="label">
-                        Password
-                    </label>
-                    <input
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="input"
-                        type="password"
-                        placeholder="Password"
-                    />
-                </div>
-
-                <div className="input-group">
-                    <label htmlFor="email" className="label">
-                        Email
-                    </label>
-                    <input
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="input"
-                        placeholder="(Optional) Email"
-                    />
-                </div>
-
-                <div className="input-group">
-                    <label htmlFor="image_profile" className="label">
-                        Image Profile
-                    </label>
-                    <input
-                        id="image_profile"
-                        name="image_profile"
-                        value={formData.image_profile}
-                        onChange={handleChange}
-                        className="input"
-                        placeholder="(Optional) Image Profile"
-                    />
-                </div>
-
-                {formErrors.length
-                    ? <Alert type="danger" messages={formErrors} />
-                    : null}             
-
-                <button>Submit</button>
-            </form>
-
-        </div>
+            <Grid item md={5} 
+                    sx={{ 
+                    backgroundImage: `url(${bg5})`,
+                    backgroundSize: 'cover',
+                    height: "100vh",
+                    }}
+            >   
+                <Box sx={{ marginTop: "30px" }}>
+                    <Typography variant="h4" 
+                                sx={{
+                                    textAlign: "center",                                
+                                    margin: "10px",
+                                    marginTop: "20px",
+                                    color: "#336d1a",
+                                    fontWeight: 700,
+                                    textTransform: "uppercase"
+                                }}
+                    >
+                        Sign Up
+                    </Typography>                           
+                    <Typography variant="h6"
+                                sx={{
+                                    textAlign: "center",                               
+                                    margin: "10px",
+                                    marginTop: "20px",
+                                    color: "#336d1a"
+                                }}
+                    > 
+                        Create your WarmUp profile and try the first climate quiz today!
+                    </Typography>
+                </Box>
+                </Grid>
+        </Grid>
 
     )
 

@@ -1,7 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../common/UserContext";
-import { Button } from "@mui/material";
+
+import {
+Button, Box, Dialog, DialogActions,
+DialogContent, DialogContentText,
+DialogTitle
+} from '@mui/material'
+
 
 const deleteBtnStyle = {
   background: "#E57D74",
@@ -14,9 +20,41 @@ const deleteBtnStyle = {
   marginRight: "5px"
 }
 
+const deleteBtnStyleInt = {
+  background: "#E57D74",
+  borderRadius: "30px",
+  border: "1px solid red",
+  color: "#953129",
+  height: "40px",
+  width: "80px",
+  padding: "5px",
+  marginRight: "5px"
+}
+
+const cancleBtnStyle = {
+  background: "#1CA168",
+  borderRadius: "30px",
+  border: "1px solid #93FF00",
+  color: "white",
+  height: "40px",
+  width: "80px",
+  padding: "5px",
+  marginRight: "5px"
+}
+
 const DeleteUser = () => {
   const navigate = useNavigate();
   const { deleteUser } = useContext(UserContext);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   const handleDelete = async () => {
     const result = await deleteUser();
@@ -31,9 +69,36 @@ const DeleteUser = () => {
 
   return (
     
-    <Button className="delete-button" onClick={handleDelete} sx={deleteBtnStyle}>
+    <Box>
+
+    <Button className="delete-button" onClick={handleClickOpen} sx={deleteBtnStyle}>
       Delete
     </Button>
+
+      <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete profile"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete your account permanently?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} sx={cancleBtnStyle}>Cancel</Button>
+          <Button onClick={handleDelete} autoFocus sx={deleteBtnStyleInt}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+    </Box>
+
   );
 };
 

@@ -14,10 +14,11 @@ Visibility, VisibilityOff
 } from '@mui/icons-material'
 
 import theme from "../theme";
-import img from "../static/images/profile/profile-avatar.png"
+import img from "../static/images/profile/profile-avatar.png";
+import bg5 from "../static/images/bg5.jpg"
 
 
-const SubmitBtnStyle = {
+const submitBtnStyle = {
     background: "#1CA168",
     borderRadius: "30px",
     border: "1px solid #93FF00",
@@ -226,7 +227,7 @@ const EditUserForm = ({ updateUser }) => {
                     </Box>
 
                         <Box sx={{ display: "flex", justifyContent: "center"}}> 
-                            <Button onClick={handleSubmit} sx={SubmitBtnStyle}> Submit </Button>
+                            <Button onClick={handleSubmit} sx={submitBtnStyle}> Submit </Button>
                             <DeleteUser />
                         </Box>
                     
@@ -237,7 +238,7 @@ const EditUserForm = ({ updateUser }) => {
 
             <Grid item md={5} 
                     sx={{ 
-                    backgroundImage: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",                            
+                    backgroundImage: `url(${bg5})`,
                     }}
             >   
                 <Box sx={{ marginTop: "30px" }}>
@@ -246,7 +247,9 @@ const EditUserForm = ({ updateUser }) => {
                                     textAlign: "center",                                
                                     margin: "10px",
                                     marginTop: "20px",
-                                    color: "white"
+                                    color: "#336d1a",
+                                    fontWeight: 700,
+                                    textTransform: "uppercase"
                                 }}
                     >
                         Edit Profile
@@ -256,7 +259,7 @@ const EditUserForm = ({ updateUser }) => {
                                     textAlign: "center",                               
                                     margin: "10px",
                                     marginTop: "20px",
-                                    color: "white"
+                                    color: "#336d1a"
                                 }}
                     > 
                         Update your WarmUp profile image and email to match your personality and style.

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "../common/Alert";
-import theme from "../theme";
 
 import { 
 Box, Grid, Typography, Button,
@@ -11,6 +10,9 @@ InputAdornment, IconButton, TextField
 import {
 Visibility, VisibilityOff
 } from '@mui/icons-material'
+
+import theme from "../theme";
+import bg5 from "../static/images/bg5.jpg"
 
 const SubmitBtnStyle = {
   background: "#1CA168",
@@ -84,7 +86,7 @@ const LoginForm = ({ loginUser }) => {
 
 
       <Grid container>
-          <Grid item md={8} 
+          <Grid item md={7} 
                   sx={{ backgroundColor: "#F0F8FF",
                         height: "100vh",
                         [theme.breakpoints.down("md")]: {
@@ -153,9 +155,9 @@ const LoginForm = ({ loginUser }) => {
             
           </Grid>
 
-          <Grid item md={4}
+          <Grid item md={5}
                     sx={{ 
-                      backgroundImage: "linear-gradient(90deg, rgba(12,225,255,1) 0%, rgba(0,230,107,1) 71%, rgba(188,255,12,1) 100%)",
+                      backgroundImage: `url(${bg5})`,
                       height: "100vh",
                       width: "100vw"
                     }}
@@ -166,7 +168,9 @@ const LoginForm = ({ loginUser }) => {
                                     textAlign: "center",                                
                                     margin: "10px",
                                     marginTop: "20px",
-                                    color: "white"
+                                    color: "#336d1a",
+                                    fontWeight: 700,
+                                    textTransform: "uppercase"
                                 }}
                     >
                         Login
@@ -176,75 +180,17 @@ const LoginForm = ({ loginUser }) => {
                                     textAlign: "center",                               
                                     margin: "10px",
                                     marginTop: "20px",
-                                    color: "white"
+                                    color: "#336d1a"
                                 }}
                     > 
-                        Sign in using your WarmUp account
+                        Sign in using your WarmUp account!
                     </Typography>
                 </Box>
             </Grid>
 
       </Grid>
 
-
-
-
-
-
-
-
-
-
-
-
-
-      // <div className="LoginForm">
-      //   <div >
-      //     <h3>Log In</h3>
-
-      //     <div>
-      //       <div>
-      //         <form onSubmit={handleSubmit}>
-      //           <div>
-      //             <label>Username</label>
-      //             <input
-      //                 name="username"
-      //                 className="form-control"
-      //                 value={formData.username}
-      //                 onChange={handleChange}
-      //                 autoComplete="username"
-      //                 required
-      //             />
-      //           </div>
-      //           <div>
-      //             <label>Password</label>
-      //             <input
-      //                 type="password"
-      //                 name="password"
-      //                 className="form-control"
-      //                 value={formData.password}
-      //                 onChange={handleChange}
-      //                 autoComplete="current-password"
-      //                 required
-      //             />
-      //           </div>
-
-      //           {formErrors.length
-      //               ? <Alert type="danger" messages={formErrors} />
-      //               : null}
-
-      //           <button onSubmit={handleSubmit}>
-      //             Submit
-      //           </button>
-
-      //         </form>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </div>
     );
-
-
 
 }
 
