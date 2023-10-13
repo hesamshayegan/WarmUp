@@ -141,7 +141,7 @@ function MyNav({ logout }) {
                         <ListItem key={page} onClick={toggleDrawer}>
                           <Typography textAlign="center">
                             {page === "About" ? (
-                              <Link  to="/" style={{ textDecoration: "none", color: "#377F37"}}>
+                              <Link  to="/about" style={{ textDecoration: "none", color: "#377F37"}}>
                                 {page}
                               </Link>
                             ) : page === "Quiz" ? (
@@ -204,7 +204,7 @@ function MyNav({ logout }) {
                   {pages.map((page) => (
                     <Typography key={page} variant="h6" sx={{ margin: 1}}>
                       {page === "About" ? (
-                        <UnderlinedLink to="/"> {page} </UnderlinedLink>
+                        <UnderlinedLink to="/about"> {page} </UnderlinedLink>
                       ) : page === "Quiz" ? (
                         <UnderlinedLink to="/categories"> {page} </UnderlinedLink>
                       ) : page === "Top Scores" ? (

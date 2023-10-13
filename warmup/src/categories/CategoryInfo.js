@@ -132,7 +132,7 @@ const CategoryInfo = () => {
                                 justifyContent: "center",
                                 flexDirection: "column",
                                 alignItems: "center"
-                            }}
+                              }}
                         >
                             <Box sx={{ marginTop: "10px", width: "75%" }}
                             >                        

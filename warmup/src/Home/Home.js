@@ -39,7 +39,6 @@ const UnderGreen= styled('div')({
     textDecorationColor: 'green',
     textDecorationThickness: '8px',
     display: 'inline' 
-    
 })
 
 const UnderRed = styled('div')({
