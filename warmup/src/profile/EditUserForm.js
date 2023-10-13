@@ -38,8 +38,7 @@ const UnderGreen= styled('div')({
     textDecoration: 'underline',
     textDecorationColor: '#93FF00',
     textDecorationThickness: '4px',
-    display: 'inline' 
-    
+    display: 'inline'  
 })
 
 const EditUserForm = ({ updateUser }) => {

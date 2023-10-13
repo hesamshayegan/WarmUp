@@ -1,9 +1,15 @@
 import React from 'react';
 import { Box, Grid, Typography } from "@mui/material";
 import Slide from '@mui/material/Slide';
+import { styled } from '@mui/material/styles';
 import Ranks from './Ranks';
 
-
+const UnderOrange = styled('div')({
+    textDecoration: 'underline',
+    textDecorationColor: '#fa6915',
+    textDecorationThickness: '8px',
+    display: 'inline' 
+})
 
 function TopScores() {
 
@@ -35,7 +41,7 @@ function TopScores() {
                                         color: "white"
                                     }}
                         > 
-                        WarmUp Top Players
+                            <UnderOrange> WarmUp </UnderOrange> Top Players 
                         </Typography>
                         <Typography variant="h6" 
                                     sx={{
