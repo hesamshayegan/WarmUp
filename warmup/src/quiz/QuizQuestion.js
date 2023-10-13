@@ -7,7 +7,8 @@ function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
   return (
 
     <Box sx={{  maxWidth: "100%", 
-               margin: "15px" }}>
+               margin: "15px" }}
+    >
       
       <motion.div
         key={key}
@@ -33,16 +34,21 @@ function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
       : questionKey.category }
       </Typography>
       
-      <Typography variant="subtitle2" sx={{ color: "white", 
-                                            borderRadius: "30px",
-                                            border: "2px solid white",
-                                            marginLeft: "5px",
-                                            padding: "5px",
-                                            background: 'radial-gradient(circle, rgba(0,0,0,1) 39%, rgba(255,255,255,1) 100%)'                                            
-                                            }}
+      <Typography variant="subtitle2" sx={{
+                                        color: "white",
+                                        borderRadius: "30px",                                        
+                                        border: "2px solid white",
+                                        background: questionKey.complexity === 'medium' ? '#d3ea29' :
+                                                    questionKey.complexity === 'hard' ? '#28fa1e' :
+                                                    questionKey.complexity === 'easy' ? '#ea5629':
+                                                          null,
+                                        marginLeft: "5px",
+                                        padding: "5px",
+                                  }}
       >
-      {questionKey.complexity} </Typography>
-      
+        {questionKey.complexity} 
+      </Typography>
+
       </Box>
       <FormControl >
         <RadioGroup sx={{ margin: "15px" }}>

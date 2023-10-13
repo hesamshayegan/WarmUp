@@ -1,5 +1,4 @@
-import React, { useEffect, useContext } from 'react'; 
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
 import UserContext from '../common/UserContext';
 import WarmUpApi from '../api/api';
 import ScoreContext from '../common/ScoreContext';

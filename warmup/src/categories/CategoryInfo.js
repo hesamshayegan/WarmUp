@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import categoryData from "./CategoryData";
 import WarmUpApi from "../api/api";
+import Slide from '@mui/material/Slide';
 import UserContext from "../common/UserContext";
 import { 
 Grid, Box, Typography, Button
@@ -37,6 +38,7 @@ const btnStyle = {
 
 const titleStyle = {
     m: 2,
+    textAlign: "center",
     [theme.breakpoints.down("md")]: {                                    
         textAlign: "center"                                                  
         }
@@ -113,108 +115,118 @@ const CategoryInfo = () => {
     return (
 
         <Grid container>
-            
-            <Grid item className="test" md={6}>
+                
+                <Grid item className="test" md={6}>
 
-                <Box sx={{ 
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                        alignItems: "center"
-                     }}
-                >
-                    <Box sx={{ marginTop: "10px", width: "75%" }}
-                    >                        
-                        <Typography variant="h5" sx={{ textAlign: 'center', m: 2 }}> {categoryInfo.info1} </Typography>
-                        <Typography variant="h5" sx={{ textAlign: 'center' }}> {categoryInfo.info2} </Typography>
-                    </Box>
-                    <Box sx={{ 
-                        display: "flex",
-                        justifyContent: "center",                        
-                        alignItems: "center"
-                     }}>
-                        <img
-                            src={categoryInfo.img}
-                            style={{ width: "80%", height: "80%" }}
+                    <Slide direction="right" 
+                        in={true} 
+                        mountOnEnter 
+                        unmountOnExit
+                        easing={{
+                            enter: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                        }}
+                        timeout={{ enter: 1200, exit: 0 }}
+                    >
+                        <Box sx={{ 
+                                display: "flex",
+                                justifyContent: "center",
+                                flexDirection: "column",
+                                alignItems: "center"
+                            }}
+                        >
+                            <Box sx={{ marginTop: "10px", width: "75%" }}
+                            >                        
+                                <Typography variant="h5" sx={{ textAlign: 'center', m: 2 }}> {categoryInfo.info1} </Typography>
+                                <Typography variant="h5" sx={{ textAlign: 'center' }}> {categoryInfo.info2} </Typography>
+                            </Box>
+                            <Box sx={{ 
+                                display: "flex",
+                                justifyContent: "center",                        
+                                alignItems: "center"
+                            }}>
+                                <img
+                                    src={categoryInfo.img}
+                                    style={{ width: "80%", height: "80%" }}
 
-                        />
-                    </Box>
-                </Box>
+                                />
+                            </Box>
+                        </Box>
+                    </Slide>
 
-            </Grid>
+                </Grid>
 
-            <Grid item md={6} sx={containerStyle}>
-                    <Box sx={containerStyle}>
-                        <Typography variant="h3" sx={{ alignItems: "center", textTransform: "uppercase" }}> 
-                                <UnderGreen>
-                                    {categoryInfo.name === "fossil-fuels" ? "fossil fuels"
-                                    : categoryInfo.name === "food-production" ? "food production"
-                                    : categoryInfo.name }
-                                </UnderGreen> quiz                                
-                        </Typography>
-                        {record ? (
-                            <Box>
-                            {record.current_complexity === "easy" && (
+                <Grid item md={6} sx={containerStyle}>
+                        <Box sx={containerStyle}>
+                            <Typography variant="h3" sx={{ alignItems: "center", textTransform: "uppercase" }}> 
+                                    <UnderGreen>
+                                        {categoryInfo.name === "fossil-fuels" ? "fossil fuels"
+                                        : categoryInfo.name === "food-production" ? "food production"
+                                        : categoryInfo.name }
+                                    </UnderGreen> quiz                                
+                            </Typography>
+                            {record ? (
                                 <Box>
+                                {record.current_complexity === "easy" && (
+                                    <Box sx={containerStyle}>
+                                        <Typography variant="h4" sx={titleStyle}>
+                                            Are you ready to try some <UnderOrange>medium questions</UnderOrange>?
+                                        </Typography>
+                                        <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
+                                            Start
+                                        </Button>
+                                    </Box>
+                                )}
+
+                                {record.current_complexity === "medium" && (
+                                    <Box sx={containerStyle}>
+                                        <Typography variant="h4" sx={titleStyle}>
+                                            Are you ready to try some <UnderOrange>hard questions</UnderOrange>?
+                                        </Typography>
+                                        <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
+                                            Start
+                                        </Button>
+                                    </Box>
+                                )}
+
+                                {record.current_complexity === "hard" && (
+                                    <Box sx={containerStyle}>
+                                        <Typography variant="h4" sx={titleStyle}>
+                                            Your previous score is {Math.round(100*(record.correct_answers / record.questions_per_category))}% 
+                                        </Typography>
+                                        <Typography variant="h4" sx={titleStyle}>
+                                            Do you want to retake the quiz?
+                                        </Typography>
+                                        <Button onClick={handleRestartQuiz} sx={btnStyle}> Start </Button>
+                                    </Box>
+                                )}
+                                </Box>
+                            ) : (
+                                <Box sx={containerStyle}>
                                     <Typography variant="h4" sx={titleStyle}>
-                                        Are you ready to try some <UnderOrange>medium questions</UnderOrange>?
+                                        Are you ready to take the quiz?
                                     </Typography>
                                     <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
-                                        Start
+                                        Play
                                     </Button>
                                 </Box>
                             )}
 
-                            {record.current_complexity === "medium" && (
+                            {!currentUser ? (
                                 <Box sx={containerStyle}>
                                     <Typography variant="h4" sx={titleStyle}>
-                                        Are you ready to try some <UnderOrange>hard questions</UnderOrange>?
+                                        Are you ready to take the quiz?
                                     </Typography>
                                     <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
-                                        Start
+                                        Play
                                     </Button>
                                 </Box>
-                            )}
+                            ) : (
+                                null
+                                )   
+                            }
+                        </Box>
 
-                            {record.current_complexity === "hard" && (
-                                <Box sx={containerStyle}>
-                                    <Typography variant="h4" sx={titleStyle}>
-                                        Your previous score is {Math.round(100*(record.correct_answers / record.questions_per_category))}% 
-                                    </Typography>
-                                    <Typography variant="h4" sx={titleStyle}>
-                                        Do you want to retake the quiz?
-                                    </Typography>
-                                    <Button onClick={handleRestartQuiz} sx={btnStyle}> Start </Button>
-                                </Box>
-                            )}
-                            </Box>
-                        ) : (
-                            <Box sx={containerStyle}>
-                                <Typography variant="h4" sx={titleStyle}>
-                                    Are you ready to take the quiz?
-                                </Typography>
-                                <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
-                                    Play
-                                </Button>
-                            </Box>
-                        )}
-
-                        {!currentUser ? (
-                            <Box sx={containerStyle}>
-                                <Typography variant="h4" sx={titleStyle}>
-                                    Are you ready to take the quiz?
-                                </Typography>
-                                <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
-                                    Play
-                                </Button>
-                            </Box>
-                        ) : (
-                            null
-                            )   
-                        }
-                    </Box>
-
-            </Grid>
+                </Grid>
 
         </Grid>
         

@@ -246,26 +246,29 @@ class Score {
             for (const category of categories) {
                 const { id: cat_id, category: categoryName } = category;
                 let categoryScore = 0
+                let currentLevel = ''           
                 
                 // calculate current score per category
                 const questionsQuery = await db.query(`
-                SELECT questions_per_category, correct_answers
+                SELECT questions_per_category, correct_answers, current_complexity
                 FROM user_quiz_progress
                 WHERE user_id = $1
                 AND cat_id = $2
-                `, [ user_id, cat_id]);
+                `, [user_id, cat_id]);
 
                 if (questionsQuery.rows.length === 0) {
                         categoryScore
                 } else {
-                        const { questions_per_category, correct_answers } = questionsQuery.rows[0];
+                        const { questions_per_category, correct_answers, current_complexity } = questionsQuery.rows[0];
                         categoryScore = correct_answers / questions_per_category;
+                        currentLevel = current_complexity
                 }
-
+                // debugger;
                 userScores.push({
                     id: cat_id,
                     category: categoryName,
                     currentScore: categoryScore,
+                    currComplexity: currentLevel
                 });
             }
         };

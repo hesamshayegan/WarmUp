@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Box } from '@mui/material';
+import { CardActionArea, CardActions, Box, Button } from '@mui/material';
 import { motion } from "framer-motion";
 
 
@@ -15,12 +15,23 @@ import agriculture from "../static/images/categories/agriculture.jpg"
 import transportation from "../static/images/categories/transportation.avif"
 import food from "../static/images/categories/food.jpg"
 
+// const buttonStyle = {
+//     color: "white",
+//     borderRadius: "30px",
+//     border: "2px solid white",
+//     backgroundColor: currentLevel === 'medium' ? 'yellow' :
+//                      currentLevel === 'hard' ? 'green' :
+//                      currentLevel === 'easy' ? 'orange':
+//                      null,
+//     marginLeft: "10px",
+//     marginBottom: "30px",
 
+// };
 
-const CategoryCard = ({ category}) => {
+const CategoryCard = ({ category, currentLevel}) => {
 
     const [hover, setHover] = useState(false);
-
+    console.log('currentLevel', currentLevel)
     return (
 
 
@@ -70,7 +81,7 @@ const CategoryCard = ({ category}) => {
                                     sx={{ width: "100%" }}
                                 />
 
-                                <CardContent>
+                                <CardContent sx={{ height: "110px"}}>
                                     <Typography gutterBottom variant="h4" component="div" color="white" textTransform="uppercase">
                                         {category === "fossil-fuels" ? "fossil fuels"
                                         : category === "food-production" ? "food production"
@@ -85,8 +96,40 @@ const CategoryCard = ({ category}) => {
                                         : category === "transportation" ? "How do cars, trucks, airplanes, and ships pollute the air and make the planet warmer?"
                                         : category === "food-production" ? "How does growing, moving, and storing food pollute the air, trap heat, and warm the planet?"
                                         : null}
-                                    </Typography>
+                                    </Typography> 
                                 </CardContent>
+                                <CardActions>
+                                    {currentLevel && (
+                                        <Box sx ={{ display: "flex", flexDirection: "row" }}>
+                                            <Typography variant="body2"
+                                                        sx={{ color:"white", marginTop: "5px", textTransform: "uppercase" }}>
+                                                Current Level
+                                            </Typography>
+                                                            
+                                            <Button size="small" 
+                                                    sx={{
+                                                        color: "white",
+                                                        borderRadius: "30px",
+                                                        border: "2px solid white",
+                                                        backgroundColor: currentLevel === 'medium' ? '#d3ea29' :
+                                                                         currentLevel === 'hard' ? '#28fa1e' :
+                                                                         currentLevel === 'easy' ? '#ea5629':
+                                                                         null,
+                                                        marginLeft: "10px",
+                                                        marginBottom: "30px"
+                                                        }}
+                                            >
+                                                {currentLevel === 'medium' ? 'medium' :
+                                                currentLevel === 'hard' ? 'hard' :
+                                                currentLevel === 'easy' ? 'easy' :
+                                                null
+                                                }
+                                            </Button>
+                                        </Box>
+                                     )}
+                                    
+                                                                   
+                                </CardActions>
                                                           
                             </Link>
                         </CardActionArea>

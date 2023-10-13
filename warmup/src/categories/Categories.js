@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from '../common/UserContext';
+import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from "../api/api";
 import CategoryCard from "./CategoryCard"
 import Grid from '@mui/material/Grid'
@@ -9,6 +11,10 @@ import { Typography, Box } from "@mui/material";
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
+    const { currentUser } = useContext(UserContext);
+    const { scores, setScores } = useContext(ScoreContext); 
+
+    
 
     useEffect(() => {
         async function fetchCategories() {
@@ -23,6 +29,36 @@ const Categories = () => {
         fetchCategories();
         
     }, []);
+
+
+    
+    useEffect(() => {
+        if (currentUser) {
+            async function fetchCurrentScores() {
+                try {
+                    const username = currentUser.username;
+                    const fetchedCurrentScores = await WarmUpApi.getCurrentScores(username);
+                    setScores(fetchedCurrentScores);
+                } catch (error) {
+                    console.error("Error fetching current scores:", error);
+                }
+            }
+            
+            fetchCurrentScores();
+        }
+    }, [currentUser]);
+            
+    console.log('scores',scores)
+
+
+    function findCurrentLevel(id) {
+        if (scores) {            
+          const currLevel = scores.find((cat) => cat.id === id);
+          return currLevel ? currLevel.currComplexity : '';
+        }
+        return '';
+    }
+    
 
     console.log("cursor before", document.body.style.cursor) 
 
@@ -69,15 +105,18 @@ const Categories = () => {
                     style={{ minHeight: "100vh" }}     
                 >
                     <Grid container spacing={2} sx={{ width: '80%', marginTop: "20px" }} >
-                                {categories.map(c => (
-                                    <Grid item key={c.id} xs={12} sm={6} md={4}
-                                        sx={{ backgroundColor: "transparent" }}>
-                                        <CategoryCard
-                                            id={c.id}
-                                            category={c.category}
-                                        />
-                                    </Grid>
-                                ))}
+                        {categories.map(c => {
+                            const currLevel = findCurrentLevel(c.id);
+                            return (
+                                <Grid item key={c.id} xs={12} sm={6} md={4} sx={{ backgroundColor: "transparent" }}>
+                                    <CategoryCard
+                                        id={c.id}
+                                        category={c.category}
+                                        currentLevel={currLevel}
+                                    />
+                                </Grid>
+                            );
+                        })}
                     </Grid>
                 </Grid>
             </div>
