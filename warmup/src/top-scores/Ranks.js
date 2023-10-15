@@ -16,8 +16,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import theme from "../theme";
 import WarmUpApi from '../api/api';
 import { motion } from 'framer-motion';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 import img from "../static/images/profile/profile-avatar.png";
+
 
 
 
@@ -244,7 +246,7 @@ function Ranks() {
   
 
         function findImageProfile(user_id) {
-          if (users) {            
+          if (users && Array.isArray(users)) {            
             const user = users.find((user) => user.id === user_id);
             return user ? user.image_profile : '';
             
@@ -298,9 +300,18 @@ function Ranks() {
         }
 
         console.log('sortedLogs', sortedLogs)
-        if (Object.keys(sortedLogs).length === 0) {
+        if (Object.keys(sortedLogs).length === 0 || !Array.isArray(users)) {
 
-          return <div> Loading... </div>;
+          return (
+            <Box sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}>
+              <LoadingSpinner />
+            </Box>
+          );
 
         } else {
 
@@ -376,8 +387,7 @@ function Ranks() {
 
                         
                         // Get the comment content & image profile for the current item, using the concept of Closure
-                        const commentContent = findCommentContent(row.id);
-                        {console.log('row', row)}
+                        const commentContent = findCommentContent(row.id);                        
                         const imageProfile = findImageProfile(row.user_id)
 
                         return (                          

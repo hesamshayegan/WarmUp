@@ -6,7 +6,11 @@ import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import Scoreboard from '../scoreboard/Scoreboard';
 import { styled } from '@mui/material/styles';
-import { Box, Button, Grid, Typography, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Paper } from "@mui/material";
+import { 
+Box, Button, Grid, Typography,
+Dialog, DialogActions, DialogContent,
+DialogTitle, DialogContentText, Paper }
+from "@mui/material";
 import theme from "../theme";
 import "./Quiz.css"
 
@@ -18,6 +22,7 @@ import agriculture from "../static/images/forms/agriculture.jpg"
 import transportation from "../static/images/forms/transportation.jpg"
 import food from "../static/images/forms/food.jpg"
 import climate from "./climate-video.mp4"
+import LoadingSpinner from '../common/LoadingSpinner';
 
 
 
@@ -352,7 +357,18 @@ function Quiz() {
 
             } else if (questions.length === 0) {
 
-                return <div>Loading...</div>;
+                return (
+                    <Box sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100vh",
+                      }}>
+                
+                        <LoadingSpinner />
+
+                    </Box>
+                )
 
             } else {
 

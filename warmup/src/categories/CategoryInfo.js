@@ -206,7 +206,7 @@ const CategoryInfo = () => {
                                         Are you ready to take the quiz?
                                     </Typography>
                                     <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
-                                        Play
+                                        Start
                                     </Button>
                                 </Box>
                             )}
@@ -217,7 +217,7 @@ const CategoryInfo = () => {
                                         Are you ready to take the quiz?
                                     </Typography>
                                     <Button href={`../quiz/categories/${category}`} key={id} sx={btnStyle}>
-                                        Play
+                                        Start
                                     </Button>
                                 </Box>
                             ) : (

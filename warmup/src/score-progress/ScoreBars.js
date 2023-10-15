@@ -4,6 +4,7 @@ import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
 import theme from "../theme";
 import { Box, Typography, Button } from "@mui/material";
+import LoadingSpinner from '../common/LoadingSpinner';
 
 import {
   FlexibleXYPlot,
@@ -135,7 +136,16 @@ function ScoreBars () {
         
         
         if (Object.keys(groupedData).length === 0) {
-          return <div> Loading... </div>;
+          return (
+            <Box sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}>
+              <LoadingSpinner />
+            </Box>
+          );
         }
 
         return (          
