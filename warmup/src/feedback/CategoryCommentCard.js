@@ -6,9 +6,9 @@ import {
 Card, CardContent, CardMedia, CardActionArea,
 Box, Button, Typography, TextField, Dialog,
 DialogActions, DialogContent, DialogContentText,
-DialogTitle
+DialogTitle, IconButton
 } from '@mui/material'
-
+import CloseIcon from '@mui/icons-material/Close';
 import plasticBadge from "../static/images/badges/plastic-badge.png"
 import fossilBadge from "../static/images/badges/fossil-badge.png"
 import deforestationBadge from "../static/images/badges/deforestation-badge.png"
@@ -245,7 +245,18 @@ const CategoryCommentCard = ({ id, category, content}) => {
                                                     : category === "food-production" ? " food production"
                                                     : ` ${category}` }
                                                 </DialogTitle>
-
+                                                <IconButton                    
+                                                    onClick={handleClose}
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        right: 8,
+                                                        top: 8,
+                                                        backgroundColor: "#e3f2e8",
+                                                        border: "1px solid #96FFB5",                            
+                                                    }}
+                                                >
+                                                    <CloseIcon sx={{ color: "#4cd078"}} />
+                                                </IconButton>
                                                 <DialogContent>
 
                                                     <DialogContentText sx={{ marginBottom: "10px"}}>
