@@ -13,16 +13,16 @@ DialogTitle, DialogContentText, Paper }
 from "@mui/material";
 import theme from "../theme";
 import "./Quiz.css"
-
+import LoadingSpinner from '../common/LoadingSpinner';
 
 import plastic from "../static/images/forms/plastic-form.jpg"
 import fossil from "../static/images/forms/fossil-form.jpg"
-import deforestation from "../static/images/forms/deforestation.jpg"
-import agriculture from "../static/images/forms/agriculture.jpg"
-import transportation from "../static/images/forms/transportation.jpg"
-import food from "../static/images/forms/food.jpg"
+import deforestation from "../static/images/forms/deforestation-form.jpg"
+import agriculture from "../static/images/forms/agriculture-form.jpeg"
+import transportation from "../static/images/forms/transportation-form.jpeg"
+import food from "../static/images/forms/food-form.jpeg"
 import climate from "./climate-video.mp4"
-import LoadingSpinner from '../common/LoadingSpinner';
+
 
 
 

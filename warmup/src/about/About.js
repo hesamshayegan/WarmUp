@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Box, Typography,  } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import theme from "../theme";
-import bg12 from "../static/images/bg12.png";
+import bg12 from "../static/images/bg/bg12.png";
 import Fade from '@mui/material/Fade';
 import Slide from '@mui/material/Slide';
 

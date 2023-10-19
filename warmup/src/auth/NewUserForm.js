@@ -11,7 +11,7 @@ Visibility, VisibilityOff
 } from '@mui/icons-material'
 
 import theme from "../theme";
-import bg5 from "../static/images/bg5.jpg"
+import bg5 from "../static/images/bg/bg5.jpg"
 
 const SubmitBtnStyle = {
     background: "#1CA168",

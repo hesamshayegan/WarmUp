@@ -4,7 +4,6 @@ import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from "../api/api";
 import CategoryCard from "./CategoryCard"
 import Grid from '@mui/material/Grid'
-import AnimCursor from "../common/AnimatedCursor"
 import "./Categories.css";
 import { Typography, Box } from "@mui/material";
 
@@ -97,7 +96,7 @@ const Categories = () => {
                         Take a quiz to test your knowledge and learn something new!
                     </Typography>
                 </Box>
-                <AnimCursor />
+                
                 <Grid
                     container
                     justifyContent="center"

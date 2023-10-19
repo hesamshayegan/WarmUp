@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from 'react';
 import UserContext from '../common/UserContext';
 import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
-import theme from "../theme";
 import 'react-vis/dist/style.css'
 import { Box, Typography } from "@mui/material";
 import { motion } from 'framer-motion';

@@ -11,10 +11,10 @@ import Grow from '@mui/material/Grow';
 import Fade from '@mui/material/Fade';
 import theme from "../theme";
 
-import bg1 from "../static/images/bg1.jpg"
-import bg2 from "../static/images/bg2.jpg"
-import bg3 from "../static/images/bg3.avif"
-import bg4 from "../static/images/bg4.jpg"
+import bg1 from "../static/images/bg/bg1.jpg"
+import bg2 from "../static/images/bg/bg2.jpg"
+import bg3 from "../static/images/bg/bg3.avif"
+import bg4 from "../static/images/bg/bg4.jpg"
 
 
 const Bg1 = styled('div')({

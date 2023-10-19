@@ -1,9 +1,9 @@
-import bg6 from "../static/images/bg6.jpg";
-import bg7 from "../static/images/bg7.jpg";
-import bg8 from "../static/images/bg8.jpg";
-import bg9 from "../static/images/bg9.jpg";
-import bg10 from "../static/images/bg10.jpg";
-import bg11 from "../static/images/bg11.jpg";
+import bg6 from "../static/images/bg/bg6.jpg";
+import bg7 from "../static/images/bg/bg7.jpg";
+import bg8 from "../static/images/bg/bg8.jpg";
+import bg9 from "../static/images/bg/bg9.jpg";
+import bg10 from "../static/images/bg/bg10.jpg";
+import bg11 from "../static/images/bg/bg11.jpg";
 
 
 const categoryData = [

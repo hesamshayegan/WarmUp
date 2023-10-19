@@ -15,7 +15,7 @@ Visibility, VisibilityOff
 
 import theme from "../theme";
 import img from "../static/images/profile/profile-avatar.png";
-import bg5 from "../static/images/bg5.jpg"
+import bg5 from "../static/images/bg/bg5.jpg"
 
 
 const submitBtnStyle = {
