@@ -4,7 +4,7 @@ import ScoreContext from '../common/ScoreContext';
 import WarmUpApi from '../api/api';
 import theme from "../theme";
 import { Box, Typography, Button } from "@mui/material";
-import LoadingSpinner from '../common/LoadingSpinner';
+
 
 import {
   FlexibleXYPlot,
@@ -143,7 +143,7 @@ function ScoreBars () {
               alignItems: "center",
               height: "100vh",
             }}>
-              <LoadingSpinner />
+              <Typography variant="h4"> No score registered yet... </Typography>
             </Box>
           );
         }

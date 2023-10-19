@@ -24,8 +24,8 @@ const categoryData = [
         {
             id: 3,
             name: "deforestation",
-            info1: "Cutting trees releases carbon dioxide, contributing to the rise in temperature.",
-            info2: "Deforestation dries the land, disrupts the water cycle, fueling wildfires.",
+            info1: "Deforestation dries the land, disrupts the water cycle, fueling wildfires.",
+            info2: "Cutting trees releases carbon dioxide, contributing to the rise in temperature.",
             img: bg8
         },
         {
@@ -45,8 +45,8 @@ const categoryData = [
         {
             id: 6,
             name: "food-production",
-            info1: "Food production accounts for over a quarter of global greenhouse gas emissions.",
-            info2: "About 14% of all GHG emissions come from livestock.",
+            info1: "Over a quarter of global greenhouse gas emissions stem from food production.",
+            info2: "Food product distribution significantly impacts climate change through high energy usage.",
             img: bg11
         },
     

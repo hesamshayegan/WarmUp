@@ -17,7 +17,7 @@ import LoadingSpinner from '../common/LoadingSpinner';
 
 import plastic from "../static/images/forms/plastic-form.jpg"
 import fossil from "../static/images/forms/fossil-form.jpg"
-import deforestation from "../static/images/forms/deforestation-form.jpg"
+import deforestation from "../static/images/forms/deforestation-form.jpeg"
 import agriculture from "../static/images/forms/agriculture-form.jpeg"
 import transportation from "../static/images/forms/transportation-form.jpeg"
 import food from "../static/images/forms/food-form.jpeg"
@@ -386,8 +386,19 @@ function Quiz() {
                         </Grid>
                         
                         <Grid item xs={12} md={10}>
-                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                <Box sx={{ marginTop: "75px", width: "65%", border: "2px solid white", height: "100%" ,
+                            <Box sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    height: "100%",
+                                    }}
+                            >
+                                <Box sx={{                                            
+                                           width: "75%",
+                                           height: "400px",                                           
+                                           marginTop: "75px",
+                                           border: "2px solid white",                                           
                                            background: 
                                            currentQuestion.category === 'plastic' ? `url(${plastic})`
                                            : currentQuestion.category === 'fossil-fuels' ? `url(${fossil})`
@@ -398,26 +409,39 @@ function Quiz() {
                                            : null,                                                               
                                            backgroundSize: "cover",
                                            boxShadow: "30px 30px 30px rgba(0, 0, 0, 0.5)",
-                                           borderRadius: "30px"}}>
-                                    
-                                    
-                                    
-                                    <QuizQuestion
-                                        key={currentQuestion.id}
-                                        questionKey={currentQuestion}
-                                        selectedAnswer={
-                                            selectedAnswers && selectedAnswers[currentQuestion.id]
-                                            ?
-                                            selectedAnswers[currentQuestion.id].choice
-                                            :
-                                            null
+                                           borderRadius: "30px",
+                                           [theme.breakpoints.down("md")]: {
+                                            height: "100%"                                            
                                         }
-                                        onAnswerSelect={handleAnswerSelect}
-                                    />
-
-                                    <Box sx={{ display: "flex",
+                                        }}                                           
+                                >
+                                    
+                                    
+                                    <Box>
+                                        <QuizQuestion
+                                            key={currentQuestion.id}                                            
+                                            questionKey={currentQuestion}
+                                            questionIndex={currentQuestionIndex}
+                                            selectedAnswer={
+                                                selectedAnswers && selectedAnswers[currentQuestion.id]
+                                                ?
+                                                selectedAnswers[currentQuestion.id].choice
+                                                :
+                                                null
+                                            }
+                                            onAnswerSelect={handleAnswerSelect}                                        
+                                        />
+                                        {console.log(currentQuestionIndex)}
+                                    </Box>
+                                </Box>
+                                <Box sx={{ className: "button-box",
+                                               display: "flex",
                                                justifyContent: "center",                                               
-                                                margin: "5px"}}
+                                               margin: "10px",
+                                               justifyContent: "center",
+                                               margin: "5px",
+                                               width: "100%",
+                                            }}
                                     >
                                     {currentQuestionIndex > 0
                                         ?
@@ -428,8 +452,6 @@ function Quiz() {
                                     }
                                         <Button sx={buttonStyle}
                                             onClick={handleNextQuestion}> Next </Button>
-                                    </Box>
-
                                 </Box>
                             </Box>
 

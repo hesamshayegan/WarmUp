@@ -294,10 +294,9 @@ function Ranks() {
           }
         }
 
-        
+
         if (Object.keys(sortedLogs).length === 0 || !Array.isArray(users)) {
-        
-        // debugger;  
+
 
           return (
             <Box sx={{

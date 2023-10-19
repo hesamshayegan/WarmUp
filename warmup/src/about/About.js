@@ -111,10 +111,11 @@ function About () {
                     <Typography variant="h2" sx={{ textAlign: 'center', m: 3 }}> 
                          1. <UnderOrange>WarmUp Themes</UnderOrange>
                     </Typography>
-                    <Typography variant="h5" sx={{ textAlign: 'center', m: 2 }}>
+                    <Typography variant="h5" sx={{ m: 2 }}>
                         The WarmUp quiz is a comprehensive educational tool designed to engage users in understanding
-                        climate change through six key categories, which include: Plastic, Fossil Fuels, Deforestation
-                        Agriculture, Transportation, and Food Production.
+                        climate change through six key categories, which include: Plastic, Fossil Fuels, Deforestation,
+                        Agriculture, Transportation, and Food Production. Each category includes 15 questions with a range
+                        of complexity from easy to hard.
                     </Typography>
                     
             </Grid>
@@ -127,7 +128,7 @@ function About () {
                     <Typography variant="h2" sx={{ textAlign: 'center', m: 3 }}> 
                         2. <UnderGreen>Green Award Badge</UnderGreen>
                     </Typography>
-                    <Typography variant="h5" sx={{ textAlign: 'center', m: 2 }}>
+                    <Typography variant="h5" sx={{ m: 2 }}>
                         When users score over 80% in a category, they earn the "Green Award" badge. 
                         This badge indicates their excellent grasp of the specific climate change topic. 
                         Having this badge allows them to use the "Feedback Feature," where they can share 
@@ -145,7 +146,7 @@ function About () {
                     <Typography variant="h2" sx={{ textAlign: 'center', m: 3}}> 
                         3. <UnderBlueGreen>Progress Tracking</UnderBlueGreen>
                     </Typography>
-                    <Typography variant="h5" sx={{ textAlign: 'center', m: 2 }}>
+                    <Typography variant="h5" sx={{ m: 2 }}>
                     In the "Progress" section, users can monitor their performance over time. This allows them 
                     to track their improvement and dedication to enhancing their knowledge of climate change. 
                     It serves as a personal motivator to continuously learn and grow in this crucial area.
@@ -156,7 +157,7 @@ function About () {
                     <Typography variant="h2" sx={{ textAlign: 'center', m: 3}}> 
                         4. <UnderPink>Top Scores</UnderPink>
                     </Typography>
-                    <Typography variant="h5" sx={{ textAlign: 'center', m: 2 }}>
+                    <Typography variant="h5" sx={{ m: 2 }}>
                         The "Top Scores" section is a hub where all visitors can view the current rankings and highest scores
                         for each WarmUp category. Furthermore, users can find out about other users' opinions, solutions,
                         and insights about climate change. This feature fosters a sense of community and collaboration in the 

@@ -106,7 +106,9 @@ function ScoreCard() {
                                  Total   
                             </Typography>
                             <Typography variant="h6" sx={{ color: "white", marginLeft: "-20px" }}>  Average Score </Typography>
-                            <Typography variant="h3" sx={{ color: "white", marginLeft: "-20px" }}> {totAverageScore}% </Typography>
+                            <Typography variant="h3" sx={{ color: "white", marginLeft: "-20px" }}>
+                                {totAverageScore ? totAverageScore : '0'}% 
+                            </Typography>
 
                         </Box>
 

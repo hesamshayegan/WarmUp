@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Radio, FormControlLabel, FormControl, RadioGroup } from "@mui/material";
 import { AnimatePresence, motion } from 'framer-motion';
 
-function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
+function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect, questionIndex }) {
   
   return (
 
@@ -17,7 +17,15 @@ function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
         transition={{ type: 'spring', velocity: 5, damping: 8 }}
         exit={{ opacity: 0, x: +50 }}
       >
-        <Typography variant="h5" sx={{ color: "white"}} >{questionKey.question}</Typography>
+        <Typography variant="h5" sx={{ color: "white"}}>
+          {
+          questionKey.complexity === 'easy'   ? `${questionIndex+1}. ` :
+          questionKey.complexity === 'medium' ? `${questionIndex+6}. ` :
+          questionKey.complexity === 'hard'   ? `${questionIndex+11}. ` :
+          null
+          }
+          {questionKey.question}
+        </Typography>
       </motion.div>
 
       
@@ -50,8 +58,8 @@ function QuizQuestion({ key, questionKey, selectedAnswer, onAnswerSelect }) {
       </Typography>
 
       </Box>
-      <FormControl >
-        <RadioGroup sx={{ margin: "15px" }}>
+      <FormControl>
+        <RadioGroup sx={{ margin: "5px" }}>
         <AnimatePresence>
             {Object.keys(questionKey)
               .filter((key) => key.startsWith('choice_'))
