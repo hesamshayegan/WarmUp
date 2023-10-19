@@ -147,7 +147,7 @@ function ScoreBars () {
             </Box>
           );
         }
-
+        
         return (          
             
             <Box className="container" 
@@ -182,7 +182,7 @@ function ScoreBars () {
               
               <Box sx={{ margin: "10px", width: "150px",display: "flex",
                       justifyContent: "center", }}>
-                {selectedCategory && (                  
+                {selectedCategory && groupedData[selectedCategory] && (                  
                   groupedData[selectedCategory][0].cat_id === 1 ? <Typography> Plastic </Typography> 
                   : groupedData[selectedCategory][0].cat_id === 2 ? <Typography> Fossil Fuels </Typography>
                   : groupedData[selectedCategory][0].cat_id === 3 ? <Typography> Deforestation </Typography>

@@ -163,8 +163,6 @@ function Ranks() {
           fetchAllUsers();
         }, []);
 
-        console.log('users', users)
-
 
         // Feteching scores' history from the API
         useEffect(() => {
@@ -179,8 +177,6 @@ function Ranks() {
       
           fetchAllScoreHistory();
         }, []);
-
-
         
         // Sorting and updating sortedLogs
         useEffect(() => {
@@ -201,7 +197,7 @@ function Ranks() {
               }
               return result;
             }, {});
-        
+            
             const newSortedLogs = {};
         
             for (const catId in groupedData) {
@@ -213,7 +209,7 @@ function Ranks() {
                 newSortedLogs[catId] = userScores;
               }
             }
-           
+            
             setSortedLogs(newSortedLogs);
           }
         }, [AllScoresLogs]);
@@ -232,7 +228,6 @@ function Ranks() {
       
           fetchAllComments();
         }, []);
-
 
 
         function findCommentContent(id) {
@@ -299,8 +294,10 @@ function Ranks() {
           }
         }
 
-        console.log('sortedLogs', sortedLogs)
+        
         if (Object.keys(sortedLogs).length === 0 || !Array.isArray(users)) {
+        
+        // debugger;  
 
           return (
             <Box sx={{
@@ -368,7 +365,7 @@ function Ranks() {
                     </TableHead>
 
                     <TableBody>
-                      {sortedLogs[selectedCategory].map((row, index, array) => {
+                      {sortedLogs[selectedCategory] && sortedLogs[selectedCategory].map((row, index, array) => {
                         let rank = 1; 
                         let showIcon = false;
                     
