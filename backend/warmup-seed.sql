@@ -1,12 +1,17 @@
+-- sample users 
 INSERT INTO users (username, password, email, image_profile)
 VALUES ('testuser',
-        '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q',
-        'test@test.com',
-        'image'),
-        ('testuser2',
-        '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q',
-        'test2@test2.com',
-        'image2');
+        '$2b$12$EVl.Yns7vdm5V2iPaW8Gf.aQy5S68FDwyLfiyGCNtbKN/4Y8VJZEG',
+        'test@wamrup.com',
+        'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671116.jpg?w=740&t=st=1697755407~exp=1697756007~hmac=fc450d19c6eb2efd7f0a99753d0910f691590b93e76a594aa12b7710226cbde7'),
+        ('Kate',
+        '$2b$12$EVl.Yns7vdm5V2iPaW8Gf.aQy5S68FDwyLfiyGCNtbKN/4Y8VJZEG',
+        'Kate@wamrup.com',
+        'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671136.jpg?w=740&t=st=1697758231~exp=1697758831~hmac=610910d942af4d46ba2ccbea424608325819c9f785a21f900127393e5cdf88fc'),
+        ('Sophia',
+        '$2b$12$EVl.Yns7vdm5V2iPaW8Gf.aQy5S68FDwyLfiyGCNtbKN/4Y8VJZEG',
+        'Sophia@wamrup.com',
+        'https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611759.jpg?w=740&t=st=1697758789~exp=1697759389~hmac=e991db7a33dcc7644780227dbfaef8775e2f6f929747d6e93afafd9d76dcbf77');
 
 -- cateogories 
 INSERT INTO quiz_category (category)
@@ -16,6 +21,81 @@ VALUES ('plastic'),
        ('agriculture'),
        ('transportation'),
        ('food-production');
+
+
+-- sample scores
+INSERT INTO user_quiz_history (user_id, cat_id, score, time_stamp)
+VALUES
+(1, 1, 0.45, '2023-6-5 02:43:31'),
+(1, 1, 0.55, '2023-7-10 02:43:31'), 
+(1, 1, 0.65, '2023-8-20 02:43:31'),
+(1, 1, 0.87, '2023-9-25 02:43:31'),
+(1, 2, 0.45, '2023-5-5 02:43:31'),
+(1, 2, 0.55, '2023-6-10 02:43:31'), 
+(1, 2, 0.65, '2023-7-20 02:43:31'),
+(1, 2, 0.85, '2023-8-25 02:43:31'),
+(1, 3, 0.55, '2023-7-20 02:43:31'),
+(1, 3, 0.70, '2023-8-25 02:43:31'),
+(1, 4, 0.55, '2023-1-20 02:43:31'),
+(1, 4, 0.70, '2023-2-25 02:43:31'),
+(1, 5, 0.65, '2023-1-20 02:43:31'),
+(1, 5, 0.75, '2023-2-25 02:43:31'),
+(1, 6, 0.35, '2023-1-20 02:43:31'),
+(1, 6, 0.50, '2023-2-25 02:43:31'),
+(1, 6, 0.90, '2023-3-20 02:43:31'),
+(2, 1, 0.75, '2023-2-25 02:43:31'),
+(2, 4, 0.90, '2023-2-25 02:43:31'),
+(2, 5, 0.95, '2023-2-25 02:43:31'),
+(3, 1, 0.80, '2023-2-25 02:43:31'),
+(3, 2, 0.65, '2023-2-25 02:43:31'),
+(3, 3, 0.35, '2023-2-25 02:43:31'),
+(3, 4, 0.45, '2023-2-25 02:43:31'),
+(3, 5, 0.55, '2023-2-25 02:43:31'),
+(3, 6, 0.65, '2023-2-25 02:43:31');
+
+
+-- sample comments
+INSERT INTO comments (comment_id, content)
+VALUES
+(
+    4, 
+    'Exploring innovative biodegradable materials and promoting recycling 
+    initiatives is crucial in our quest to reduce plastic waste and protect 
+    our environment. Let''s embrace sustainable alternatives for a greener future!🌱🌍 
+    #PlasticSolution #Sustainability'
+),
+(
+    8, 
+    'Transitioning away from fossil fuels towards renewable energy sources is imperative to 
+    combat climate change and secure a cleaner, sustainable future. Let''s work together to 
+    reduce our reliance on these finite resources. 🌍⛽️ #FossilFuelAlternatives #Sustainability 💡🌱'
+),
+(
+    17, 
+    'Evolving our food production methods to prioritize sustainability, reduce waste, and promote local, 
+    organic farming can lead to a healthier planet and nourish future generations. Let''s cultivate positive 
+    change together! 🌾🍏 #SustainableFoodProduction #GreenEating" 🌎🌿'
+),
+(
+    19, 
+    'Transforming agriculture practices with an eco-conscious focus, such as precision farming and organic techniques, 
+    is essential for a more sustainable, resilient food supply. Let''s cultivate a greener, more abundant future! 🌱🚜 
+    #SustainableAgriculture #GreenHarvest" 🌍🌾'
+),
+(
+    20, 
+    'Advancing eco-friendly transportation options and investing in efficient, low-emission technologies is key to reducing 
+    our carbon footprint and building a more sustainable future for generations to come. Let''s embark on this journey together! 
+    🚗🌿 #TransportationSolutions #Sustainability" 🌏'
+),
+(
+    21, 
+    'Addressing the devastating impact of plastic on marine life is a pressing global concern. By reducing single-use plastics, 
+    supporting clean-up efforts, and raising awareness, we can safeguard our oceans and the incredible creatures that call them 
+    home. 🌊🐋 #ProtectOurOceans #PlasticImpact" 🌎🐢'
+);
+
+
 
 -- questions for cateogory: plastic
 INSERT INTO questions (question, choice_1, choice_2, choice_3, choice_4, complexity)
