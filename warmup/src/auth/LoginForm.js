@@ -35,7 +35,7 @@ const formStyle = {
 
 const LoginForm = ({ loginUser }) => {
 
-    const INITIAL_STATE = { username: "", password: "" };
+    const INITIAL_STATE = { username: "testuser", password: "123456" };
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -109,8 +109,7 @@ const LoginForm = ({ loginUser }) => {
                   <TextField
                     label="Username"
                     id="filled-username-normal"
-                    name="username"
-                    // defaultValue="Normal"
+                    name="username"                    
                     variant="filled"
                     value={formData.username}
                     onChange={handleChange}
@@ -123,7 +122,7 @@ const LoginForm = ({ loginUser }) => {
                       <FilledInput
                           id="filled-adornment-password"
                           type={showPassword ? 'text' : 'password'}
-                          name="password"
+                          name="password"                          
                           value={formData.password}
                           onChange={handleChange}                          
                           endAdornment={

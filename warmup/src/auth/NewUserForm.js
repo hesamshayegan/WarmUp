@@ -148,7 +148,7 @@ const NewUserForm = ({ registerUser }) => {
                         </FormControl>
 
                         <FormControl fullWidth sx={formStyle} variant="filled">
-                            <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
+                            <InputLabel htmlFor="filled-adornment-email">Email (Optional) </InputLabel>
                             <FilledInput
                                 id="filled-adornment-email"
                                 name="email"
@@ -158,7 +158,7 @@ const NewUserForm = ({ registerUser }) => {
                         </FormControl>
 
                         <FormControl fullWidth sx={formStyle} variant="filled">
-                            <InputLabel htmlFor="filled-adornment-image_profile">Image Profile URL</InputLabel>
+                            <InputLabel htmlFor="filled-adornment-image_profile">Image Profile URL (Optional) </InputLabel>
                             <FilledInput
                                 id="filled-adornment-image_profile"
                                 name="image_profile"

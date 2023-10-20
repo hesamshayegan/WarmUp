@@ -1,10 +1,15 @@
 import React from "react";
-import { Grid, Box, Typography,  } from "@mui/material";
+import { 
+Grid, Box, Typography, Slide,
+Fade, Link
+}
+
+from "@mui/material";
 import { styled } from '@mui/material/styles';
 import theme from "../theme";
 import bg12 from "../static/images/bg/bg12.png";
-import Fade from '@mui/material/Fade';
-import Slide from '@mui/material/Slide';
+
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const UnderOrange= styled('div')({
     textDecoration: 'underline',
@@ -27,11 +32,31 @@ const UnderBlueGreen= styled('div')({
     display: 'inline' 
 })
 
-const UnderPink= styled('div')({
+const UnderPurple= styled('div')({
     textDecoration: 'underline',
     textDecorationColor: '#ff3bff',
     textDecorationThickness: '8px',
     display: 'inline' 
+})
+
+const BackOrange= styled('div')({
+    backgroundColor: '#ffdfbd',
+    display: 'inline'
+})
+
+const BackGreen= styled('div')({
+    backgroundColor: '#d7ffbd',
+    display: 'inline'
+})
+
+const BackBlueGreen= styled('div')({
+    backgroundColor: '#c8ffef',
+    display: 'inline'
+})
+
+const BackPurple= styled('div')({
+    backgroundColor: '#ffc8fa',
+    display: 'inline'
 })
 
 function About () {
@@ -113,8 +138,8 @@ function About () {
                     </Typography>
                     <Typography variant="h5" sx={{ m: 2 }}>
                         The WarmUp quiz is a comprehensive educational tool designed to engage users in understanding
-                        climate change through six key categories, which include: Plastic, Fossil Fuels, Deforestation,
-                        Agriculture, Transportation, and Food Production. Each category includes 15 questions with a range
+                        climate change through <BackOrange>six key categorie</BackOrange>, which include: Plastic, Fossil Fuels, Deforestation,
+                        Agriculture, Transportation, and Food Production. Each category includes <BackOrange>15 questions</BackOrange> with a range
                         of complexity from easy to hard.
                     </Typography>
                     
@@ -129,9 +154,9 @@ function About () {
                         2. <UnderGreen>Green Award Badge</UnderGreen>
                     </Typography>
                     <Typography variant="h5" sx={{ m: 2 }}>
-                        When users score over 80% in a category, they earn the "Green Award" badge. 
+                        When users <BackGreen>score over 80%</BackGreen> in a category, they earn the "Green Award" badge. 
                         This badge indicates their excellent grasp of the specific climate change topic. 
-                        Having this badge allows them to use the "Feedback Feature," where they can share 
+                        Having this badge allows them to use the <BackGreen>"Feedback Feature"</BackGreen>, where they can share 
                         their thoughts, solutions, and opinions about that particular climate issue.
                     </Typography>
                     
@@ -147,23 +172,98 @@ function About () {
                         3. <UnderBlueGreen>Progress Tracking</UnderBlueGreen>
                     </Typography>
                     <Typography variant="h5" sx={{ m: 2 }}>
-                    In the "Progress" section, users can monitor their performance over time. This allows them 
+                    In the "Progress" section, users can monitor their <BackBlueGreen>performance over time</BackBlueGreen>. This allows them 
                     to track their improvement and dedication to enhancing their knowledge of climate change. 
                     It serves as a personal motivator to continuously learn and grow in this crucial area.
                     </Typography>
                     
             </Grid>
-            <Grid  item xs={12} md={6} >
+            <Grid  item xs={12} md={6}>
                     <Typography variant="h2" sx={{ textAlign: 'center', m: 3}}> 
-                        4. <UnderPink>Top Scores</UnderPink>
+                        4. <UnderPurple>Top Scores</UnderPurple>
                     </Typography>
                     <Typography variant="h5" sx={{ m: 2 }}>
                         The "Top Scores" section is a hub where all visitors can view the current rankings and highest scores
-                        for each WarmUp category. Furthermore, users can find out about other users' opinions, solutions,
-                        and insights about climate change. This feature fosters a sense of community and collaboration in the 
-                        shared pursuit of tackling climate change.
+                        for each WarmUp category. Furthermore, users can find out about other 
+                        users' <BackPurple>opinions</BackPurple>, <BackPurple>solutions</BackPurple>, and <BackPurple>insights</BackPurple> about 
+                        climate change. This feature fosters a sense of community and collaboration in the shared pursuit of tackling climate change.
                     </Typography>
                     
+            </Grid>
+            <Grid item md={12} sx={{ backgroundColor: "#96FA68" }}>
+                <Box sx={{ m: 1 }}>
+                    <Typography variant="h5" sx={{ m: 3 }}>
+                    Below is a selection of resources that have been utilized in the creation of quiz themes:
+                    </Typography>
+                    <Box
+                    sx={{
+                        marginLeft: "30px",
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                    >
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://www.edf.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>Environmental Defense Fund</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://gfi.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>Good Food Institute</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://www.iea.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>International Energy Agency</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://climate.mit.edu" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>MIT Climate Portal</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://www.oecd.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>Organisation for Economic Co-operation and Development</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://www.soils.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>Soil Science Society for America</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://sustainablefisheries-uw.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>Sustainable Fisheries UW - University of Washington</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://www.energy.gov" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>U.S. Department of Energy (DOE)</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://stories.undp.org" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>United Nations Development Programme</Typography>
+                            </Link>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <PlayArrowIcon />
+                            <Link href="https://www.epa.gov" sx={{ m: 1, textDecoration: 'none' }}>
+                            <Typography variant="h6" sx={{ color: "#30660d" }}>United States Environmental Protection Agency</Typography>
+                            </Link>
+                        </Box>
+                    </Box>
+                </Box>
             </Grid>
         </Grid>
 

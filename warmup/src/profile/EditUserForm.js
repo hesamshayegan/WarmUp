@@ -226,7 +226,16 @@ const EditUserForm = ({ updateUser }) => {
                     </Box>
 
                         <Box sx={{ display: "flex", justifyContent: "center"}}> 
-                            <Button onClick={handleSubmit} sx={submitBtnStyle}> Submit </Button>
+                            <Button onClick={handleSubmit}
+                                    sx={submitBtnStyle}
+                                    disabled={
+                                        currentUser.username === 'testuser' ||
+                                        currentUser.username === 'Kate' ||
+                                        currentUser.username === 'Sophia'
+                                    }
+                            >
+                                Submit
+                            </Button>
                             <DeleteUser />
                         </Box>
                     

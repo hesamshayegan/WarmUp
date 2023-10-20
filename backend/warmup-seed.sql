@@ -2,15 +2,15 @@
 INSERT INTO users (username, password, email, image_profile)
 VALUES ('testuser',
         '$2b$12$EVl.Yns7vdm5V2iPaW8Gf.aQy5S68FDwyLfiyGCNtbKN/4Y8VJZEG',
-        'test@wamrup.com',
+        'test@warmup.com',
         'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671116.jpg?w=740&t=st=1697755407~exp=1697756007~hmac=fc450d19c6eb2efd7f0a99753d0910f691590b93e76a594aa12b7710226cbde7'),
         ('Kate',
         '$2b$12$EVl.Yns7vdm5V2iPaW8Gf.aQy5S68FDwyLfiyGCNtbKN/4Y8VJZEG',
-        'Kate@wamrup.com',
+        'Kate@warmup.com',
         'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671136.jpg?w=740&t=st=1697758231~exp=1697758831~hmac=610910d942af4d46ba2ccbea424608325819c9f785a21f900127393e5cdf88fc'),
         ('Sophia',
         '$2b$12$EVl.Yns7vdm5V2iPaW8Gf.aQy5S68FDwyLfiyGCNtbKN/4Y8VJZEG',
-        'Sophia@wamrup.com',
+        'Sophia@warmup.com',
         'https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611759.jpg?w=740&t=st=1697758789~exp=1697759389~hmac=e991db7a33dcc7644780227dbfaef8775e2f6f929747d6e93afafd9d76dcbf77');
 
 -- cateogories 

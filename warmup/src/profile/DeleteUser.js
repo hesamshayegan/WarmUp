@@ -45,6 +45,7 @@ const cancleBtnStyle = {
 const DeleteUser = () => {
   const navigate = useNavigate();
   const { deleteUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -55,7 +56,7 @@ const DeleteUser = () => {
     setOpen(false);
   };
 
-
+  console.log('currentUser', currentUser.username)
   const handleDelete = async () => {
     const result = await deleteUser();
 
@@ -71,7 +72,15 @@ const DeleteUser = () => {
     
     <Box>
 
-    <Button className="delete-button" onClick={handleClickOpen} sx={deleteBtnStyle}>
+    <Button className="delete-button"
+            onClick={handleClickOpen}
+            sx={deleteBtnStyle}
+            disabled={
+              currentUser.username === 'testuser' ||
+              currentUser.username === 'Kate' ||
+              currentUser.username === 'Sophia'
+            }
+    >
       Delete
     </Button>
 
@@ -91,7 +100,10 @@ const DeleteUser = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} sx={cancleBtnStyle}>Cancel</Button>
-          <Button onClick={handleDelete} autoFocus sx={deleteBtnStyleInt}>
+          <Button onClick={handleDelete}
+                  autoFocus
+                  sx={deleteBtnStyleInt}                  
+          >
             Delete
           </Button>
         </DialogActions>
