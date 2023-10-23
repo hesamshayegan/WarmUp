@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 
 import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Box, Typography } from "@mui/material";
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Grow from '@mui/material/Grow';
 import Fade from '@mui/material/Fade';
@@ -85,7 +85,7 @@ const Home = () => {
 
     
     return (
-        <div className="homepage" >
+        <Box className="homepage" >
             <Bg1>
                 <Slide direction="up" 
                     in={true} 
@@ -96,7 +96,7 @@ const Home = () => {
                     }}
                     timeout={{ enter: 1000, exit: 0 }}
                     >           
-                        <div className="home-msg"
+                        <Box className="home-msg"
                             style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -118,7 +118,7 @@ const Home = () => {
                             
 
                     
-                        </div>
+                        </Box>
 
                         
                 </Slide>
@@ -207,7 +207,7 @@ const Home = () => {
 
 
             
-            <div ref={ref}>
+            <Box ref={ref}>
                     {isSectionInView ? (
                         <Grid
                             container
@@ -263,9 +263,9 @@ const Home = () => {
 
                         </Grid>
                     ) : null}
-            </div>
+            </Box>
 
-            <div ref={ref}>
+            <Box ref={ref}>
                 {isSectionInView ? (
                     <Bg4>
                         <Grow
@@ -274,7 +274,7 @@ const Home = () => {
                             style={{ transformOrigin: 'right center' }}
                             {...(scrolledOnce ? { timeout: 5000 } : {})}
                         >
-                            <div 
+                            <Box 
                                 style={{
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -312,13 +312,13 @@ const Home = () => {
                                     > Start Now 
                                     </Button>
 
-                            </div>
+                            </Box>
                         </Grow>
                     </Bg4>
                 ) : null}
-            </div>
+            </Box>
 
-        </div> 
+        </Box> 
 
     )
 

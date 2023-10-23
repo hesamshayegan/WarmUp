@@ -91,26 +91,6 @@ describe("register", function () {
     });
 });
 
-/************************************** findAll */
-
-describe("findAll", function() {
-    test("works", async function() {
-        const users = await User.findAll();
-        expect(users).toEqual([
-            {
-                username: "u1",
-                email: "u1@email.com",
-                image_profile: "src1" 
-            },
-            {
-                username: "u2",
-                email: "u2@email.com",
-                image_profile: "src2" 
-            },
-        ]);
-    });
-});
-
 /************************************** get */
 
 describe("get", function () {

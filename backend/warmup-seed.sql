@@ -109,7 +109,7 @@ VALUES
     'easy'
 ),
 (
-    'What percentage of total greenhouse gas (GHG) emissions can be attributed to the production and conversion stage of plastics'' lifecycle?',
+    'What percentage of plastic greenhouse gas (GHG) emissions can be attributed to the production and conversion stage of plastics'' lifecycle?',
     '{"answer": "4%", "isCorrect": false}',
     '{"answer": "90%", "isCorrect": true}',
     '{"answer": "20%", "isCorrect": false}',

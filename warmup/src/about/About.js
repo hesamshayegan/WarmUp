@@ -134,7 +134,7 @@ function About () {
                     }}}
             >
                     <Typography variant="h2" sx={{ textAlign: 'center', m: 3 }}> 
-                         1. <UnderOrange>WarmUp Themes</UnderOrange>
+                         1. <UnderOrange>WarmUp Categories</UnderOrange>
                     </Typography>
                     <Typography variant="h5" sx={{ m: 2 }}>
                         The WarmUp quiz is a comprehensive educational tool designed to engage users in understanding
@@ -193,7 +193,7 @@ function About () {
             <Grid item md={12} sx={{ backgroundColor: "#96FA68" }}>
                 <Box sx={{ m: 1 }}>
                     <Typography variant="h5" sx={{ m: 3 }}>
-                    Below is a selection of resources that have been utilized in the creation of quiz themes:
+                    Below is a selection of resources that have been utilized in the creation of quiz categories:
                     </Typography>
                     <Box
                     sx={{

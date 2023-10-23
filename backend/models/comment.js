@@ -123,7 +123,7 @@ const {
                 )
         
             if ((commentIdQuery.rows).length === 0) throw new NotFoundError(`No comment found`);
-
+        
             const comment_id = (commentIdQuery.rows[0]).comment_id;
             
             return comment_id

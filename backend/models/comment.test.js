@@ -41,7 +41,10 @@ describe("register a comment", function() {
 
         const data_udpate2 = {correct_answers: 6}
 
-        const content = {content: "test comment 1"}
+        const data_comment = {
+            category: 'plastic',    
+            content: "test comment 1"
+        }
              
         const record = await Score.recordScore(u1_info, data1);
 
@@ -52,7 +55,7 @@ describe("register a comment", function() {
         const record_update2 = await Score.updateScore(u1_info, data_udpate2);
 
     
-        const comment = await Comment.registerComment(u1_info, content);
+        const comment = await Comment.registerComment(u1_info, data_comment);
 
         expect(comment).toEqual(
                                 {
@@ -89,8 +92,11 @@ describe("register a comment", function() {
         const data_udpate1 = {correct_answers: 4}
 
         const data_udpate2 = {correct_answers: 6}
-
-        const content = {content: "test comment 1"}
+        
+        const data_comment = {
+            category: 'plastic',    
+            content: "test comment 1"
+        }
              
         const record = await Score.recordScore(u1_info, data1);
 
@@ -101,10 +107,10 @@ describe("register a comment", function() {
         const record_update2 = await Score.updateScore(u1_info, data_udpate2);
 
     
-        const comment = await Comment.registerComment(u1_info, content);
+        const comment = await Comment.registerComment(u1_info, data_comment);
 
         try {
-            const comment = await Comment.registerComment(u1_info, content);
+            const comment = await Comment.registerComment(u1_info, data_comment);
         } catch(err) {
             expect(err instanceof BadRequestError).toBeTruthy();
         }
@@ -132,9 +138,15 @@ describe("edit a comment", function() {
 
         const data_udpate2 = {correct_answers: 6}     
         
-        const content = {content: "test comment 1"}
+        const data_comment = {
+            category: 'plastic',    
+            content: "test comment 1"
+        }
 
-        const contentUpdated = {content: "updated: test comment 1"}
+        const data_comment_updated = {
+            category: 'plastic',    
+            content: "updated: test comment 1"
+        }
              
         const record = await Score.recordScore(u1_info, data1);
 
@@ -144,9 +156,9 @@ describe("edit a comment", function() {
         // Current Complexity: Medium to Hard
         const record_update2 = await Score.updateScore(u1_info, data_udpate2);
 
-        const comment = await Comment.registerComment(u1_info, content);
+        const comment = await Comment.registerComment(u1_info, data_comment);
 
-        const commentUpdated = await Comment.editComment(u1_info, contentUpdated);
+        const commentUpdated = await Comment.editComment(u1_info, data_comment_updated);
 
         expect(commentUpdated).toEqual(
                                 {
@@ -184,6 +196,8 @@ describe("remove a comment", function() {
         const u1_info = {username: 'u1',
                          category: 'plastic'}
 
+        const u1 = {username: 'u1' }
+       
         const data1 = {correct_answers: 2,
                        current_complexity: "easy"}
 
@@ -191,7 +205,10 @@ describe("remove a comment", function() {
 
         const data_udpate2 = {correct_answers: 6}
 
-        const content = {content: "test comment 1"}
+        const data_comment = {
+            category: 'plastic',    
+            content: "test comment 1"
+        }
 
         const record = await Score.recordScore(u1_info, data1);
 
@@ -202,13 +219,13 @@ describe("remove a comment", function() {
         const record_update2 = await Score.updateScore(u1_info, data_udpate2);
         
 
-        const comment = await Comment.registerComment(u1_info, content);
+        const comment = await Comment.registerComment(u1_info, data_comment);
 
         const res1 = await db.query(
             "SELECT * FROM comments");
         expect(res1.rows).toHaveLength(1);
-        
-        await Comment.removeComment(u1_info);
+
+        await Comment.removeComment(u1, u1_info.category);
 
         const res2 = await db.query(
             "SELECT * FROM comments");
@@ -246,7 +263,10 @@ describe("test comment on delete cascade", function() {
 
         const data_udpate2 = {correct_answers: 6}
 
-        const content = {content: "test comment 1"}
+        const data_comment = {
+            category: 'plastic',    
+            content: "test comment 1"
+        }
 
         const record = await Score.recordScore(u1_info, data1);
 
@@ -257,7 +277,7 @@ describe("test comment on delete cascade", function() {
         const record_update2 = await Score.updateScore(u1_info, data_udpate2);
         
 
-        const comment = await Comment.registerComment(u1_info, content);
+        const comment = await Comment.registerComment(u1_info, data_comment);
 
         const res1 = await db.query(
             "SELECT * FROM comments");

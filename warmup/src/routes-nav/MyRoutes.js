@@ -10,7 +10,6 @@ import Categories from "../categories/Categories"
 import CategoryInfo from "../categories/CategoryInfo";
 import Quiz from "../quiz/Quiz";
 import ScoreProgress from "../score-progress/ScoreProgress.js";
-import Test from "./test";
 import TopScores from "../top-scores/TopScores";
 import Feedback from "../feedback/Feedback";
 import About from "../about/About";
@@ -43,8 +42,6 @@ const MyRoutes = () => {
                 <Route path="/topscores" element={<TopScores />} />
 
                 <Route path="/about" element={<About />} />
-
-                <Route path="/test" element={<Test />} />
 
                 <Route element={<PrivateRoutes /> }>
 
