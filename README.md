@@ -1,10 +1,11 @@
-# WarmUP Quiz App
+# WarmUp Quiz App
 
 ![WarmUp](./warmup/src/static/images/readme/warmup.JPG)
 
 ## About WarmUp
 
-The Warmup Quiz app focuses on climate change topics, providing users with a series of questions and challenges to test their environmental knowledge and awareness. I was the designer and developer responsible for creating the app's API, backend, and frontend components.
+### App Description
+The WarmUp Quiz app focuses on climate change topics, providing users with a series of questions and challenges to test their environmental knowledge and awareness. I was the designer and developer responsible for creating the app's API, backend, and frontend components.
 
 ### Why WarmUp?
 
@@ -13,7 +14,7 @@ The app was designed to address the critical issue of climate change due to its 
 ## App Features
 
 ### - User Authentication & Authorization
-This section allows users to register as Warmup users with optional email and image profile settings, ensuring secure access to app features.
+This section allows users to register as WarmUp users with optional email and image profile settings, ensuring secure access to app features.
 
 ### - User Profile
 Registered users have the capability to edit or delete their profiles, providing them with control over their account information.
@@ -92,7 +93,7 @@ Frontend Learning Outcomes:
 
 2. **Effective State Management**: I learned how to proficiently manage and manipulate state, ensuring data integrity and delivering a seamless user experience.
 
-3. **Responsive Design**: I became proficient in creating responsive web designs that adapt to various screen sizes and devices by customizing Material UI components
+3. **Responsive Design**: I became proficient in creating responsive web designs that adapt to various screen sizes and devices by customizing Material UI components.
 
 
 ## Technical Stack
@@ -120,3 +121,11 @@ To execute the code, follow these steps:
 2. This command runs the app in development mode.
 
 3. To access the app locally, open your web browser and visit http://localhost:3000.
+
+
+## Additional Note
+
+Use the following credentials to access the app:
+
+- Username: testuser
+- Password: 123456

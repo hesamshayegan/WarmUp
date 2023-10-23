@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import UserContext from "../common/UserContext";
 import PrivateRoutes from "./PrivateRoutes";
-import Home from "../Home/Home";
+import Home from "../home/Home";
 import LoginForm from "../auth/LoginForm";
 import NewUserForm from "../auth/NewUserForm";
 import EditUserForm from "../profile/EditUserForm.js";
