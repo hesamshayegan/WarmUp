@@ -39,6 +39,13 @@ app.use("/quiz", quizRoutes)
 app.use("/comment", commentRoutes)
 
 
+//Homepage message
+app.get("/", (req, res) => {
+  let result = "Welcome to WarmUp!"
+  return res.send(result);
+})
+
+
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
     return next(new NotFoundError());
