@@ -24,6 +24,8 @@ const MyRoutes = () => {
     console.log("contextValue", contextValue);
 
     const { loginUser, registerUser, updateUser }  = useContext(UserContext);
+
+    console.log('loginUser>>>', loginUser)
    
     return (
         

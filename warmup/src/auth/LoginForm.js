@@ -95,7 +95,7 @@ const LoginForm = ({ loginUser }) => {
                         }  
                     }}
             >
-              <Box sx={{ width: "100%" }}>
+              {/* <Box sx={{ width: "100%" }}>
                 <Box sx={{
                             display: "flex",
                             flexDirection: "column",
@@ -195,7 +195,8 @@ const LoginForm = ({ loginUser }) => {
                             Sign in using your WarmUp account!
                         </Typography>
                     </Box>
-                </Slide>  
+                </Slide>   */}
+                Test!!!
             </Grid>
 
       </Grid>
