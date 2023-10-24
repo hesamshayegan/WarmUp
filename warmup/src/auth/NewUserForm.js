@@ -49,18 +49,17 @@ const NewUserForm = ({ registerUser }) => {
         event.preventDefault();
     };
 
-    console.debug(
-        "LoginForm",
-        "formData=", formData,
-        "formErrors", formErrors,
-    );
+    // console.debug(
+    //     "LoginForm",
+    //     "formData=", formData,
+    //     "formErrors", formErrors,
+    // );
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
-        console.log("Form Data to be submitted:", formData);
+        // console.log("Form Data to be submitted:", formData);
 
-        // Remove email field if it's empty
             if (formData.email === "") {
                 delete formData.email;
             }

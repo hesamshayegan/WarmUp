@@ -53,6 +53,19 @@ const UnderBlue = styled('div')({
     display: 'inline' 
 })
 
+const topSectionStyle = {
+    color: '#000000',
+    fontWeight: '800',
+    textAlign: 'center',
+    m: 2
+}
+
+const BottomSectionStyle = {
+    color: '#000000',
+    fontWeight: '500',
+    textAlign: 'center',
+    marginTop: '50px',
+}
 
 const Home = () => {
 
@@ -61,8 +74,8 @@ const Home = () => {
     const [scrolledOnce, setScrolledOnce] = useState(false);
     const [isSectionInView, setIsSectionInView] = useState(false);
 
-    console.debug("Homepage", "currentUser=", currentUser);
-    console.log(theme)
+    // console.debug("Homepage", "currentUser=", currentUser);
+    // console.log(theme)
 
     // Only trigger once when it comes into view
     const [ref, inView] = useInView({
@@ -104,17 +117,11 @@ const Home = () => {
                             flexDirection: 'column'}}
                         >
                             
-                            <Typography variant='h3' 
-                                        style={{
-                                        color: '#000000',
-                                        fontWeight: '800',
-                                        textAlign: 'center',
-                                        }}
-                            >   
-                                <p> Our <UnderGreen> planet</UnderGreen> is calling, let's listen. </p>
-                                <p> <UnderGreen>Together, we can make a difference. </UnderGreen> </p>
-                                <p> Act today, for a better tomorrow. </p>
-                            </Typography>
+                            
+                            <Typography variant="h3" sx={topSectionStyle}> Our <UnderGreen> planet</UnderGreen> is calling, let's listen. </Typography>
+                            <Typography variant="h3" sx={topSectionStyle}> <UnderGreen>Together, we can make a difference. </UnderGreen> </Typography>
+                            <Typography variant="h3" sx={topSectionStyle}> Act today, for a better tomorrow. </Typography>
+                            
                             
 
                     
@@ -284,33 +291,25 @@ const Home = () => {
                                 }}
                             >
                                             
-                                    <Typography variant='h3' 
-                                                style={{
-                                                color: '#000000',
-                                                fontWeight: '500',
-                                                textAlign: 'center',
-                                                marginTop: '30px',
-                                                }}
-                                    >   
-                                        <p> Climate change is a complex issue,</p>
-                                        <p>  but knowledge is the key to tackling it. </p>
-                                        <p> How much do you know about it? </p>
-                                        <p> Take the WarmUp quiz to find out! </p>
-                                    </Typography>
+                                <Typography variant='h3' sx ={BottomSectionStyle}> Climate change is a complex issue, </Typography>
+                                <Typography variant='h3' sx ={BottomSectionStyle}> but knowledge is the key to tackling it. </Typography>
+                                <Typography variant='h3' sx ={BottomSectionStyle}> How much do you know about it? </Typography>
+                                <Typography variant='h3' sx ={BottomSectionStyle}> Take the WarmUp quiz to find out! </Typography>
                                     
-                                    <Button href="/categories" variant="text" size='large' 
-                                            sx={{
-                                                borderRadius: '30px',
-                                                border: "3px solid #BFFFBF",
-                                                color: "black",                                   
-                                                fontSize: '28px',
-                                                marginBottom: '50px',
-                                                [theme.breakpoints.down("md")]: {
-                                                    border: "3px solid #000000"
-                                                }
-                                            }}
-                                    > Start Now 
-                                    </Button>
+                                <Button href="/categories" variant="text" size='large' 
+                                        sx={{
+                                            borderRadius: '30px',
+                                            border: "3px solid #BFFFBF",
+                                            color: "black",                                   
+                                            fontSize: '28px',
+                                            marginTop: '30px',
+                                            marginBottom: '50px',
+                                            [theme.breakpoints.down("md")]: {
+                                                border: "3px solid #000000"
+                                            }
+                                        }}
+                                > Start Now 
+                                </Button>
 
                             </Box>
                         </Grow>

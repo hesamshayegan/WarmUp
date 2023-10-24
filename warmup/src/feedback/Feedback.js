@@ -52,7 +52,7 @@ function Feedback() {
                     
             }, []);
 
-            console.log(comments)
+            // console.log(comments)
 
             return (
                 
@@ -120,9 +120,7 @@ function Feedback() {
                                                 content={(comments.find((comment) => comment.category === c.category)?.content) || null}
                                             />
                                             
-                                            {console.log('categories', categories)}
-                                            {console.log('comments', comments)}
-                                            {console.log('comment', comments.find((comment) => comment.category === c.category)?.content)}
+                                            
                                         </Grid>
                                         
                                     ))}

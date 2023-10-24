@@ -120,7 +120,7 @@ function ScoreBars () {
           }
         };
         
-        {console.log('groupedData', groupedData)}
+        
 
         function formatDate(dateStr) {
           const date = new Date(dateStr);

@@ -56,7 +56,7 @@ const DeleteUser = () => {
     setOpen(false);
   };
 
-  console.log('currentUser', currentUser.username)
+  // console.log('currentUser', currentUser.username)
   const handleDelete = async () => {
     const result = await deleteUser();
 

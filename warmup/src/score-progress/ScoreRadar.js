@@ -144,7 +144,8 @@ function ScoreRadar() {
                 </Box>
                 <Typography variant="h6"
                                 sx={{
-                                    textAlign: "center",                                    
+                                    textAlign: "center",
+                                    m: 1                                  
                                     }}
                     >
                       The radar chart shows your top scores (%) for each category.

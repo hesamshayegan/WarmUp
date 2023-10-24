@@ -50,11 +50,11 @@ const LoginForm = ({ loginUser }) => {
 
     
 
-    console.debug(
-        "LoginForm",
-        "formData=", formData,
-        "formErrors", formErrors,
-    );
+    // console.debug(
+    //     "LoginForm",
+    //     "formData=", formData,
+    //     "formErrors", formErrors,
+    // );
 
     
     const handleSubmit = async (e) => {

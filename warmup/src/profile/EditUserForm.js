@@ -52,9 +52,9 @@ const EditUserForm = ({ updateUser }) => {
         event.preventDefault();
     };
 
-    console.debug(
-        "userContext=",  useContext(UserContext)
-    )
+    // console.debug(
+    //     "userContext=",  useContext(UserContext)
+    // )
 
     const { currentUser, token, userInfoLoaded } = useContext(UserContext);
     
@@ -77,7 +77,7 @@ const EditUserForm = ({ updateUser }) => {
             };
 
             setFormData(INITIAL_STATE);
-            console.log("INITIAL_STATE", INITIAL_STATE)
+            // console.log("INITIAL_STATE", INITIAL_STATE)
         }
 
     }, [currentUser]);
@@ -90,10 +90,18 @@ const EditUserForm = ({ updateUser }) => {
     const handleSubmit = async evt => {
         evt.preventDefault();
 
-        const profileData = { 
-            password: formData.password,
-            email: formData.email,
-            image_profile: formData.image_profile            
+        let profileData = {}
+        if (formData.email) {
+            profileData = { 
+                password: formData.password,
+                email: formData.email,
+                image_profile: formData.image_profile            
+            }
+        } else {
+            profileData = { 
+                password: formData.password,
+                image_profile: formData.image_profile            
+            }
         }
 
         let result = await updateUser(profileData);
@@ -118,7 +126,7 @@ const EditUserForm = ({ updateUser }) => {
     }
 
 
-    console.log(formData)
+    // console.log(formData)
 
     return (
 

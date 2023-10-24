@@ -69,7 +69,7 @@ function Quiz() {
                         const fetchedQuestions = await WarmUpApi.getQuestions({ username, category });
                         setQuestions(fetchedQuestions);
 
-                        console.log('Questions state:', questions);
+                        // console.log('Questions state:', questions);
         
                     } catch (error) {
                         console.error('Error fetching questions:', error);
@@ -178,8 +178,8 @@ function Quiz() {
 
             const showAnswers = (scrollType) => () => {
 
-                console.log(questions)
-                console.log("selectedAnswers", selectedAnswers)
+                // console.log(questions)
+                // console.log("selectedAnswers", selectedAnswers)
 
                 setShowingAnswers(true);
                 setDialogOpen(true);
@@ -208,7 +208,7 @@ function Quiz() {
             if (isQuizCompleted) {
                 
                 score = Object.values(selectedAnswers).filter(answer => answer.score === 1).length;
-                console.log(score)
+                // console.log(score)
 
                 return (
         
@@ -431,7 +431,7 @@ function Quiz() {
                                             }
                                             onAnswerSelect={handleAnswerSelect}                                        
                                         />
-                                        {console.log(currentQuestionIndex)}
+                                       
                                     </Box>
                                 </Box>
                                 <Box sx={{ className: "button-box",

@@ -471,7 +471,7 @@ class Score {
 
         const result = historyQuery.rows;
         
-        if (result.length === 0) throw new NotFoundError(`No score found`);
+        // if (result.length === 0) throw new NotFoundError(`No score found`);
 
         return result;
 

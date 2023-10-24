@@ -43,7 +43,7 @@ const CategoryCommentCard = ({ id, category, content}) => {
             const { currentUser } = useContext(UserContext);
             const [open, setOpen] = useState(false);
             const [formInput, setFormInput] = useState('');
-            console.log(id, content)
+            // console.log(id, content)
             useEffect(() => {
                 async function fetchScoreHistory() {
                 try {

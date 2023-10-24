@@ -109,7 +109,7 @@ const CategoryInfo = () => {
 
     const categoryInfo = categories.find(cat => cat.name === category); 
 
-    console.log('categoryInfo', categoryInfo)
+    // console.log('categoryInfo', categoryInfo)
 
 
     return (

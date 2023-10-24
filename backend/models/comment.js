@@ -186,7 +186,7 @@ const {
                 [user_id],
                 )
                 
-            if ((commentIdQuery.rows).length === 0) throw new NotFoundError(`No comment found`);
+        //     if ((commentIdQuery.rows).length === 0) throw new NotFoundError(`No comment found`);
 
 
             const result = commentIdQuery.rows            

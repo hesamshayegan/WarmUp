@@ -15,23 +15,11 @@ import agriculture from "../static/images/categories/agriculture.jpg"
 import transportation from "../static/images/categories/transportation.avif"
 import food from "../static/images/categories/food.jpg"
 
-// const buttonStyle = {
-//     color: "white",
-//     borderRadius: "30px",
-//     border: "2px solid white",
-//     backgroundColor: currentLevel === 'medium' ? 'yellow' :
-//                      currentLevel === 'hard' ? 'green' :
-//                      currentLevel === 'easy' ? 'orange':
-//                      null,
-//     marginLeft: "10px",
-//     marginBottom: "30px",
-
-// };
 
 const CategoryCard = ({ category, currentLevel}) => {
 
     const [hover, setHover] = useState(false);
-    console.log('currentLevel', currentLevel)
+    // console.log('currentLevel', currentLevel)
     return (
 
 
