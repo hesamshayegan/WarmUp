@@ -57,6 +57,7 @@ const MyRoutes = () => {
 
                 </Route>
 
+                <Route path="*" element={<Home />} />
                         
             </Routes>
         
