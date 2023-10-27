@@ -19,6 +19,7 @@ function App() {
   const [userInfoLoaded, setUserInfoLoaded] = useState(false);
   const [scores, setScores] = useState([])
   const [scoreLog, setScoreLog] = useState([])
+  const [loginMessage, setLoginMessage] = useState(false);
 
 
   async function loginUser(data) {
@@ -27,6 +28,7 @@ function App() {
       const res = await WarmUpApi.loginUser(data);
       setToken(res);
       setCurrentUser(res);
+      setLoginMessage(true)
       return { success: true };
 
     } catch (errors) {
@@ -152,7 +154,10 @@ function App() {
                   setToken, token, userInfoLoaded, 
                   setUserInfoLoaded, loginUser,
                   registerUser, updateUser,
-                  deleteUser, logout }}>
+                  deleteUser, logout, 
+                  loginMessage, setLoginMessage
+                }}
+        >
 
           <MyNav logout={logout}/>
 

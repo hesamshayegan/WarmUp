@@ -2,10 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../common/UserContext";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-
 import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
-import { Button, Grid, Box, Typography } from "@mui/material";
+import 
+{ Button, Grid, Box, Typography, Dialog, 
+DialogActions,DialogContent, DialogTitle, Paper
+}
+from "@mui/material";
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Grow from '@mui/material/Grow';
 import Fade from '@mui/material/Fade';
@@ -67,12 +70,32 @@ const BottomSectionStyle = {
     marginTop: '50px',
 }
 
+const StyledPaper = styled(Paper)`
+  border-radius: 30px;
+  border: 2mm inset rgba(0, 0, 0, .6);
+
+  @media (max-width: 768px) {
+    background-color: rgba(46, 93, 75, 1);
+  }
+
+    background-color: rgba(46, 93, 75, 0.95);
+`;
+
+const buttonStyle = {
+    color: "white",
+    borderRadius: "30px",
+    border: "2px solid white",
+    marginRight: "5px",
+    backgroundColor: "#59c6dd",
+};
+
 const Home = () => {
 
     const { currentUser } = useContext(UserContext);
     const trigger = useScrollTrigger();
     const [scrolledOnce, setScrolledOnce] = useState(false);
     const [isSectionInView, setIsSectionInView] = useState(false);
+    const { loginMessage, setLoginMessage } = useContext(UserContext);
 
     // console.debug("Homepage", "currentUser=", currentUser);
     // console.log(theme)
@@ -129,6 +152,54 @@ const Home = () => {
 
                         
                 </Slide>
+                
+                {loginMessage && (
+                    <Box>
+                        
+                        <Dialog
+                            onClose={() => setLoginMessage(false)}
+                            open={true}                          
+                            disableEscapeKeyDown={true}
+                            sx={{ borderRadius: "15px"}} 
+                            PaperComponent={StyledPaper}                                                  
+                        >
+                            <DialogTitle>
+                                <Typography sx={{ color: "white",
+                                                            marginTop: "10px",                                                            
+                                                            [theme.breakpoints.down("md")]: {
+                                                                width: "90%"}
+                                                            }}
+                                >
+                                Hi {currentUser.username}👋!
+                                </Typography>
+                            </DialogTitle>
+                            <DialogContent sx={{ width: "450px",
+                                             [theme.breakpoints.down("md")]: {
+                                                 width: "80%"}}}>
+                                <Typography sx={{ color: "white",
+                                                            marginTop: "10px",
+                                                            textAlign: "center",
+                                                            [theme.breakpoints.down("md")]: {
+                                                                width: "90%"
+                                                               }
+                                                            }}
+                                >
+                                 Welcome to WarmUp!🌲🌎
+                                </Typography>
+                            </DialogContent>
+
+                            <DialogActions>
+                                <Box sx={{ marginBottom: "5px"}}>                        
+                                    <Button onClick={ () => setLoginMessage(false)} sx={buttonStyle}>
+                                        Close
+                                    </Button>
+                                </Box>
+                            </DialogActions>
+
+                        </Dialog>
+                    </Box>
+                )}
+                
             </Bg1>
 
 
