@@ -55,6 +55,11 @@ This section serves as a hub for current rankings and the highest scores in each
 - Authorization: Role-based access control
 - Response formats: JSON
 
+## Frontend
+
+### Component Hierarchy
+![components](./warmup/src/static/images/readme/component-hierarchy.PNG)
+
 ## Addressing Key Challenges
 
 ### **1. Scores' Progress**
