@@ -79,7 +79,7 @@ This section serves as a hub for current rankings and the highest scores in each
   On the frontend, while retrieving data from various tables didn't pose any issue, matching data for all users created a problem. This challenge resulted in difficulty in efficiently consolidating data for all users.
   
 - **Solution**: 
-  I overcame this issue by utilizing the concept of closures. I stored the required data in a variable within a closure, which allowed continued access to the data even after the loop had finished executing. This approach enabled the effective consolidation of data for all users, improving the efficiency of data retrieval and matching.
+  I overcame this issue by utilizing the concept of closures. I stored the required data in a variable within a closure, which allowed continued access to the data even after the loop had finished executing. This approach enabled the effective consolidation of data for all users, improving the efficiency of data retrieval and matching. (see lines 233-250 & 366-466 in the top-scores -> Rank )
 
 
 ## What I learned?
@@ -96,7 +96,7 @@ Backend Learning Outcomes:
 
 Frontend Learning Outcomes:
 
-1. **Performance Optimization**: I acquired the ability to enhance performance, reduce loading times, and manage side effects effectively by leveraging React hooks, including useEffect and useRef.
+1. **Performance Optimization**: I acquired the ability to enhance performance, reduce loading times, and manage side effects effectively by leveraging React hooks, including useEffect, useState, and useContext.
 
 2. **Effective State Management**: I learned how to proficiently manage and manipulate state, ensuring data integrity and delivering a seamless user experience.
 
